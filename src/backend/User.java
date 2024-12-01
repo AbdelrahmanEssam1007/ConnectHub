@@ -12,5 +12,54 @@ public class User {
   //  private String profilePicture;
   //  private String coverPicture;  might be a good idea to move these into a profile management class
   //  private String bio;
+
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getUserName() {
+    return userName;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public String getDateOfBirth() {
+    return dateOfBirth;
+  }
+
+  public UserStatus getStatus() {
+    return status;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setUserName(String userName) {
+    this.userName = userName;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public void setDateOfBirth(String dateOfBirth) {
+    this.dateOfBirth = dateOfBirth;
+  }
+
+  public void setStatus(UserStatus status) {
+    this.status = status;
+  }
 }
 
