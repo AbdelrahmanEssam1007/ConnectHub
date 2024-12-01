@@ -1,4 +1,4 @@
-package helper;
+package authentication;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
