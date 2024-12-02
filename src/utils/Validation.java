@@ -31,14 +31,38 @@ public class Validation {
     *.{8,} ensures at least 8 characters
     */
 
-  public static boolean validateEmail(String email) {
+  public static final Pattern VALID_USERNAME_REGEX =
+    Pattern.compile("^[a-zA-Z0-9._-]{3,}$");
 
+  /**
+   * ^ asserts the position at the start of the string.
+   * [a-zA-Z0-9._-] matches a single character that can be a lowercase letter (a-z), an uppercase letter (A-Z), a digit (0-9), a dot (.), an underscore (_), or a hyphen (-).
+   * {3,} matches three or more of the preceding token.
+   * $ asserts the position at the end of the string.
+   */
+
+  public static boolean validateEmail(String email) {
+    if (email == null || email.isEmpty()) {
+      return false;
+    }
     Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
     return matcher.matches();
   }
 
   public static boolean validatePassword(String password) {
+    if (password == null || password.isEmpty()) {
+      return false;
+    }
     Matcher matcher = VALID_PASSWORD_REGEX.matcher(password);
     return matcher.matches();
   }
+
+  public static boolean validateUsername(String username) {
+    if (username == null || username.isEmpty()) {
+      return false;
+    }
+    Matcher matcher = VALID_USERNAME_REGEX.matcher(username);
+    return matcher.matches();
+  }
+
 }

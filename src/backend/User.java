@@ -1,11 +1,14 @@
 package backend;
 
+import java.time.LocalDate;
+
 public class User {
   private String userId;
   private String email;
+
   private String userName;
   private String password;
-  private String dateOfBirth;
+  private LocalDate dateOfBirth;
   private UserStatus status;
   // will probably use hashmaps for friend lookup
   // will probably use hashmaps for blocked lookup
@@ -30,7 +33,7 @@ public class User {
     return password;
   }
 
-  public String getDateOfBirth() {
+  public LocalDate getDateOfBirth() {
     return dateOfBirth;
   }
 
@@ -54,7 +57,7 @@ public class User {
     this.password = password;
   }
 
-  public void setDateOfBirth(String dateOfBirth) {
+  public void setDateOfBirth(LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 
