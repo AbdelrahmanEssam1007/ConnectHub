@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class User {
   private String userId;
+  private static int numID = 0;
   private String email;
 
   private String userName;
@@ -15,6 +16,11 @@ public class User {
   //  private String profilePicture;
   //  private String coverPicture;  might be a good idea to move these into a profile management class
   //  private String bio;
+
+    public User() {
+        numID ++;
+        this.userId = "u"+ User.numID;
+    }
 
 
   public String getUserId() {
@@ -41,9 +47,9 @@ public class User {
     return status;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
+//  public void setUserId(String userId) {
+//    this.userId = userId;
+//  }
 
   public void setEmail(String email) {
     this.email = email;

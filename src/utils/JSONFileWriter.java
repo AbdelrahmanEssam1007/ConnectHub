@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class JSONFileWriter {
-    public <T>void writeJson(String filePath, List<T> dataList) throws IOException {
+    public static <T>void writeJson(String filePath, List<T> dataList) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         File file = new File(filePath);

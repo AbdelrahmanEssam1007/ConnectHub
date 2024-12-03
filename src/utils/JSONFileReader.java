@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class JSONFileReader {
-    public <T> List<T> readJson(String filePath, Class<T> CLASS) throws IOException {
+    public static <T> List<T> readJson(String filePath, Class<T> CLASS) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
@@ -18,7 +18,7 @@ public class JSONFileReader {
         return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, CLASS));
     }
 
-    public boolean doesEmailExist(String email, String filePath) throws IOException {
+    public static boolean doesEmailExist(String email, String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(filePath);
         if (!file.exists() || file.length() == 0) {
