@@ -1,5 +1,7 @@
 package backend;
 
+import utils.UserIDGenerator;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -12,10 +14,9 @@ public class User {
   private String dateOfBirth;
   private boolean status;
 
-    public User() {
-        numID ++;
-        this.userId = "u"+ User.numID;
-    }
+  public User() {
+      this.userId = UserIDGenerator.generateUserId();
+  }
 
 
   public String getUserId() {
