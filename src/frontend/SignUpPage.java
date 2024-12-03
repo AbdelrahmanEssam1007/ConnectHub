@@ -23,16 +23,16 @@ public class SignUpPage extends javax.swing.JFrame {
     /**
      * Creates new form SignUpPage
      */
-    
+
     private static final String USERS_DB = "Users_DB.json";
-    
+
     public SignUpPage() {
         initComponents();
-        
+
         this.setLocationRelativeTo(null);
         this.setTitle("Sign Up");
         this.setVisible(true);
-        
+
         this.dateOfBirthChooser.setDate(new java.util.Date());
     }
 
@@ -187,12 +187,12 @@ public class SignUpPage extends javax.swing.JFrame {
         calendar.setTime(this.dateOfBirthChooser.getDate());
         LocalDate date = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        
+
         try {
             if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
                 throw new IllegalArgumentException("Fields can't be empty");
             }
-            
+
             if (!Validation.validatePassword(password)) {
                 throw new IllegalArgumentException("""
                                                    Password must follow these rules:\n
@@ -201,28 +201,29 @@ public class SignUpPage extends javax.swing.JFrame {
                                                    3) At least one capital letter
                                                    4) At least one number
                                                    5) At least one special character
-                                                   6) No whitspaces (i.e: spaces and tabs)
+                                                   6) No whitespaces (i.e: spaces and tabs)
                                                    """);
             }
-            
+
             if (!Validation.validateEmail(email)) {
                 throw new IllegalArgumentException("Invalid Email");
             }
-            
-            if (JSONFileReader.doesEmailExist(email, "Users_DB.json")) { // still don't know the 
+
+            if (JSONFileReader.doesEmailExist(email, "Users_DB.json")) { // still don't know the
                 throw new IllegalArgumentException("An account with this email already exists");
             }
-            
+
             User user = new User();
             user.setDateOfBirth(date.format(formatter));
             user.setEmail(email);
-            user.setPassword(password);
+            user.setPassword(utils.SimpleHash.hash(password));
             user.setUserName(username);
-            
+            user.setStatus(false);
+
             List <User> users = JSONFileReader.readJson(SignUpPage.USERS_DB, User.class); // error here
             users.add(user);
             JSONFileWriter.writeJson(SignUpPage.USERS_DB, users);
-            
+
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -245,7 +246,7 @@ public class SignUpPage extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

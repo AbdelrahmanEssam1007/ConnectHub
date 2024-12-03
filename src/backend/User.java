@@ -7,16 +7,10 @@ public class User {
   private String userId;
   private static int numID = 0;
   private String email;
-
   private String userName;
   private String password;
   private String dateOfBirth;
-  private UserStatus status;
-  // will probably use hashmaps for friend lookup
-  // will probably use hashmaps for blocked lookup
-  //  private String profilePicture;
-  //  private String coverPicture;  might be a good idea to move these into a profile management class
-  //  private String bio;
+  private boolean status;
 
     public User() {
         numID ++;
@@ -44,7 +38,7 @@ public class User {
     return dateOfBirth;
   }
 
-  public UserStatus getStatus() {
+  public boolean getStatus() {
     return status;
   }
 
@@ -68,7 +62,7 @@ public class User {
     this.dateOfBirth = dateOfBirth;
   }
 
-  public void setStatus(UserStatus status) {
+  public void setStatus(boolean status) {
     this.status = status;
   }
 
