@@ -1,16 +1,26 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package backend;
 
-import java.time.LocalDateTime;
+import java.io.File;
 
-public class Post {
-  private String contentId;
-  private String authorId;
-  private String contentText;
-  private String contentImage;
-  private LocalDateTime timeStamp;
-
-}
-
-class Story extends Post {
-  private LocalDateTime expirationTimeStamp;
+/**
+ *
+ * @author Amr
+ */
+public class Post extends Content{
+    
+    public Post (String text, User user) {
+        super(text, user);
+    }
+    
+    public Post (String text, File imageFile, User user) {
+        super(text, imageFile, user);
+    }
+    
+    public Post (File imageFile, User user) {
+        super(imageFile, user);
+    }
 }
