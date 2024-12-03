@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.swing.*;
 
+import backend.UserDB;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
 import utils.Validation;
@@ -27,6 +28,8 @@ public class SignUpPage extends javax.swing.JFrame {
      * Creates new form SignUpPage
      */
 
+    UserDB userdb = new UserDB();
+
     private static final String USERS_DB = "Users_DB.json";
 
     public SignUpPage() {
@@ -35,7 +38,6 @@ public class SignUpPage extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Sign Up");
         this.setVisible(true);
-
         this.dateOfBirthChooser.setDate(new java.util.Date());
     }
 
@@ -192,6 +194,7 @@ public class SignUpPage extends javax.swing.JFrame {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         try {
+            this.userdb.setUsers(JSONFileReader.readJson(SignUpPage.USERS_DB, User.class));
             if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
                 throw new IllegalArgumentException("Fields can't be empty");
             }
@@ -226,11 +229,11 @@ public class SignUpPage extends javax.swing.JFrame {
                 throw new IllegalArgumentException("Invalid Date of Birth");
             }
 
-            if (JSONFileReader.searchUserByUserName(username, "Users_DB.json") != null) {
+            if (userdb.searchUserByUserName(username) != null) {
                 throw new IllegalArgumentException("An account with this username already exists");
             }
 
-            if (JSONFileReader.searchUserByEmail(email, "Users_DB.json") != null) { // still don't know the
+            if (userdb.searchUserByEmail(email) != null) { // still don't know the
                 throw new IllegalArgumentException("An account with this email already exists");
             }
 
@@ -241,9 +244,8 @@ public class SignUpPage extends javax.swing.JFrame {
             user.setUserName(username);
             user.setStatus(false);
 
-            List <User> users = JSONFileReader.readJson(SignUpPage.USERS_DB, User.class); // error here
-            users.add(user);
-            JSONFileWriter.writeJson(SignUpPage.USERS_DB, users);
+            userdb.getUsers().add(user);
+            JSONFileWriter.writeJson(SignUpPage.USERS_DB, userdb.getUsers());
 
         }
         catch (Exception e) {

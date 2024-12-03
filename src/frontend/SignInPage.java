@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.User;
+import backend.UserDB;
 import utils.JSONFileReader;
 
 import javax.swing.*;
@@ -32,14 +33,17 @@ public class SignInPage extends JFrame {
                 String email = usernameTF.getText();
                 String password = passTF.getText();
                 User user;
+                UserDB userDB = new UserDB();
                 try {
-                    user = JSONFileReader.searchUserByEmail(email, "Users_DB.json");
+                    userDB.setUsers(JSONFileReader.readJson("Users_DB.json", User.class));
+                    user = userDB.searchUserByEmail(email);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
                 if(email.isEmpty() || password.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
                 } else if(user != null && checkPassword(password, user.getPassword())) {
+                    System.out.println(user.getUserName());
                     System.out.println("Login successful");
                     setVisible(false);
                     dispose();

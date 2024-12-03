@@ -17,36 +17,4 @@ public class JSONFileReader {
         }
         return objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, CLASS));
     }
-
-    public static User searchUserByEmail(String email, String filePath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File(filePath);
-        if (!file.exists() || file.length() == 0) {
-            return null;
-        }
-        List<User> users = objectMapper.readValue(file, new TypeReference<List<User>>() {
-        });
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    public static User searchUserByUserName(String userName, String filePath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        File file = new File(filePath);
-        if (!file.exists() || file.length() == 0) {
-            return null;
-        }
-        List<User> users = objectMapper.readValue(file, new TypeReference<List<User>>() {
-        });
-        for (User user : users) {
-            if (user.getUserName().equals(userName)) {
-                return user;
-            }
-        }
-        return null;
-    }
 }
