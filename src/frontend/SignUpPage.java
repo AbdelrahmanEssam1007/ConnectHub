@@ -5,11 +5,14 @@
 package frontend;
 
 import backend.User;
+
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
 import utils.Validation;
@@ -244,6 +247,7 @@ public class SignUpPage extends javax.swing.JFrame {
 
         }
         catch (Exception e) {
+            UIManager.put("OptionPane.minimumSize",new Dimension(300,200));
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_signUpButtonMouseClicked
