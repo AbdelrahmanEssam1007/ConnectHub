@@ -209,6 +209,24 @@ public class SignUpPage extends javax.swing.JFrame {
                 throw new IllegalArgumentException("Invalid Email");
             }
 
+            if(!Validation.validateUsername(username)) {
+                throw new IllegalArgumentException("""
+                                                   Username must follow these rules:\n
+                                                   1) At least 3 characters long
+                                                   2) No whitespaces (i.e: spaces and tabs)
+                                                   3) Can contain only small and capital letters, numbers, dots, underscores, and hyphens
+                                                   """
+                );
+            }
+
+            if(date.isAfter(LocalDate.now())) {
+                throw new IllegalArgumentException("Invalid Date of Birth");
+            }
+
+            if (JSONFileReader.doesUserNameExist(username, "Users_DB.json")) {
+                throw new IllegalArgumentException("An account with this username already exists");
+            }
+
             if (JSONFileReader.doesEmailExist(email, "Users_DB.json")) { // still don't know the
                 throw new IllegalArgumentException("An account with this email already exists");
             }
