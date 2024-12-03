@@ -229,7 +229,8 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_signUpButtonMouseClicked
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // return to main page
+        new Main();
+        this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void quitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitButtonActionPerformed
