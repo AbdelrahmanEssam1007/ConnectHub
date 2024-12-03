@@ -1,6 +1,7 @@
 package backend;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class User {
   private String userId;
@@ -9,7 +10,7 @@ public class User {
 
   private String userName;
   private String password;
-  private LocalDate dateOfBirth;
+  private String dateOfBirth;
   private UserStatus status;
   // will probably use hashmaps for friend lookup
   // will probably use hashmaps for blocked lookup
@@ -39,7 +40,7 @@ public class User {
     return password;
   }
 
-  public LocalDate getDateOfBirth() {
+  public String getDateOfBirth() {
     return dateOfBirth;
   }
 
@@ -63,12 +64,13 @@ public class User {
     this.password = password;
   }
 
-  public void setDateOfBirth(LocalDate dateOfBirth) {
+  public void setDateOfBirth(String dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 
   public void setStatus(UserStatus status) {
     this.status = status;
   }
+
 }
 

@@ -6,6 +6,7 @@ package frontend;
 
 import backend.User;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -185,7 +186,7 @@ public class SignUpPage extends javax.swing.JFrame {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this.dateOfBirthChooser.getDate());
         LocalDate date = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         
         try {
             if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
@@ -213,7 +214,7 @@ public class SignUpPage extends javax.swing.JFrame {
             }
             
             User user = new User();
-            user.setDateOfBirth(date);
+            user.setDateOfBirth(date.format(formatter));
             user.setEmail(email);
             user.setPassword(password);
             user.setUserName(username);
