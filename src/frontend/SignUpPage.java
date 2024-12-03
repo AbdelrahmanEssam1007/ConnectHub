@@ -226,11 +226,11 @@ public class SignUpPage extends javax.swing.JFrame {
                 throw new IllegalArgumentException("Invalid Date of Birth");
             }
 
-            if (JSONFileReader.doesUserNameExist(username, "Users_DB.json")) {
+            if (JSONFileReader.searchUserByUserName(username, "Users_DB.json") != null) {
                 throw new IllegalArgumentException("An account with this username already exists");
             }
 
-            if (JSONFileReader.doesEmailExist(email, "Users_DB.json")) { // still don't know the
+            if (JSONFileReader.searchUserByEmail(email, "Users_DB.json") != null) { // still don't know the
                 throw new IllegalArgumentException("An account with this email already exists");
             }
 
@@ -247,7 +247,7 @@ public class SignUpPage extends javax.swing.JFrame {
 
         }
         catch (Exception e) {
-            UIManager.put("OptionPane.minimumSize",new Dimension(300,200));
+//            UIManager.put("OptionPane.minimumSize",new Dimension(300,200));
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_signUpButtonMouseClicked

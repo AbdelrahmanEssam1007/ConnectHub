@@ -109,7 +109,8 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_signUpButtonMouseClicked
 
     private void logInButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logInButtonMouseClicked
-        // TODO add your handling code here:
+        new SignInPage();
+        this.dispose();
     }//GEN-LAST:event_logInButtonMouseClicked
 
     /**
