@@ -5,18 +5,15 @@
 package frontend;
 
 import backend.User;
-
-import java.awt.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.List;
-import javax.swing.*;
-
 import backend.UserDB;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
 import utils.Validation;
+
+import javax.swing.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 /**
  *
@@ -191,7 +188,6 @@ public class SignUpPage extends javax.swing.JFrame {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this.dateOfBirthChooser.getDate());
         LocalDate date = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         try {
             this.userdb.setUsers(JSONFileReader.readJson(SignUpPage.USERS_DB, User.class));
@@ -238,10 +234,10 @@ public class SignUpPage extends javax.swing.JFrame {
             }
 
             User user = new User();
-            user.setDateOfBirth(date.format(formatter));
-            user.setEmail(email);
+            user.setDateOfBirth(date);
             user.setPassword(utils.SimpleHash.hash(password));
             user.setUserName(username);
+            user.setEmail(email);
             user.setStatus(false);
 
             userdb.getUsers().add(user);

@@ -3,21 +3,18 @@ package backend;
 import utils.UserIDGenerator;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class User {
   private String userId;
-  private static int numID = 0;
   private String email;
   private String userName;
   private String password;
-  private String dateOfBirth;
+  private LocalDate dateOfBirth;
   private boolean status;
 
   public User() {
       this.userId = UserIDGenerator.generateUserId();
   }
-
 
   public String getUserId() {
     return userId;
@@ -35,7 +32,7 @@ public class User {
     return password;
   }
 
-  public String getDateOfBirth() {
+  public LocalDate getDateOfBirth() {
     return dateOfBirth;
   }
 
@@ -59,7 +56,7 @@ public class User {
     this.password = password;
   }
 
-  public void setDateOfBirth(String dateOfBirth) {
+  public void setDateOfBirth(LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 
