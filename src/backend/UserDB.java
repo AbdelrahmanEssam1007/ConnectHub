@@ -16,13 +16,18 @@ import utils.JSONFileReader;
 public class UserDB {
 
   private List<User> users;
+  private static final UserDB USERDB = new UserDB();
 
-  public UserDB() {
+  private UserDB() {
       try {
           this.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
       } catch (IOException ex) {
           Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
       }
+  }
+  
+  public static UserDB getInstance () {
+      return USERDB;
   }
 
   public List<User> getUsers() {

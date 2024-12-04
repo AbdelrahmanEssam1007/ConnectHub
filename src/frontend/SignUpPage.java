@@ -26,7 +26,7 @@ public class SignUpPage extends javax.swing.JFrame {
      * Creates new form SignUpPage
      */
 
-    UserDB userdb = new UserDB();
+    UserDB userdb = UserDB.getInstance();
 
     public SignUpPage() {
         initComponents();

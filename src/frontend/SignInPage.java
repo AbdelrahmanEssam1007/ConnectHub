@@ -34,7 +34,7 @@ public class SignInPage extends JFrame {
                 String email = usernameTF.getText();
                 String password = passTF.getText();
                 User user;
-                UserDB userDB = new UserDB();
+                UserDB userDB = UserDB.getInstance();
                 try {
                     userDB.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
                     user = userDB.searchUserByEmail(email);
