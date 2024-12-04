@@ -8,13 +8,21 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import utils.FileNames;
+import utils.JSONFileReader;
 
 public class UserDB {
 
   private List<User> users;
 
   public UserDB() {
-    users = new ArrayList<>();
+      try {
+          this.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
+      } catch (IOException ex) {
+          Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+      }
   }
 
   public List<User> getUsers() {

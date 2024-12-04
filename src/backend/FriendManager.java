@@ -4,9 +4,11 @@ import java.util.List;
 
 public class FriendManager {
   private User user;
+  private UserDB userDB;
 
   public FriendManager(User user) {
     this.user = user;
+    this.userDB = new UserDB();
   }
 
   // Send a friend request to another user
@@ -44,6 +46,11 @@ public class FriendManager {
 
     pending.remove(senderId);
     user.getProfile().getFriends().add(senderId);
+    
+    User targetUser = userDB.searchUserByUserId(senderId);
+    
+    targetUser.getProfile().getFriends().add(this.user.getUserId());
+    
     System.out.println("Friend request accepted.");
   }
 
@@ -70,6 +77,7 @@ public class FriendManager {
     profile.getBlocked().add(targetId);
     profile.getFriends().remove(targetId);
     profile.getPending().remove(targetId);
+    
     System.out.println("User has been blocked.");
   }
 
@@ -82,6 +90,7 @@ public class FriendManager {
     }
 
     blocked.remove(targetId);
+    
     System.out.println("User has been unblocked.");
   }
 }
