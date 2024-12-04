@@ -11,6 +11,7 @@ public class User {
   private String password;
   private LocalDate dateOfBirth;
   private boolean status;
+  private Profile profile;
 
   public User() {
       this.userId = UserIDGenerator.generateUserId();
@@ -60,5 +61,12 @@ public class User {
     this.status = status;
   }
 
+  public Profile getProfile() {
+    return profile;
+  }
+
+  public void setProfile(Profile profile) {
+    this.profile = profile;
+  }
 }
 
