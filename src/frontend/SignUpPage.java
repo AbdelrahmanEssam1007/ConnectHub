@@ -241,6 +241,9 @@ public class SignUpPage extends javax.swing.JFrame {
             user.setStatus(false);
             userdb.addUser(user);
             JSONFileWriter.writeJson(FileNames.USERS.getFileName(), userdb.getUsers());
+            JOptionPane.showMessageDialog(null, "Account created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            new SignInPage();
+            this.dispose();
         }
         catch (Exception e) {
 //            UIManager.put("OptionPane.minimumSize",new Dimension(300,200));
