@@ -4,6 +4,8 @@
  */
 package frontend;
 
+import javax.swing.*;
+
 /**
  *
  * @author Zaki
@@ -13,7 +15,15 @@ public class Main extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    public Main() {
+    private static Main pageInstance = null;
+
+    public static synchronized Main getInstance(){
+        if(pageInstance == null)
+            pageInstance = new Main();
+        return pageInstance;
+    }
+
+    private Main() {
         initComponents();
         
         this.setLocationRelativeTo(null);
@@ -104,12 +114,18 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_quitButtonActionPerformed
 
     private void signUpButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUpButtonMouseClicked
-        new SignUpPage();
+        SwingUtilities.invokeLater(() -> {
+            SignUpPage signUpPage = SignUpPage.getInstance();
+            signUpPage.setVisible(true);
+        });
         this.dispose();
     }//GEN-LAST:event_signUpButtonMouseClicked
 
     private void logInButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logInButtonMouseClicked
-        new SignInPage();
+        SwingUtilities.invokeLater(() -> {
+            SignInPage signInPage = SignInPage.getInstance();
+            signInPage.setVisible(true);
+        });
         this.dispose();
     }//GEN-LAST:event_logInButtonMouseClicked
 
@@ -143,7 +159,10 @@ public class Main extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Main().setVisible(true);
+                SwingUtilities.invokeLater(() -> {
+                    Main main = Main.getInstance();
+                    main.setVisible(true);
+                });
             }
         });
     }

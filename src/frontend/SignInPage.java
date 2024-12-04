@@ -21,8 +21,15 @@ public class SignInPage extends JFrame {
     private JButton loginButton;
     private JButton quitButton;
     private JButton backButton;
+    private static SignInPage pageInstance = null;
 
-    public SignInPage() {
+    public static synchronized SignInPage getInstance(){
+        if(pageInstance == null)
+            pageInstance = new SignInPage();
+        return pageInstance;
+    }
+
+    private SignInPage() {
         setContentPane(SignInPanel);
         setSize(new Dimension(640, 480));
         setLocationRelativeTo(null);
@@ -58,7 +65,10 @@ public class SignInPage extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Main();
+                SwingUtilities.invokeLater(() -> {
+                    Main main = Main.getInstance();
+                    main.setVisible(true);
+                });
                 dispose();
             }
         });

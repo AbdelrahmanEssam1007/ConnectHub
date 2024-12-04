@@ -27,14 +27,22 @@ public class SignUpPage extends javax.swing.JFrame {
      */
 
     UserDB userdb = new UserDB();
+    private static SignUpPage pageInstance = null;
 
-    public SignUpPage() {
+    public static synchronized SignUpPage getInstance(){
+        if(pageInstance == null)
+            pageInstance = new SignUpPage();
+        return pageInstance;
+    }
+
+    private SignUpPage() {
         initComponents();
 
         this.setLocationRelativeTo(null);
         this.setTitle("Sign Up");
         this.setVisible(true);
         this.dateOfBirthChooser.setDate(new java.util.Date());
+        getRootPane().setDefaultButton(signUpButton);
     }
 
     /**
@@ -242,7 +250,7 @@ public class SignUpPage extends javax.swing.JFrame {
             userdb.addUser(user);
             JSONFileWriter.writeJson(FileNames.USERS.getFileName(), userdb.getUsers());
             JOptionPane.showMessageDialog(null, "Account created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            new SignInPage();
+            SignInPage.getInstance();
             this.dispose();
         }
         catch (Exception e) {
@@ -252,7 +260,10 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_signUpButtonMouseClicked
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        new Main();
+        SwingUtilities.invokeLater(() -> {
+            Main main = Main.getInstance();
+            main.setVisible(true);
+        });
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
