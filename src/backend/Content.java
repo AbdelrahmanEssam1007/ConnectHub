@@ -89,11 +89,11 @@ public class Content {
         return null;
     }
     
-    public String getImagePath(){
+    public String returnImagePath(){
         return contentData.getImagePath();
     }
     
-    public String getText(){
+    public String returnText(){
         return contentData.getText();
     }
         

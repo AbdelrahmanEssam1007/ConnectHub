@@ -114,11 +114,11 @@ public class PostsPanel extends javax.swing.JPanel {
         postPanel.add(postHeader);
 
         /*To do combine all types of posts in one constructor*/
-        String imagePath = post.getImagePath();
-        if (post.getText() != null && imagePath != null) {
-            postPanel.add(new JLabel(post.getText()));
-        } else if (post.getText() != null) {
-            postPanel.add(new JLabel(post.getText()));
+        String imagePath = post.returnImagePath();
+        if (post.returnText() != null && imagePath != null) {
+            postPanel.add(new JLabel(post.returnText()));
+        } else if (post.returnText() != null) {
+            postPanel.add(new JLabel(post.returnText()));
         }
         if(imagePath != null){
             ImageIcon postImage = new ImageIcon(imagePath);
