@@ -6,6 +6,7 @@ package frontend;
 
 import backend.User;
 import backend.UserDB;
+import utils.FileNames;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
 import utils.Validation;
@@ -26,8 +27,6 @@ public class SignUpPage extends javax.swing.JFrame {
      */
 
     UserDB userdb = new UserDB();
-
-    private static final String USERS_DB = "Users_DB.json";
 
     public SignUpPage() {
         initComponents();
@@ -190,7 +189,7 @@ public class SignUpPage extends javax.swing.JFrame {
         LocalDate date = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
 
         try {
-            this.userdb.setUsers(JSONFileReader.readJson(SignUpPage.USERS_DB, User.class));
+            this.userdb.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
             if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
                 throw new IllegalArgumentException("Fields can't be empty");
             }
@@ -204,7 +203,8 @@ public class SignUpPage extends javax.swing.JFrame {
                                                    4) At least one number
                                                    5) At least one special character
                                                    6) No whitespaces (i.e: spaces and tabs)
-                                                   """);
+                                                   """
+                );
             }
 
             if (!Validation.validateEmail(email)) {
@@ -239,10 +239,8 @@ public class SignUpPage extends javax.swing.JFrame {
             user.setUserName(username);
             user.setEmail(email);
             user.setStatus(false);
-
-            userdb.getUsers().add(user);
-            JSONFileWriter.writeJson(SignUpPage.USERS_DB, userdb.getUsers());
-
+            userdb.addUser(user);
+            JSONFileWriter.writeJson(FileNames.USERS.getFileName(), userdb.getUsers());
         }
         catch (Exception e) {
 //            UIManager.put("OptionPane.minimumSize",new Dimension(300,200));

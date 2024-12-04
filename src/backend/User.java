@@ -40,10 +40,6 @@ public class User {
     return status;
   }
 
-//  public void setUserId(String userId) {
-//    this.userId = userId;
-//  }
-
   public void setEmail(String email) {
     this.email = email;
   }

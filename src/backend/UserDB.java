@@ -18,11 +18,15 @@ public class UserDB {
   }
 
   public List<User> getUsers() {
-    return users;
+    return new ArrayList<>(users);
   }
 
   public void setUsers(List<User> users) {
     this.users = users;
+  }
+
+  public void addUser(User user) {
+    users.add(user);
   }
 
   public User searchUserByEmail(String email) {
