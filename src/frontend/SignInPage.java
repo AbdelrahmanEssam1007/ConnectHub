@@ -38,7 +38,7 @@ public class SignInPage extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = usernameTF.getText();
+                String email = usernameTF.getText().toLowerCase();
                 String password = passTF.getText();
                 User user;
                 UserDB userDB = new UserDB();

@@ -191,7 +191,7 @@ public class SignUpPage extends javax.swing.JFrame {
         // will have to check whether handle already exists
         String username = this.usernameField.getText();
         String password = this.passwordField.getText();
-        String email = this.emailField.getText();
+        String email = this.emailField.getText().toLowerCase();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this.dateOfBirthChooser.getDate());
         LocalDate date = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
