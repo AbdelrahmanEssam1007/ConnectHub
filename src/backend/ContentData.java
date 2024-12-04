@@ -20,9 +20,9 @@ final class ContentData {
         this.text = text;
     }
 
-    public ContentData(String imagePath, String text) {
-        this.imagePath = imagePath;
+    public ContentData(String text, String imagePath) {
         this.text = text;
+        this.imagePath = imagePath;
     }
 
     public ContentData(String imagePath, boolean imageOnly) {

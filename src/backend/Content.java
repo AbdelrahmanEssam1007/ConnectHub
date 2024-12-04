@@ -9,37 +9,51 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 public class Content {
     private ContentData contentData;
-    private String postDate;
+    private LocalDateTime postDate;
     private String postID;
     private String authorID;
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
     public Content(String text, User user) {
         contentData = new ContentData(text);
-        this.postDate = LocalDateTime.now().toString();
+        this.postDate = LocalDateTime.now();
         this.postID = "postIDTest";
         this.authorID = user.getUserId();
+        this.username = user.getUserName();
     }
     
     public Content(String text, File imageFile, User user) {
         String path = saveImage(imageFile);
         contentData = new ContentData(text, path);
-        this.postDate = LocalDateTime.now().toString();
+        this.postDate = LocalDateTime.now();
         this.postID = "postIDTest";
         this.authorID = user.getUserId();
+        this.username = user.getUserName();
     }
     
     public Content(File imageFile, User user) {
         String path = saveImage(imageFile);
-        contentData = new ContentData(path);
-        this.postDate = LocalDateTime.now().toString();
+        contentData = new ContentData(path, true);
+        this.postDate = LocalDateTime.now();
         this.postID = "postIDTest";
         this.authorID = user.getUserId();
+        this.username = user.getUserName();
     }
     
     private String saveImage(File imageFile){
@@ -72,19 +86,19 @@ public class Content {
         return null;
     }
     
-    public BufferedImage getImage(){
-        return contentData.loadImage();
+    public String getImagePath(){
+        return contentData.getImagePath();
     }
     
     public String getText(){
         return contentData.getText();
     }
         
-    public String getPostDate() {
+    public LocalDateTime getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(String postDate) {
+    public void setPostDate(LocalDateTime postDate) {
         this.postDate = postDate;
     }
 
