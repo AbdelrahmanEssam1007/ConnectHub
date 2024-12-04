@@ -1,5 +1,6 @@
 package backend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Profile {
@@ -10,6 +11,12 @@ public class Profile {
   private String profilePhoto;
   private String coverPhoto;
   private String bio;
+
+  public Profile() {
+    this.friends = new ArrayList<>();
+    this.blocked = new ArrayList<>();
+    this.pending = new ArrayList<>();
+  }
 
   public List<String> getFriends() {
     return friends;
@@ -57,29 +64,5 @@ public class Profile {
 
   public void setBio(String bio) {
     this.bio = bio;
-  }
-
-  public void addFriend(String friend) {
-    friends.add(friend);
-  }
-
-  public void removeFriend(String friend) {
-    friends.remove(friend);
-  }
-
-  public void blockUser(String user) {
-    blocked.add(user);
-  }
-
-  public void unblockUser(String user) {
-    blocked.remove(user);
-  }
-
-  public void sendFriendRequest(String user) {
-    pending.add(user);
-  }
-
-  public void cancelFriendRequest(String user) {
-    pending.remove(user);
   }
 }

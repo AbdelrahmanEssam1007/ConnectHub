@@ -15,6 +15,7 @@ public class User {
 
   public User() {
       this.userId = UserIDGenerator.generateUserId();
+      profile = new Profile();
   }
 
   public String getUserId() {
