@@ -4,11 +4,11 @@ import java.util.List;
 
 public class FriendManager {
   private User user;
-  private UserDB userDB;
+//  private UserDB userDB;
 
   public FriendManager(User user) {
     this.user = user;
-    this.userDB = new UserDB();
+//    this.userDB = new UserDB();
   }
 
   // Send a friend request to another user
@@ -37,8 +37,9 @@ public class FriendManager {
   }
 
   // Accept a friend request
-  public void acceptFriendRequest(String senderId) {
+  public void acceptFriendRequest(User senderUser) { // will be called by passing UserDB.getInstance ().searchUserByUserName (jlist.getindex) or smth like that
     List<String> pending = user.getProfile().getPending();
+    String senderId = senderUser.getUserId();
     if (!pending.contains(senderId)) {
       System.out.println("No friend request from this user.");
       return;
@@ -47,16 +48,15 @@ public class FriendManager {
     pending.remove(senderId);
     user.getProfile().getFriends().add(senderId);
     
-    User targetUser = userDB.searchUserByUserId(senderId);
-    
-    targetUser.getProfile().getFriends().add(this.user.getUserId());
+    senderUser.getProfile().getFriends().add(this.user.getUserId());
     
     System.out.println("Friend request accepted.");
   }
 
   // Decline a friend request
-  public void declineFriendRequest(String senderId) {
+  public void declineFriendRequest(User senderUser) {
     List<String> pending = user.getProfile().getPending();
+    String senderId = senderUser.getUserId();
     if (!pending.contains(senderId)) {
       System.out.println("No friend request from this user.");
       return;
@@ -67,8 +67,9 @@ public class FriendManager {
   }
 
   // Block a user
-  public void blockUser(String targetId) {
+  public void blockUser(User targetUser) {
     Profile profile = user.getProfile();
+    String targetId = targetUser.getUserId();
     if (profile.getBlocked().contains(targetId)) {
       System.out.println("User is already blocked.");
       return;
@@ -82,8 +83,9 @@ public class FriendManager {
   }
 
   // Unblock a user
-  public void unblockUser(String targetId) {
+  public void unblockUser(User targetUser) {
     List<String> blocked = user.getProfile().getBlocked();
+    String targetId = targetUser.getUserId();
     if (!blocked.contains(targetId)) {
       System.out.println("User is not blocked.");
       return;
