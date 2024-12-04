@@ -2,6 +2,7 @@ package frontend;
 
 import backend.User;
 import backend.UserDB;
+import utils.FileNames;
 import utils.JSONFileReader;
 
 import javax.swing.*;
@@ -35,7 +36,7 @@ public class SignInPage extends JFrame {
                 User user;
                 UserDB userDB = new UserDB();
                 try {
-                    userDB.setUsers(JSONFileReader.readJson("Users_DB.json", User.class));
+                    userDB.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
                     user = userDB.searchUserByEmail(email);
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -50,7 +51,6 @@ public class SignInPage extends JFrame {
                     //new Main(User)
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
-                    usernameTF.setText("");
                     passTF.setText("");
                 }
             }
