@@ -5,6 +5,8 @@
 package backend;
 
 import backend.User;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 public class Content {
+    @JsonProperty
     private ContentData contentData;
     private LocalDateTime postDate;
     private String postID;
@@ -29,7 +32,7 @@ public class Content {
         this.username = username;
     }
 
-
+    public Content(){};
     public Content(String text, User user) {
         contentData = new ContentData(text);
         this.postDate = LocalDateTime.now();
@@ -117,5 +120,12 @@ public class Content {
     public void setAuthorID(String authorID) {
         this.authorID = authorID;
     }
-    
+
+    public void setContentData(ContentData contentData) {
+        this.contentData = contentData;
+    }
+
+    public ContentData getContentData() {
+        return contentData;
+    }
 }

@@ -3,7 +3,7 @@ package utils;
 public enum FileNames {
     USERS("Users_DB.json"),
     POSTS("posts.json"),
-    STORES("stores.json");
+    STORIES("stories.json");
 
     private final String fileName;
 

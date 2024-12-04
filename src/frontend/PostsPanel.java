@@ -23,6 +23,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import utils.FileNames;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
 
@@ -34,7 +36,7 @@ public class PostsPanel extends javax.swing.JPanel {
     private User user;
     private JFileChooser fileChooser = new JFileChooser();
     private JPanel postContainer = new JPanel();
-    private ArrayList<Post> posts = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
     public PostsPanel(User user, int width, int height) {
         initComponents();
         this.user = user;
@@ -43,38 +45,58 @@ public class PostsPanel extends javax.swing.JPanel {
         postContainer.setLayout(new BoxLayout(postContainer, BoxLayout.Y_AXIS));
         JScrollPane postScroller = new JScrollPane(postContainer);
         add(postScroller, BorderLayout.CENTER);
-        
-        int result = uploadImage();
-        if (result == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            addPostPanel(new Post("Hello This is text", user));
-            addPostPanel(new Post("second post here", selectedFile, user));
-            addPostPanel(new Post(selectedFile, user));
+        setBackground(Color.WHITE);
+
+        Post x = new Post("test", user);
+        posts.add(x);
+        saveToDB();
+
+        readFromDB();
+        for(Post t : posts){
+            addPostPanel(t);
         }
 
     }
     
-    /*private void saveToDB(){
+    private void saveToDB(){
         try {
-            List<Post> allPosts = JSONFileReader.readJson("posts.json", Post.class);
+            List<Post> allPosts = JSONFileReader.readJson(FileNames.POSTS.getFileName(), Post.class);
             allPosts.addAll(posts);
-            JSONFileWriter.writeJson("posts.json", allPosts);
+            JSONFileWriter.writeJson(FileNames.POSTS.getFileName(), allPosts);
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error loading or saving to post database.", "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }*/
+    }
+
+    private void readFromDB(){
+        try {
+            List<Post> allPosts =JSONFileReader.readJson(FileNames.POSTS.getFileName(), Post.class);
+            posts.clear();
+            posts.addAll(allPosts);
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error reading posts from database.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
     
-    private int uploadImage(){
+    private File uploadImage(){
         fileChooser.setDialogTitle("Select an image file");
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png"));
 
         int result = fileChooser.showOpenDialog(this);
-        return result;
+        if (result == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Error uploading image..", "Error", JOptionPane.ERROR_MESSAGE);
+            return null;
+        }
     }
-    
-    private void addPostPanel(Post post){
-        posts.add(post);
+
+    private void addPostPanel(Post post) {
         postContainer.add(createPostPanel(post));
         postContainer.revalidate();
         postContainer.repaint();
@@ -87,10 +109,11 @@ public class PostsPanel extends javax.swing.JPanel {
         postPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
         DateTimeFormatter postDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        JLabel postHeader = new JLabel(post.getUsername()+ "      " + post.getPostDate().format(postDateFormat));
+        JLabel postHeader = new JLabel(post.getUsername()+ "    " + post.getPostDate().format(postDateFormat));
         postHeader.setFont(new Font("Arial", Font.BOLD, 12));
         postPanel.add(postHeader);
-        
+
+        /*To do combine all types of posts in one constructor*/
         String imagePath = post.getImagePath();
         if (post.getText() != null && imagePath != null) {
             postPanel.add(new JLabel(post.getText()));

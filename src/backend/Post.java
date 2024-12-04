@@ -11,7 +11,9 @@ import java.io.File;
  * @author Amr
  */
 public class Post extends Content{
-    
+
+    public Post(){};
+
     public Post (String text, User user) {
         super(text, user);
     }

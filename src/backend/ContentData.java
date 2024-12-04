@@ -16,6 +16,8 @@ final class ContentData {
     private String imagePath = null;
     private String text = null;
 
+    public ContentData(){};
+
     public ContentData(String text) {
         this.text = text;
     }
