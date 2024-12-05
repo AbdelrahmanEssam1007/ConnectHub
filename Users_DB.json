@@ -7,7 +7,7 @@
   "status" : true,
   "profile" : {
     "friends" : [ "cb2b9573-b77b-4897-83f2-99c422c3e9b8" ],
-    "blocked" : [ ],
+    "blocked" : [ "a0951309-15c0-46c6-b66a-d341c2499332" ],
     "pending" : [ ],
     "profilePhoto" : null,
     "coverPhoto" : null,
@@ -49,6 +49,21 @@
   "userName" : "Abdo2",
   "password" : "108f38515296a2e7800dd44d9e5e151e8c5764686da64a86f7675ffe3b1dd003",
   "dateOfBirth" : [ 2024, 12, 5 ],
+  "status" : false,
+  "profile" : {
+    "friends" : [ ],
+    "blocked" : [ ],
+    "pending" : [ ],
+    "profilePhoto" : null,
+    "coverPhoto" : null,
+    "bio" : null
+  }
+}, {
+  "userId" : "a0951309-15c0-46c6-b66a-d341c2499332",
+  "email" : "amr@gmail.com",
+  "userName" : "AwkAmr",
+  "password" : "47c94bca3024af4e2c31d8bdab267903ec44aed20913fd17729d6b4370c87172",
+  "dateOfBirth" : [ 2020, 5, 19 ],
   "status" : false,
   "profile" : {
     "friends" : [ ],

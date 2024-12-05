@@ -31,6 +31,13 @@ public abstract class ContentManagerFactory {
             content.clear();
             List<? extends Content> allContent = contentLoader.loadContent();
             content.addAll(allContent);
+            List<String> friends =  user.getProfile().getFriends();
+            List<Content> tempContent = new ArrayList<>();
+            for(Content x : content){
+                if(friends.contains(x.getAuthorID()))
+                    tempContent.add(x);
+            }
+            content = tempContent;
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

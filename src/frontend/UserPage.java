@@ -19,6 +19,8 @@ import javax.swing.ListModel;
 import backend.User;
 import backend.content.Post;
 import backend.content.PostManager;
+import backend.content.Story;
+import backend.content.StoryManager;
 import frontend.content.PostsPanel;
 import utils.ImageUtils;
 
@@ -40,23 +42,13 @@ public class UserPage extends javax.swing.JFrame {
 
     private User loggedInUser;
     private FriendManager FM;
+    private PostManager postManager;
+    private StoryManager storyManager;
 
     public UserPage() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (800, 700));
-
-        PostManager postManager = new PostManager(this.loggedInUser);
-        System.out.println(jPanel1.getWidth());
-        PostsPanel x = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight());
-        jPanel1.setBackground(Color.WHITE);
-        jPanel1.setLayout(new BorderLayout());
-        jPanel1.add(x, BorderLayout.CENTER);
-        jPanel1.revalidate();
-        jPanel1.repaint();
-        x.setVisible(true);
-        this.setVisible(true);
-
     }
 
     public UserPage (User user) {
@@ -67,6 +59,18 @@ public class UserPage extends javax.swing.JFrame {
         this.updateCurrentFriendsList();
         this.updateFriendRequestsList();
         this.updateFriendSuggestionsList();
+
+        postManager = new PostManager(this.loggedInUser);
+        storyManager = new StoryManager(this.loggedInUser);
+        System.out.println(jPanel1.getWidth());
+        PostsPanel x = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight());
+        jPanel1.setBackground(Color.WHITE);
+        jPanel1.setLayout(new BorderLayout());
+        jPanel1.add(x, BorderLayout.CENTER);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        x.setVisible(true);
+        this.setVisible(true);
     }
 
     /**
@@ -450,7 +454,7 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void createNewPostButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewPostButtonMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void updateCurrentFriendsList () {
