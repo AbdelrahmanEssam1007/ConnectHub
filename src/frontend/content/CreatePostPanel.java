@@ -1,7 +1,9 @@
 package frontend.content;
 
 import backend.RefreshManager;
+import backend.content.ContentManagerFactory;
 import backend.content.PostManager;
+import backend.content.StoryManager;
 import utils.ImageUtils;
 
 import javax.swing.*;
@@ -17,14 +19,24 @@ public class CreatePostPanel extends JFrame{
     private JPanel imageContainer;
     private JButton createPostButton;
     private JButton uploadImageButton;
-    private final PostManager postManager;
+    private JRadioButton postRadioButton;
+    private JRadioButton storyRadioButton;
+    private ButtonGroup contentGroup;
     private File imageFile;
+    private final PostManager postManager;
+    private final StoryManager storyManager;
     private final RefreshManager refreshManager;
 
-    public CreatePostPanel(PostManager postManager, RefreshManager refreshManager) throws HeadlessException {
+    public CreatePostPanel(PostManager postManager, StoryManager storyManager, RefreshManager refreshManager) throws HeadlessException {
         /*Initializing needed variables*/
         this.postManager = postManager;
+        this.storyManager = storyManager;
         this.refreshManager = refreshManager;
+
+        /*Managing button group*/
+        contentGroup = new ButtonGroup();
+        contentGroup.add(storyRadioButton);
+        contentGroup.add(postRadioButton);
 
         /*Setting up main creation panel*/
         setTitle("Create Post");
@@ -64,9 +76,21 @@ public class CreatePostPanel extends JFrame{
                 String text = contentTextInput.getText();
                 if(imageFile != null && !text.isEmpty()){
                     try {
-                        postManager.createTextImageContent(text, imageFile);
-                        JOptionPane.showMessageDialog(null, "Successfully made post!",
+                        if(postRadioButton.isSelected()){
+                            postManager.createTextImageContent(text, imageFile);
+                            JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        else if(storyRadioButton.isSelected()){
+                            storyManager.createTextImageContent(text, imageFile);
+                            JOptionPane.showMessageDialog(null, "Successfully made story!",
+                                    "Story Creation", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Must select radio button.",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(),
                                 "Error", JOptionPane.ERROR_MESSAGE);
@@ -76,9 +100,20 @@ public class CreatePostPanel extends JFrame{
                 }
                 else if(imageFile != null){
                     try {
-                        postManager.createImageOnlyContent(imageFile);
-                        JOptionPane.showMessageDialog(null, "Successfully made post!",
+                        if(postRadioButton.isSelected()){
+                            postManager.createImageOnlyContent(imageFile);
+                            JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
+                        }else if(storyRadioButton.isSelected()){
+                            storyManager.createImageOnlyContent(imageFile);
+                            JOptionPane.showMessageDialog(null, "Successfully made story!",
+                                    "Story Creation", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(null, "Must select radio button.",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(),
                                 "Error", JOptionPane.ERROR_MESSAGE);
@@ -87,9 +122,20 @@ public class CreatePostPanel extends JFrame{
                     dispose();
                 }
                 else if(!text.isEmpty()){
-                    postManager.createTextOnlyContent(text);
-                    JOptionPane.showMessageDialog(null, "Successfully made post!",
-                            "Post Creation", JOptionPane.INFORMATION_MESSAGE);
+                    if(postRadioButton.isSelected()){
+                        postManager.createTextOnlyContent(text);
+                        JOptionPane.showMessageDialog(null, "Successfully made post!",
+                                "Post Creation", JOptionPane.INFORMATION_MESSAGE);
+                    }else if(storyRadioButton.isSelected()){
+                        storyManager.createTextOnlyContent(text);
+                        JOptionPane.showMessageDialog(null, "Successfully made story!",
+                                "Story Creation", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Must select radio button.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                     refreshManager.refreshAll();
                     dispose();
                 }
