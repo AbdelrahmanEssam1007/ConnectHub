@@ -11,25 +11,12 @@ import backend.User;
 import utils.Constants;
 
 public class Story extends Content implements Constants{
-    private LocalDateTime creationTime;
-    
-    public Story (String text, User user) {
-        super(text, user);
-        creationTime = LocalDateTime.now();
-    }
-    
-    public Story (String text, File imageFile, User user) {
-        super(text, imageFile, user);
-        creationTime = LocalDateTime.now();
 
-    }
-    
-    public Story (File imageFile, User user) {
-        super(imageFile, user);
-        creationTime = LocalDateTime.now();
+    public Story (ContentData contentData, LocalDateTime postDate, String postID, String authorID, String username) {
+        super(contentData, postDate, postID, authorID, username);
     }
     
     public boolean isExpired(){
-        return creationTime.plusMinutes(STORY_EXPIRY).isBefore(LocalDateTime.now());
+        return getPostDate().plusMinutes(STORY_EXPIRY).isBefore(LocalDateTime.now());
     }
 }
