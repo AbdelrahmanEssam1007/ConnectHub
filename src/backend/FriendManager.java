@@ -45,8 +45,8 @@ public class FriendManager {
       return;
     }
 
+    userProfile.getPending().remove(senderUser.getUserId());
     userProfile.getFriends().add(senderUser.getUserId());
-    senderProfile.getPending().remove(user.getUserId());
     senderProfile.getFriends().add(user.getUserId());
   }
 
