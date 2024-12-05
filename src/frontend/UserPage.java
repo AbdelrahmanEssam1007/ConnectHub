@@ -43,13 +43,12 @@ public class UserPage extends javax.swing.JFrame {
 
     public UserPage() {
         initComponents();
-        this.setSize(new Dimension (600, 700));
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (800, 700));
 
-        PostManager postManager = new PostManager(user);
+        PostManager postManager = new PostManager(this.loggedInUser);
         System.out.println(jPanel1.getWidth());
-        PostsPanel x = new PostsPanel(user, postManager,jPanel1.getWidth(), jPanel1.getHeight());
+        PostsPanel x = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight());
         jPanel1.setBackground(Color.WHITE);
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(x, BorderLayout.CENTER);
