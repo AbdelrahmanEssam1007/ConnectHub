@@ -14,6 +14,7 @@ public class JSONFileWriter {
         objectMapper.registerModule(new JavaTimeModule());
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         File file = new File(filePath);
+        // TODO: handle file not created
         objectWriter.writeValue(file, dataList);
     }
 }

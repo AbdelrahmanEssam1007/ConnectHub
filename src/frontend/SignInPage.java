@@ -31,10 +31,10 @@ public class SignInPage extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = usernameTF.getText();
+                String email = usernameTF.getText().toLowerCase();
                 String password = passTF.getText();
                 User user;
-                UserDB userDB = new UserDB();
+                UserDB userDB = UserDB.getInstance();
                 try {
                     userDB.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
                     user = userDB.searchUserByEmail(email);
@@ -48,7 +48,9 @@ public class SignInPage extends JFrame {
                     System.out.println("Login successful");
                     setVisible(false);
                     dispose();
-                    //new Main(User)
+                    user.setStatus(true);
+                    UserDB.getInstance().SaveDB();
+                    new UserPage(user);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
                     passTF.setText("");

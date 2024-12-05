@@ -13,4 +13,6 @@ public interface Constants {
     int STORY_EXPIRY = 60;
     /*Images folder directory*/
     String IMAGES_DIRECTORY = "images/";
+    String DEFAULT_PFP = "images/__Blank_PFP.jpg";
+    String DEFAULT_COVER_PHOTO = "images/__Cover_Photo.jpg";
 }

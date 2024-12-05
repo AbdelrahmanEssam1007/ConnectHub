@@ -4,6 +4,18 @@
  */
 package frontend;
 
+import backend.FriendManager;
+import backend.CustomCellRenderer;
+import backend.Profile;
+import backend.User;
+import backend.UserDB;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 import backend.User;
 import backend.content.Post;
 import backend.content.PostManager;
@@ -25,10 +37,13 @@ public class UserPage extends javax.swing.JFrame {
     /**
      * Creates new form UserPage
      */
-    public UserPage(User user) {
+
+    private User loggedInUser;
+    private FriendManager FM;
+
+    public UserPage() {
         initComponents();
-        user.setUserName("test");
-        this.setTitle("ConnectHub - <username>");
+        this.setSize(new Dimension (600, 700));
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (800, 700));
 
@@ -42,6 +57,17 @@ public class UserPage extends javax.swing.JFrame {
         jPanel1.repaint();
         x.setVisible(true);
         this.setVisible(true);
+
+    }
+
+    public UserPage (User user) {
+        this ();
+        this.loggedInUser = user;
+        this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
+        this.FM = FriendManager.getInstance(user);
+        this.updateCurrentFriendsList();
+        this.updateFriendRequestsList();
+        this.updateFriendSuggestionsList();
     }
 
     /**
@@ -110,11 +136,9 @@ public class UserPage extends javax.swing.JFrame {
 
         jLabel1.setText("Current Friends");
 
-        currentFriendsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        currentFriendsList.setModel(new DefaultListModel<String>()
+        );
+        currentFriendsList.setCellRenderer(new CustomCellRenderer());
         jScrollPane1.setViewportView(currentFriendsList);
 
         removeCurrentFriendButton.setText("Remove");
@@ -133,11 +157,9 @@ public class UserPage extends javax.swing.JFrame {
 
         jLabel2.setText("Friend Requests");
 
-        friendRequestsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        friendRequestsList.setModel(new DefaultListModel<String>()
+        );
+        friendRequestsList.setCellRenderer(new CustomCellRenderer());
         jScrollPane2.setViewportView(friendRequestsList);
 
         acceptRequestButton.setText("Accept");
@@ -156,11 +178,8 @@ public class UserPage extends javax.swing.JFrame {
 
         jLabel3.setText("Friend Suggestions");
 
-        friendSuggestionsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        friendSuggestionsList.setModel(new DefaultListModel<String>());
+        friendSuggestionsList.setCellRenderer(new CustomCellRenderer());
         jScrollPane3.setViewportView(friendSuggestionsList);
 
         sendRequestToSuggestedButton.setText("Send Friend Request");
@@ -172,11 +191,8 @@ public class UserPage extends javax.swing.JFrame {
 
         jLabel4.setText("Search For New Friends");
 
-        searchedUsersList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        searchedUsersList.setModel(new DefaultListModel<String>());
+        searchedUsersList.setCellRenderer(new CustomCellRenderer());
         jScrollPane4.setViewportView(searchedUsersList);
 
         sendRequestToSearchedButton.setText("Send Friend Request");
@@ -350,44 +366,123 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_showFriendsStoriesButtonMouseClicked
 
     private void blockCurrentFriendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blockCurrentFriendButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.currentFriendsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+
+        FM.blockUser(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        this.updateCurrentFriendsList();
     }//GEN-LAST:event_blockCurrentFriendButtonMouseClicked
 
     private void removeCurrentFriendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCurrentFriendButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.currentFriendsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+
+        FM.removeUserFriend(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        this.updateCurrentFriendsList();
     }//GEN-LAST:event_removeCurrentFriendButtonMouseClicked
 
     private void rejectRequestButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rejectRequestButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.friendRequestsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+
+        FM.declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendRequestsList.getSelectedValue()));
+        this.updateFriendRequestsList();
     }//GEN-LAST:event_rejectRequestButtonMouseClicked
 
     private void acceptRequestButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptRequestButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.friendRequestsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        FM.acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendRequestsList.getSelectedValue()));
+        this.updateFriendRequestsList();
+        this.updateCurrentFriendsList();
     }//GEN-LAST:event_acceptRequestButtonMouseClicked
 
     private void sendRequestToSuggestedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendRequestToSuggestedButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.friendSuggestionsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendSuggestionsList.getSelectedValue()));
+        this.updateFriendSuggestionsList();
     }//GEN-LAST:event_sendRequestToSuggestedButtonMouseClicked
 
     private void searchForUsersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchForUsersButtonMouseClicked
-        // TODO add your handling code here:
+        List <String> searchedUsers = new ArrayList<>();
+        for (User user : UserDB.getInstance().getUsers()) {
+            if (user.getUserName().contains(this.searchCriteriaField.getText()) && // search criteria
+                    !user.getUserName().equals(this.loggedInUser.getUserName()) && // not the user himself
+                    !this.loggedInUser.getProfile().getFriends().contains(user.getUserId()) && // not already friends
+                    !this.loggedInUser.getProfile().getBlocked().contains(user.getUserId())) { // not blocked
+                searchedUsers.add(user.getUserName());
+            }
+        }
+        this.searchedUsersList.setListData(new Vector<String>(searchedUsers));
     }//GEN-LAST:event_searchForUsersButtonMouseClicked
 
     private void sendRequestToSearchedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendRequestToSearchedButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.searchedUsersList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.searchedUsersList.getSelectedValue()));
+        this.updateFriendSuggestionsList();
     }//GEN-LAST:event_sendRequestToSearchedButtonMouseClicked
 
     private void quitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitButtonMouseClicked
-        // TODO add your handling code here:
+        this.loggedInUser.setStatus(false);
+        UserDB.getInstance().SaveDB();
+        this.dispose();
     }//GEN-LAST:event_quitButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
+        new Main();
+        this.loggedInUser.setStatus(false);
+        UserDB.getInstance().SaveDB();
+        this.dispose();
+
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void createNewPostButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewPostButtonMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_createNewPostButtonMouseClicked
+
+    private void updateCurrentFriendsList () {
+        List <String> friends = new ArrayList<>();
+        for (String friendID : loggedInUser.getProfile().getFriends()) {
+            friends.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
+        }
+        this.currentFriendsList.setListData(new Vector<String>(friends));
+    }
+
+    private void updateFriendRequestsList () {
+        List <String> friendRequests = new ArrayList<>();
+        for (String friendID : loggedInUser.getProfile().getPending()) {
+            friendRequests.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
+        }
+        this.friendRequestsList.setListData(new Vector<String>(friendRequests));
+    }
+
+    private void updateFriendSuggestionsList () {
+        List <String> friendSuggestions = new ArrayList<>();
+        for (String friendID : loggedInUser.getProfile().getFriends()) {
+            for (String suggestedFriendID : UserDB.getInstance().searchUserByUserId(friendID).getProfile().getFriends()) {
+                if (!loggedInUser.getProfile().getFriends().contains(suggestedFriendID) // not already friends
+                        && !loggedInUser.getProfile().getPending().contains(suggestedFriendID) // not already sent a request
+                        && !suggestedFriendID.equals(loggedInUser.getUserId())) { // not the user himself
+                 friendSuggestions.add(UserDB.getInstance().searchUserByUserId(suggestedFriendID).getUserName());
+                }
+            }
+        }
+        this.friendSuggestionsList.setListData(new Vector<String>(friendSuggestions));
+    }
 
     /**
      * @param args the command line arguments
@@ -418,9 +513,8 @@ public class UserPage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            User user = new User();
             public void run() {
-                new UserPage(user).setVisible(true);
+                new UserPage().setVisible(true);
             }
         });
     }
