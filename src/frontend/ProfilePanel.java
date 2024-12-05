@@ -28,6 +28,7 @@ public class ProfilePanel extends JPanel implements Constants {
 
     private JFileChooser fileChooser = new JFileChooser();
 
+    /* TODO: change from profile to user */
     public ProfilePanel(Profile profile) {
         pfpImagePath = profile.getProfilePhoto();
         coverImagePath = profile.getCoverPhoto();
@@ -94,7 +95,7 @@ public class ProfilePanel extends JPanel implements Constants {
                             fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png"));
                             int result = fileChooser.showOpenDialog(ProfilePanel.this);
                             if (result == JFileChooser.APPROVE_OPTION) {
-                                // use image saver
+                                // TODO:use image saver
                                 pfpImagePath = fileChooser.getSelectedFile().getAbsolutePath();
                                 pfpImage = new ImageIcon(pfpImagePath);
                                 Image scaledPfpImage = pfpImage.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
@@ -115,7 +116,7 @@ public class ProfilePanel extends JPanel implements Constants {
                             fileChooser.addChoosableFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "jpeg", "png"));
                             int result = fileChooser.showOpenDialog(ProfilePanel.this);
                             if (result == JFileChooser.APPROVE_OPTION) {
-                                // use image saver
+                                // TODO:use image saver
                                 coverImagePath = fileChooser.getSelectedFile().getAbsolutePath();
                                 coverImage = new ImageIcon(coverImagePath);
                                 Image scaledCoverImage = coverImage.getImage().getScaledInstance(300, 100, Image.SCALE_SMOOTH);

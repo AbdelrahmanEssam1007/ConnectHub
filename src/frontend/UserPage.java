@@ -32,7 +32,7 @@ public class UserPage extends javax.swing.JFrame {
     public UserPage() {
         initComponents();
         
-        this.setTitle("ConnectHub - <username>");
+
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (600, 630));
         this.setVisible(true);
@@ -44,7 +44,7 @@ public class UserPage extends javax.swing.JFrame {
         this ();
         
         this.loggedInUser = user;
-        
+        this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
         this.updateCurrentFriendsList();
         
         

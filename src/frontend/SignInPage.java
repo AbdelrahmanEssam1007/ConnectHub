@@ -48,7 +48,7 @@ public class SignInPage extends JFrame {
                     System.out.println("Login successful");
                     setVisible(false);
                     dispose();
-                    //new Main(User)
+                    new UserPage(user);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
                     passTF.setText("");
