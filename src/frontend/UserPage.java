@@ -10,6 +10,7 @@ import backend.content.PostManager;
 import frontend.content.PostsPanel;
 import utils.ImageUtils;
 
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
@@ -29,18 +30,14 @@ public class UserPage extends javax.swing.JFrame {
         user.setUserName("test");
         this.setTitle("ConnectHub - <username>");
         this.setLocationRelativeTo(null);
-        this.setSize(new Dimension (600, 630));
-        PostManager postManager = new PostManager(user);
+        this.setSize(new Dimension (800, 700));
 
-        File imageFile = ImageUtils.uploadImage();
-        try {
-            postManager.createTextImageContent("Testing you", imageFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        PostsPanel x = new PostsPanel(user, postManager,getWidth()-20,getHeight()-20);
+        PostManager postManager = new PostManager(user);
+        System.out.println(jPanel1.getWidth());
+        PostsPanel x = new PostsPanel(user, postManager,jPanel1.getWidth(), jPanel1.getHeight());
         jPanel1.setBackground(Color.WHITE);
-        jPanel1.add(x);
+        jPanel1.setLayout(new BorderLayout());
+        jPanel1.add(x, BorderLayout.CENTER);
         jPanel1.revalidate();
         jPanel1.repaint();
         x.setVisible(true);
@@ -197,8 +194,8 @@ public class UserPage extends javax.swing.JFrame {
         });
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        jPanel1.setMinimumSize(new java.awt.Dimension(370, 535));
-        jPanel1.setPreferredSize(new java.awt.Dimension(370, 535));
+        jPanel1.setMinimumSize(new java.awt.Dimension(550, 500));
+        jPanel1.setPreferredSize(new java.awt.Dimension(550, 500));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
