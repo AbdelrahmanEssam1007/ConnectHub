@@ -6,7 +6,7 @@
   "dateOfBirth" : [ 2024, 12, 5 ],
   "status" : true,
   "profile" : {
-    "friends" : [ "cb2b9573-b77b-4897-83f2-99c422c3e9b8", "cb2b9573-b77b-4897-83f2-99c422c3e9c8" ],
+    "friends" : [ "cb2b9573-b77b-4897-83f2-99c422c3e9b8" ],
     "blocked" : [ ],
     "pending" : [ ],
     "profilePhoto" : null,
@@ -36,7 +36,7 @@
   "dateOfBirth" : [ 2024, 12, 5 ],
   "status" : false,
   "profile" : {
-    "friends" : [ "e9a28975-62c3-4cba-b586-669918ad4389" ],
+    "friends" : [ ],
     "blocked" : [ ],
     "pending" : [ ],
     "profilePhoto" : null,

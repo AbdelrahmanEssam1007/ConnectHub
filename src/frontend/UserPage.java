@@ -32,18 +32,14 @@ public class UserPage extends javax.swing.JFrame {
     
     public UserPage() {
         initComponents();
-        
-
+        this.setSize(new Dimension (600, 700));
         this.setLocationRelativeTo(null);
-        this.setSize(new Dimension (600, 630));
         this.setVisible(true);
-        
-        
+
     }
-    
+
     public UserPage (User user) {
         this ();
-        
         this.loggedInUser = user;
         this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
         this.FM = FriendManager.getInstance(user);
@@ -407,7 +403,12 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_searchForUsersButtonMouseClicked
 
     private void sendRequestToSearchedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendRequestToSearchedButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.searchedUsersList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.searchedUsersList.getSelectedValue()));
+        this.updateFriendSuggestionsList();
     }//GEN-LAST:event_sendRequestToSearchedButtonMouseClicked
 
     private void quitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitButtonMouseClicked
