@@ -5,7 +5,7 @@ import java.util.List;
 public class FriendManager {
   private User user;
   private Profile userProfile;
-//  private UserDB userDB;
+//  private UserDB userDB; integrate db later
 
   public FriendManager(User user) {
     this.user = user;
@@ -32,7 +32,6 @@ public class FriendManager {
       return;
     }
 
-    userProfile.getPending().add(targetUser.getUserId());
     targetProfile.getPending().add(user.getUserId());
     System.out.println("Friend request sent successfully.");
   }
@@ -46,7 +45,6 @@ public class FriendManager {
       return;
     }
 
-    userProfile.getPending().remove(senderUser.getUserId());
     userProfile.getFriends().add(senderUser.getUserId());
     senderProfile.getPending().remove(user.getUserId());
     senderProfile.getFriends().add(user.getUserId());
