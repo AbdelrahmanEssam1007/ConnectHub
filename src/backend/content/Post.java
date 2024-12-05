@@ -7,6 +7,7 @@ package backend.content;
 import backend.User;
 
 import java.io.File;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -14,17 +15,8 @@ import java.io.File;
  */
 public class Post extends Content{
 
-    public Post(){};
+    public Post (ContentData contentData, LocalDateTime postDate, String postID, String authorID, String username) {
+        super(contentData, postDate, postID, authorID, username);
+    }
 
-    public Post (String text, User user) {
-        super(text, user);
-    }
-    
-    public Post (String text, File imageFile, User user) {
-        super(text, imageFile, user);
-    }
-    
-    public Post (File imageFile, User user) {
-        super(imageFile, user);
-    }
 }

@@ -41,33 +41,7 @@ public class Content {
     }
 
     /*TODO: try removing empty constructor here and in content data*/
-    public Content(){};
-
-    public Content(String text, User user) {
-        contentData = new ContentData(text);
-        this.postDate = LocalDateTime.now();
-        this.postID = "postIDTest";
-        this.authorID = user.getUserId();
-        this.username = user.getUserName();
-    }
-    
-    public Content(String text, File imageFile, User user) throws IOException{
-        String path = ImageSaver.saveImage(imageFile);
-        contentData = new ContentData(text, path);
-        this.postDate = LocalDateTime.now();
-        this.postID = "postIDTest";
-        this.authorID = user.getUserId();
-        this.username = user.getUserName();
-    }
-    
-    public Content(File imageFile, User user) throws IOException{
-        String path = ImageSaver.saveImage(imageFile);
-        contentData = new ContentData(path, true);
-        this.postDate = LocalDateTime.now();
-        this.postID = "postIDTest";
-        this.authorID = user.getUserId();
-        this.username = user.getUserName();
-    }
+    /*public Content(){};*/
     
     public String returnImagePath(){
         return contentData.getImagePath();

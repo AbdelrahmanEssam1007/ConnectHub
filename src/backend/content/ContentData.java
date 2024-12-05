@@ -11,7 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-
+/*TODO: Check if there are anymore final classes*/
 final class ContentData {
     private String imagePath = null;
     private String text = null;
@@ -25,13 +25,6 @@ final class ContentData {
     public ContentData(String text, String imagePath) {
         this.text = text;
         this.imagePath = imagePath;
-    }
-
-    public ContentData(String imagePath, boolean imageOnly) {
-        if(imageOnly)
-            this.imagePath = imagePath;
-        else
-            JOptionPane.showMessageDialog(null, "Uploading image only incorrectly.", "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     public String getImagePath() {

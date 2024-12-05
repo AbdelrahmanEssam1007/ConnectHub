@@ -4,7 +4,7 @@
  */
 package frontend.content;
 
-import backend.content.Post;
+import backend.content.*;
 import backend.User;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,7 +31,8 @@ public class PostsPanel extends javax.swing.JPanel {
     private User user;
     private JFileChooser fileChooser = new JFileChooser();
     private JPanel postContainer = new JPanel();
-    private List<Post> posts = new ArrayList<>();
+    private List<Content> posts = new ArrayList<>();
+
     public PostsPanel(User user, int width, int height) {
         initComponents();
         this.user = user;
@@ -42,36 +43,17 @@ public class PostsPanel extends javax.swing.JPanel {
         add(postScroller, BorderLayout.CENTER);
         setBackground(Color.WHITE);
 
-        Post x = new Post("test", user);
+        ContentManagerFactory postManager = new PostManager();
+        postManager.readFromDB();
+        posts = postManager.getContent();
+        PostFactory postFactory = new PostFactory();
+        Content x = postFactory.createTextOnlyContent("Hello", user);
         posts.add(x);
-        saveToDB();
+        postManager.setContent(posts);
+        postManager.saveToDB();
 
-        readFromDB();
-        for(Post t : posts){
+        for(Content t : posts){
             addPostPanel(t);
-        }
-
-    }
-    
-    private void saveToDB(){
-        try {
-            List<Post> allPosts = JSONFileReader.readJson(FileNames.POSTS.getFileName(), Post.class);
-            allPosts.addAll(posts);
-            JSONFileWriter.writeJson(FileNames.POSTS.getFileName(), allPosts);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void readFromDB(){
-        try {
-            List<Post> allPosts =JSONFileReader.readJson(FileNames.POSTS.getFileName(), Post.class);
-            posts.clear();
-            posts.addAll(allPosts);
-        } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error reading posts from database.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -91,13 +73,13 @@ public class PostsPanel extends javax.swing.JPanel {
         }
     }
 
-    private void addPostPanel(Post post) {
+    private void addPostPanel(Content post) {
         postContainer.add(createPostPanel(post));
         postContainer.revalidate();
         postContainer.repaint();
     }
     
-    private JPanel createPostPanel(Post post){
+    private JPanel createPostPanel(Content post){
         JPanel postPanel = new JPanel();
         JButton remove = new JButton();
         remove.addActionListener(new ActionListener() {

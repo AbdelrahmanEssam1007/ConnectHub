@@ -52,6 +52,11 @@ public abstract class ContentManagerFactory {
     public List<Content> getContent() {
         return content;
     }
+
+    public void setContent(List<Content> content) {
+        this.content = content;
+    }
+
     protected void addContent(Content content){
         this.content.add(content);
     }
