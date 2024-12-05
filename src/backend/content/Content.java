@@ -6,8 +6,9 @@ package backend.content;
 
 import backend.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import utils.ImageSaver;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -50,8 +51,8 @@ public class Content {
         this.username = user.getUserName();
     }
     
-    public Content(String text, File imageFile, User user) {
-        String path = saveImage(imageFile);
+    public Content(String text, File imageFile, User user) throws IOException{
+        String path = ImageSaver.saveImage(imageFile);
         contentData = new ContentData(text, path);
         this.postDate = LocalDateTime.now();
         this.postID = "postIDTest";
@@ -59,43 +60,13 @@ public class Content {
         this.username = user.getUserName();
     }
     
-    public Content(File imageFile, User user) {
-        String path = saveImage(imageFile);
+    public Content(File imageFile, User user) throws IOException{
+        String path = ImageSaver.saveImage(imageFile);
         contentData = new ContentData(path, true);
         this.postDate = LocalDateTime.now();
         this.postID = "postIDTest";
         this.authorID = user.getUserId();
         this.username = user.getUserName();
-    }
-    
-    private String saveImage(File imageFile){
-        try {
-            BufferedImage temp = ImageIO.read(imageFile);
-
-            BufferedImage convertedImage = new BufferedImage(
-                temp.getWidth(),
-                temp.getHeight(),
-                BufferedImage.TYPE_INT_RGB 
-            );
-
-            Graphics2D g = convertedImage.createGraphics();
-            g.drawImage(temp, 0, 0, null);
-            g.dispose();
-
-            File destinationDir = new File("images/");
-            if (!destinationDir.exists()) {
-                destinationDir.mkdir();
-            }
-
-            String fileName = imageFile.getName().replaceAll("\\..*$", "") + ".jpg";
-            File destinationFile = new File(destinationDir, fileName);
-            ImageIO.write(convertedImage, "jpg", destinationFile);
-
-            return destinationFile.getAbsolutePath();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return null;
     }
     
     public String returnImagePath(){
