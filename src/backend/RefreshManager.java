@@ -2,7 +2,7 @@ package backend;
 
 import java.util.List;
 
-public class RefreshManager {
+public final class RefreshManager {
     private final List<Refreshable> refreshableList;
 
     public RefreshManager(List<Refreshable> refreshableList) {
