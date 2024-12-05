@@ -54,7 +54,6 @@ public abstract class ContentManagerFactory {
             return;
         }
         content.remove(item);
-        saveToDB();
     }
 
     public List<Content> getContent() {
@@ -67,7 +66,6 @@ public abstract class ContentManagerFactory {
 
     protected void addContent(Content content){
         this.content.add(content);
-        saveToDB();
     }
 
     public void createTextOnlyContent(String text){

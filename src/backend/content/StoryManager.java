@@ -13,7 +13,6 @@ public class StoryManager extends ContentManagerFactory{
     }
 
     public void removeExpired(){
-        readFromDB();
         for(Content x : content){
             if(x.isExpired()){
                 removeContent(x);
