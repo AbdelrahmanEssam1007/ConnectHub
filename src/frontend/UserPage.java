@@ -28,14 +28,15 @@ public class UserPage extends javax.swing.JFrame {
      */
     
     private User loggedInUser;
-    private FriendManager FM;
     
     public UserPage() {
         initComponents();
+        
 
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (600, 630));
         this.setVisible(true);
+        
         
     }
     
