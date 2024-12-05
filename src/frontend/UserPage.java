@@ -117,7 +117,7 @@ public class UserPage extends javax.swing.JFrame {
 
         currentFriendsList.setModel(new DefaultListModel<String>()
         );
-        this.currentFriendsList.setCellRenderer(new CustomCellRenderer ());
+        currentFriendsList.setCellRenderer(new CustomCellRenderer());
         jScrollPane1.setViewportView(currentFriendsList);
 
         removeCurrentFriendButton.setText("Remove");
@@ -138,7 +138,7 @@ public class UserPage extends javax.swing.JFrame {
 
         friendRequestsList.setModel(new DefaultListModel<String>()
         );
-        this.friendRequestsList.setCellRenderer(new CustomCellRenderer ());
+        friendRequestsList.setCellRenderer(new CustomCellRenderer());
         jScrollPane2.setViewportView(friendRequestsList);
 
         acceptRequestButton.setText("Accept");
@@ -158,7 +158,7 @@ public class UserPage extends javax.swing.JFrame {
         jLabel3.setText("Friend Suggestions");
 
         friendSuggestionsList.setModel(new DefaultListModel<String>());
-        this.friendSuggestionsList.setCellRenderer(new CustomCellRenderer ());
+        friendSuggestionsList.setCellRenderer(new CustomCellRenderer());
         jScrollPane3.setViewportView(friendSuggestionsList);
 
         sendRequestToSuggestedButton.setText("Send Friend Request");
@@ -171,7 +171,7 @@ public class UserPage extends javax.swing.JFrame {
         jLabel4.setText("Search For New Friends");
 
         searchedUsersList.setModel(new DefaultListModel<String>());
-        this.searchedUsersList.setCellRenderer(new CustomCellRenderer ());
+        searchedUsersList.setCellRenderer(new CustomCellRenderer());
         jScrollPane4.setViewportView(searchedUsersList);
 
         sendRequestToSearchedButton.setText("Send Friend Request");
