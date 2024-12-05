@@ -32,7 +32,7 @@ public class UserPage extends javax.swing.JFrame {
     public UserPage() {
         initComponents();
         
-
+        this.setTitle("ConnectHub - <username>");
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (600, 630));
         this.setVisible(true);
@@ -45,8 +45,9 @@ public class UserPage extends javax.swing.JFrame {
         
         this.loggedInUser = user;
         this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
-        this.updateCurrentFriendsList();
         
+        this.updateCurrentFriendsList();
+        this.updatePendingRequestsList();
         
     }
 
@@ -363,11 +364,25 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_removeCurrentFriendButtonMouseClicked
 
     private void rejectRequestButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rejectRequestButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.currentFriendsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        
+        new FriendManager(this.loggedInUser).declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        this.updatePendingRequestsList();
+//        this.updateCurrentFriendsList();
     }//GEN-LAST:event_rejectRequestButtonMouseClicked
 
     private void acceptRequestButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptRequestButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.currentFriendsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        
+        new FriendManager(this.loggedInUser).acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        this.updatePendingRequestsList();
+        this.updateCurrentFriendsList();
     }//GEN-LAST:event_acceptRequestButtonMouseClicked
 
     private void sendRequestToSuggestedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendRequestToSuggestedButtonMouseClicked
@@ -397,6 +412,14 @@ public class UserPage extends javax.swing.JFrame {
     private void updateCurrentFriendsList () {
         List <String> friends = new ArrayList<>();
         for (String friendID : loggedInUser.getProfile().getFriends()) {
+            friends.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
+        }
+        this.currentFriendsList.setListData(new Vector<String>(friends));
+    }
+    
+    private void updatePendingRequestsList () {
+        List <String> friends = new ArrayList<>();
+        for (String friendID : loggedInUser.getProfile().getPending()) {
             friends.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
         }
         this.currentFriendsList.setListData(new Vector<String>(friends));
