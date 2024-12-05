@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package backend;
+package backend.content;
 
 import backend.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,7 +11,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -24,6 +23,14 @@ public class Content {
     private String authorID;
     private String username;
 
+    public Content(ContentData contentData, LocalDateTime postDate, String postID, String authorID, String username) {
+        this.contentData = contentData;
+        this.postDate = postDate;
+        this.postID = postID;
+        this.authorID = authorID;
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -32,7 +39,9 @@ public class Content {
         this.username = username;
     }
 
+    /*TODO: try removing empty constructor here and in content data*/
     public Content(){};
+
     public Content(String text, User user) {
         contentData = new ContentData(text);
         this.postDate = LocalDateTime.now();

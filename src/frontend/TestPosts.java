@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.User;
+import frontend.content.PostsPanel;
 
 import javax.swing.*;
 

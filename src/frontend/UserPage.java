@@ -4,7 +4,11 @@
  */
 package frontend;
 
-import java.awt.Dimension;
+import backend.User;
+import frontend.content.PostsPanel;
+
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 /**
  *
@@ -15,12 +19,20 @@ public class UserPage extends javax.swing.JFrame {
     /**
      * Creates new form UserPage
      */
-    public UserPage() {
+    public UserPage(User user) {
         initComponents();
-        
+        user.setUserName("test");
         this.setTitle("ConnectHub - <username>");
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (600, 630));
+        PostsPanel x = new PostsPanel(user, getWidth()-100,getHeight()-100);
+        x.setBackground(Color.WHITE);
+        x.setBorder(new EmptyBorder(0,0,0,0));
+        jPanel1.setBackground(Color.WHITE);
+        jPanel1.add(x);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        x.setVisible(true);
         this.setVisible(true);
     }
 
@@ -380,8 +392,9 @@ public class UserPage extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            User user = new User();
             public void run() {
-                new UserPage().setVisible(true);
+                new UserPage(user).setVisible(true);
             }
         });
     }

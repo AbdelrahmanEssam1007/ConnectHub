@@ -9,6 +9,8 @@ package utils;
  * @author Amr
  */
 public interface Constants {
-    //Story expiry time in minutes
-    int STORY_EXPIRY = 60; 
+    /*Story time expiry in minutes*/
+    int STORY_EXPIRY = 60;
+    /*Images folder directory*/
+    String IMAGES_DIRECTORY = "images/";
 }

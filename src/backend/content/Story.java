@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package backend;
+package backend.content;
 
 import java.io.File;
 import java.time.LocalDateTime;
+
+import backend.User;
 import utils.Constants;
 
 public class Story extends Content implements Constants{
