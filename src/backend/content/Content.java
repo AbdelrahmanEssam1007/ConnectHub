@@ -4,17 +4,9 @@
  */
 package backend.content;
 
-import backend.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import utils.ImageSaver;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 public class Content {
     @JsonProperty
@@ -24,6 +16,10 @@ public class Content {
     private String authorID;
     private String username;
 
+    /*TODO: Replace it with json creator constructor*/
+    /*Do not remove empty constructor for now, needed for Jackson*/
+    public Content(){};
+
     public Content(ContentData contentData, LocalDateTime postDate, String postID, String authorID, String username) {
         this.contentData = contentData;
         this.postDate = postDate;
@@ -31,6 +27,8 @@ public class Content {
         this.authorID = authorID;
         this.username = username;
     }
+
+    public boolean isExpired(){ return false; }
 
     public String getUsername() {
         return username;
@@ -40,9 +38,7 @@ public class Content {
         this.username = username;
     }
 
-    /*TODO: try removing empty constructor here and in content data*/
-    /*public Content(){};*/
-    
+
     public String returnImagePath(){
         return contentData.getImagePath();
     }

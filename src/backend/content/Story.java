@@ -12,10 +12,12 @@ import utils.Constants;
 
 public class Story extends Content implements Constants{
 
+    public Story(){};
     public Story (ContentData contentData, LocalDateTime postDate, String postID, String authorID, String username) {
         super(contentData, postDate, postID, authorID, username);
     }
-    
+
+    @Override
     public boolean isExpired(){
         return getPostDate().plusMinutes(STORY_EXPIRY).isBefore(LocalDateTime.now());
     }

@@ -42,15 +42,5 @@ final class ContentData {
     public void setText(String text) {
         this.text = text;
     }
-    
-    public BufferedImage loadImage(){
-        try {
-            if(imagePath != null)
-                return ImageIO.read(new File(imagePath));
-        } catch (IOException ex) {
-            UIManager.put("OptionPane.minimumSize",new Dimension(300,200));
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        return null;
-    }
+
 }

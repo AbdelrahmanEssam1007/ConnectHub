@@ -5,6 +5,8 @@
 package frontend;
 
 import backend.User;
+import backend.content.Post;
+import backend.content.PostManager;
 import frontend.content.PostsPanel;
 
 import javax.swing.border.EmptyBorder;
@@ -25,7 +27,7 @@ public class UserPage extends javax.swing.JFrame {
         this.setTitle("ConnectHub - <username>");
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (600, 630));
-        PostsPanel x = new PostsPanel(user, getWidth()-100,getHeight()-100);
+        PostsPanel x = new PostsPanel(user, new PostManager(user),getWidth()-100,getHeight()-100);
         x.setBackground(Color.WHITE);
         x.setBorder(new EmptyBorder(0,0,0,0));
         jPanel1.setBackground(Color.WHITE);

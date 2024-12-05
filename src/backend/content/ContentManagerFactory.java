@@ -6,6 +6,7 @@ import utils.JSONFileReader;
 import utils.JSONFileWriter;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,16 @@ import java.util.List;
 public abstract class ContentManagerFactory {
     private final FileNames fileName;
     private final ContentLoader contentLoader;
+    private final ContentFactory contentFactory;
+    private final User user;
     List<Content> content = new ArrayList<>();
 
-    public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader) {
+    public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory,
+                                 User user) {
         this.fileName = fileName;
         this.contentLoader = contentLoader;
+        this.contentFactory = contentFactory;
+        this.user = user;
     }
 
     public void readFromDB(){
@@ -39,14 +45,15 @@ public abstract class ContentManagerFactory {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    /*TODO: remove*/
-    public  void removeContent(Content item, User user){
-        /*
-        * Check userID removing is same as userID of post
-        * Search for item in list of content
-        * remove from list
-        * remove save to db
-        * */
+
+    public  void removeContent(Content item){
+        if(!user.getUserId().equals(item.getAuthorID())){
+            JOptionPane.showMessageDialog(null,
+                    "You don't have permission to remove this content.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        content.remove(item);
     }
 
     public List<Content> getContent() {
@@ -60,6 +67,16 @@ public abstract class ContentManagerFactory {
     protected void addContent(Content content){
         this.content.add(content);
     }
-    /*TODO: implement createContent*/
-    public abstract Content createContent();
+
+    public void createTextOnlyContent(String text){
+        content.add(contentFactory.createTextOnlyContent(text, user));
+    }
+
+    public void createImageOnlyContent(File imageFile) throws IOException{
+        content.add(contentFactory.createImageOnlyContent(imageFile, user));
+    }
+
+    public void createTextImageContent(String text, File imageFile) throws IOException{
+        content.add(contentFactory.createTextImageContent(text, imageFile, user));
+    }
 }

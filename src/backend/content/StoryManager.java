@@ -4,15 +4,20 @@
  */
 package backend.content;
 
+import backend.User;
 import utils.FileNames;
 
 public class StoryManager extends ContentManagerFactory{
-    public StoryManager(){
-        super(FileNames.POSTS, new StoryLoader());
+    public StoryManager(User user){
+        super(FileNames.POSTS, new StoryLoader(), new StoryFactory(), user);
     }
 
-    @Override
-    public Content createContent() {
-        return null;
+    public void removeExpired(){
+        for(Content x : content){
+            if(x.isExpired()){
+                removeContent(x);
+            }
+            saveToDB();
+        }
     }
 }
