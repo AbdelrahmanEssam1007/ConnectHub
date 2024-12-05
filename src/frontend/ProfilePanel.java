@@ -88,6 +88,9 @@ public class ProfilePanel extends JPanel implements Constants {
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(editButton.getText().equals("Save")) {
+                    profile.setBio(bioTextArea.getText());
+                }
                 boolean isEditable = bioTextArea.isEditable();
                 bioTextArea.setEditable(!isEditable);
                 editButton.setText(isEditable ? "Edit" : "Save"); // Toggle button text
@@ -106,6 +109,8 @@ public class ProfilePanel extends JPanel implements Constants {
                             Image scaledPfpImage = ImageUtils.scaleImageIcon(pfpImagePath, 100).getImage();
                             pfpImage = new ImageIcon(scaledPfpImage);
                             pfpLabel.setIcon(pfpImage);
+                            // TODO: save image only if user saves changes
+                            profile.setProfilePhoto(pfpImagePath);
                         }
                     });
 
@@ -121,6 +126,7 @@ public class ProfilePanel extends JPanel implements Constants {
                             Image scaledCoverImage = ImageUtils.scaleImageIcon(coverImagePath, 250).getImage();
                             coverImage = new ImageIcon(scaledCoverImage);
                             coverLabel.setIcon(coverImage);
+                            profile.setCoverPhoto(coverImagePath);
                         }
                     });
 

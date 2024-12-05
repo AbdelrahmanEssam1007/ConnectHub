@@ -357,7 +357,10 @@ public class UserPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void showProfileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showProfileButtonMouseClicked
-        // TODO add your handling code here:
+        ProfilePanel profilePanel = new ProfilePanel(this.loggedInUser, jPanel1.getWidth(), 200);
+        jPanel1.add(profilePanel, BorderLayout.PAGE_START);
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }//GEN-LAST:event_showProfileButtonMouseClicked
 
     private void showFriendsPostsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsPostsButtonMouseClicked
