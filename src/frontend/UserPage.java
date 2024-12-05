@@ -28,15 +28,14 @@ public class UserPage extends javax.swing.JFrame {
      */
     
     private User loggedInUser;
+    private FriendManager FM;
     
     public UserPage() {
         initComponents();
-        
 
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (600, 630));
         this.setVisible(true);
-        
         
     }
     
@@ -45,9 +44,10 @@ public class UserPage extends javax.swing.JFrame {
         
         this.loggedInUser = user;
         this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
+        this.FM = FriendManager.getInstance(user);
         this.updateCurrentFriendsList();
-        
-        
+        this.updateFriendRequestsList();
+        this.updateFriendSuggestionsList();
     }
 
     /**
@@ -348,7 +348,7 @@ public class UserPage extends javax.swing.JFrame {
             return ;
         }
         
-        new FriendManager(this.loggedInUser).blockUser(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        FM.blockUser(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
         this.updateCurrentFriendsList();
     }//GEN-LAST:event_blockCurrentFriendButtonMouseClicked
 
@@ -358,24 +358,50 @@ public class UserPage extends javax.swing.JFrame {
             return ;
         }
         
-        new FriendManager(this.loggedInUser).removeUserFriend(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        FM.removeUserFriend(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
         this.updateCurrentFriendsList();
     }//GEN-LAST:event_removeCurrentFriendButtonMouseClicked
 
     private void rejectRequestButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rejectRequestButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.friendRequestsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+
+        FM.declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendRequestsList.getSelectedValue()));
+        this.updateFriendRequestsList();
     }//GEN-LAST:event_rejectRequestButtonMouseClicked
 
     private void acceptRequestButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptRequestButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.friendRequestsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        FM.acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendRequestsList.getSelectedValue()));
+        this.updateFriendRequestsList();
+        this.updateCurrentFriendsList();
     }//GEN-LAST:event_acceptRequestButtonMouseClicked
 
     private void sendRequestToSuggestedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendRequestToSuggestedButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.friendSuggestionsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendSuggestionsList.getSelectedValue()));
+        this.updateFriendSuggestionsList();
     }//GEN-LAST:event_sendRequestToSuggestedButtonMouseClicked
 
     private void searchForUsersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchForUsersButtonMouseClicked
-        // TODO add your handling code here:
+        List <String> searchedUsers = new ArrayList<>();
+        for (User user : UserDB.getInstance().getUsers()) {
+            if (user.getUserName().contains(this.searchCriteriaField.getText()) && // search criteria
+                    !user.getUserName().equals(this.loggedInUser.getUserName()) && // not the user himself
+                    !this.loggedInUser.getProfile().getFriends().contains(user.getUserId()) && // not already friends
+                    !this.loggedInUser.getProfile().getBlocked().contains(user.getUserId())) { // not blocked
+                searchedUsers.add(user.getUserName());
+            }
+        }
+        this.searchedUsersList.setListData(new Vector<String>(searchedUsers));
     }//GEN-LAST:event_searchForUsersButtonMouseClicked
 
     private void sendRequestToSearchedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendRequestToSearchedButtonMouseClicked
@@ -383,11 +409,17 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_sendRequestToSearchedButtonMouseClicked
 
     private void quitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitButtonMouseClicked
-        // TODO add your handling code here:
+        this.loggedInUser.setStatus(false);
+        UserDB.getInstance().SaveDB();
+        this.dispose();
     }//GEN-LAST:event_quitButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
+        new Main();
+        this.loggedInUser.setStatus(false);
+        UserDB.getInstance().SaveDB();
+        this.dispose();
+
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void createNewPostButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewPostButtonMouseClicked
@@ -401,7 +433,29 @@ public class UserPage extends javax.swing.JFrame {
         }
         this.currentFriendsList.setListData(new Vector<String>(friends));
     }
-    
+
+    private void updateFriendRequestsList () {
+        List <String> friendRequests = new ArrayList<>();
+        for (String friendID : loggedInUser.getProfile().getPending()) {
+            friendRequests.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
+        }
+        this.friendRequestsList.setListData(new Vector<String>(friendRequests));
+    }
+
+    private void updateFriendSuggestionsList () {
+        List <String> friendSuggestions = new ArrayList<>();
+        for (String friendID : loggedInUser.getProfile().getFriends()) {
+            for (String suggestedFriendID : UserDB.getInstance().searchUserByUserId(friendID).getProfile().getFriends()) {
+                if (!loggedInUser.getProfile().getFriends().contains(suggestedFriendID) // not already friends
+                        && !loggedInUser.getProfile().getPending().contains(suggestedFriendID) // not already sent a request
+                        && !suggestedFriendID.equals(loggedInUser.getUserId())) { // not the user himself
+                 friendSuggestions.add(UserDB.getInstance().searchUserByUserId(suggestedFriendID).getUserName());
+                }
+            }
+        }
+        this.friendSuggestionsList.setListData(new Vector<String>(friendSuggestions));
+    }
+
     /**
      * @param args the command line arguments
      */

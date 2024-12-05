@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.FileNames;
 import utils.JSONFileReader;
+import utils.JSONFileWriter;
 
 public class UserDB {
 
@@ -25,13 +26,21 @@ public class UserDB {
           Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
       }
   }
-  
+
   public static UserDB getInstance () {
       return USERDB;
   }
 
   public List<User> getUsers() {
     return new ArrayList<>(users);
+  }
+
+  public void SaveDB() {
+      try {
+        JSONFileWriter.writeJson(FileNames.USERS.getFileName(), users);
+      } catch (IOException ex) {
+          Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+      }
   }
 
   public void setUsers(List<User> users) {

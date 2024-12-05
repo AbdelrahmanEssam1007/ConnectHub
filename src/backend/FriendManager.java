@@ -1,16 +1,29 @@
 package backend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FriendManager {
+  
+  private static final FriendManager FRIEND_MANAGER = null;
+  
   private User user;
   private Profile userProfile;
-//  private UserDB userDB; integrate db later
+  private UserDB userDB;
 
-  public FriendManager(User user) {
+  private FriendManager(User user) {
     this.user = user;
     this.userProfile = user.getProfile();
-//    this.userDB = new UserDB();
+    this.userDB = UserDB.getInstance();
+  }
+  
+  public synchronized static FriendManager getInstance(User user) {
+    if (FRIEND_MANAGER == null) {
+      return new FriendManager(user);
+    }else if (FRIEND_MANAGER.user.getUserId() != user.getUserId()) {
+      return new FriendManager(user);
+    }
+    return FRIEND_MANAGER;
   }
 
   // Send a friend request to another user
@@ -34,6 +47,7 @@ public class FriendManager {
 
     targetProfile.getPending().add(user.getUserId());
     System.out.println("Friend request sent successfully.");
+    userDB.SaveDB();
   }
 
   // Accept a friend request
@@ -46,8 +60,9 @@ public class FriendManager {
     }
 
     userProfile.getFriends().add(senderUser.getUserId());
-    senderProfile.getPending().remove(user.getUserId());
+    userProfile.getPending().remove(senderUser.getUserId());
     senderProfile.getFriends().add(user.getUserId());
+    userDB.SaveDB();
   }
 
   // Decline a friend request
@@ -60,7 +75,7 @@ public class FriendManager {
     }
 
     userProfile.getPending().remove(senderUser.getUserId());
-    senderProfile.getPending().remove(user.getUserId());
+    userDB.SaveDB();
   }
 
   // Block a user
@@ -79,6 +94,7 @@ public class FriendManager {
     targetProfile.getPending().remove(user.getUserId());
     
     System.out.println("User has been blocked.");
+    userDB.SaveDB();
   }
 
   // Unblock a user
@@ -91,10 +107,12 @@ public class FriendManager {
 
     userProfile.getBlocked().remove(targetId);
     System.out.println("User has been unblocked.");
+    userDB.SaveDB();
   }
   
   public void removeUserFriend (User targetUser) {
       this.userProfile.getFriends().remove(targetUser.getUserId());
       targetUser.getProfile().getFriends().remove(this.user.getUserId());
+      userDB.SaveDB();
   }
 }

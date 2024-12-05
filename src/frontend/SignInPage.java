@@ -31,7 +31,7 @@ public class SignInPage extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = usernameTF.getText();
+                String email = usernameTF.getText().toLowerCase();
                 String password = passTF.getText();
                 User user;
                 UserDB userDB = UserDB.getInstance();
@@ -48,6 +48,8 @@ public class SignInPage extends JFrame {
                     System.out.println("Login successful");
                     setVisible(false);
                     dispose();
+                    user.setStatus(true);
+                    UserDB.getInstance().SaveDB();
                     new UserPage(user);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);

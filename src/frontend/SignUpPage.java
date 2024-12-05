@@ -237,7 +237,7 @@ public class SignUpPage extends javax.swing.JFrame {
             user.setDateOfBirth(date);
             user.setPassword(utils.SimpleHash.hash(password));
             user.setUserName(username);
-            user.setEmail(email);
+            user.setEmail(email.toLowerCase());
             user.setStatus(false);
             userdb.addUser(user);
             JSONFileWriter.writeJson(FileNames.USERS.getFileName(), userdb.getUsers());

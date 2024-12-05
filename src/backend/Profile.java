@@ -16,6 +16,7 @@ public class Profile {
     this.friends = new ArrayList<>();
     this.blocked = new ArrayList<>();
     this.pending = new ArrayList<>();
+    //set UID, state friend, pendingr, pendings, blocked
   }
 
   public List<String> getFriends() {
