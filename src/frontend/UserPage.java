@@ -371,9 +371,8 @@ public class UserPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void showProfileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showProfileButtonMouseClicked
-        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), "Profile");
-        jPanel1.removeAll();
-        jPanel1.add(postsPanel);
+        ProfilePanel profilePanel = new ProfilePanel(this.loggedInUser, jPanel1.getWidth(), 200);
+        jPanel1.add(profilePanel, BorderLayout.PAGE_START);
         jPanel1.revalidate();
         jPanel1.repaint();
     }//GEN-LAST:event_showProfileButtonMouseClicked
