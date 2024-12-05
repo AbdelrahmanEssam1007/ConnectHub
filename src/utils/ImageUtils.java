@@ -56,11 +56,10 @@ public class ImageUtils implements Constants{
         if (result == JFileChooser.APPROVE_OPTION) {
             return fileChooser.getSelectedFile();
         } else if(result == JFileChooser.ERROR_OPTION){
-            JOptionPane.showMessageDialog(null, "Error uploading image..", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Error uploading image.", "Error", JOptionPane.ERROR_MESSAGE);
             return null;
         }
         return null;
     }
 
-    /*TODO: Add make image jpg friendly here*/
 }

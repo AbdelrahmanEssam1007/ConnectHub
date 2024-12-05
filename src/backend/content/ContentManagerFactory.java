@@ -26,27 +26,41 @@ public abstract class ContentManagerFactory {
         this.user = user;
     }
 
-    public void readFromDB(){
+    public void readFromDB(String type){
         try {
             content.clear();
             List<? extends Content> allContent = contentLoader.loadContent();
             content.addAll(allContent);
-            List<String> friends =  user.getProfile().getFriends();
             List<Content> tempContent = new ArrayList<>();
-            for(Content x : content){
-                if(friends.contains(x.getAuthorID()))
-                    tempContent.add(x);
+
+            switch (type) {
+                case "Profile" -> {
+                    for (Content x : content) {
+                        if (user.getUserId().equals(x.getAuthorID()))
+                            tempContent.add(x);
+                    }
+                }
+                case "Friends" -> {
+                    List<String> friends = user.getProfile().getFriends();
+                    for (Content x : content) {
+                        if (friends.contains(x.getAuthorID()))
+                            tempContent.add(x);
+                    }
+                }
+                case "All" -> tempContent = content;
+                default -> throw new IOException("Unknown type input");
             }
+
             content = tempContent;
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    public void saveToDB(){
+    public void saveToDB(List<Content> contentToSave){
         try {
             List<Content> allContent = new ArrayList<>(contentLoader.loadContent());
-            allContent.addAll(content);
+            allContent.addAll(contentToSave);
             JSONFileWriter.writeJson(fileName.getFileName(), allContent);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -60,8 +74,13 @@ public abstract class ContentManagerFactory {
                     "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        content.remove(item);
-        saveToDB();
+        try {
+            List<Content> allContent = new ArrayList<>(contentLoader.loadContent());
+            allContent.remove(item);
+            JSONFileWriter.writeJson(fileName.getFileName(), allContent);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public List<Content> getContent() {
@@ -74,7 +93,7 @@ public abstract class ContentManagerFactory {
 
     protected void addContent(Content content){
         this.content.add(content);
-        saveToDB();
+        saveToDB(List.of(content));
     }
 
     public void createTextOnlyContent(String text){

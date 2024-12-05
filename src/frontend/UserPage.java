@@ -4,11 +4,8 @@
  */
 package frontend;
 
-import backend.FriendManager;
-import backend.CustomCellRenderer;
-import backend.Profile;
-import backend.User;
-import backend.UserDB;
+import backend.*;
+
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,9 @@ import backend.content.Post;
 import backend.content.PostManager;
 import backend.content.Story;
 import backend.content.StoryManager;
+import frontend.content.CreatePostPanel;
 import frontend.content.PostsPanel;
+import frontend.content.StoriesPanel;
 import utils.ImageUtils;
 
 import javax.swing.*;
@@ -44,11 +43,21 @@ public class UserPage extends javax.swing.JFrame {
     private FriendManager FM;
     private PostManager postManager;
     private StoryManager storyManager;
+    private RefreshManager refreshManager;
+    private PostsPanel postsPanel;
+    private StoriesPanel storiesPanel;
 
     public UserPage() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (800, 700));
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                loggedInUser.setStatus(false);
+                UserDB.getInstance().SaveDB();
+            }
+        });
     }
 
     public UserPage (User user) {
@@ -60,17 +69,22 @@ public class UserPage extends javax.swing.JFrame {
         this.updateFriendRequestsList();
         this.updateFriendSuggestionsList();
 
+        String type = "Profile";
         postManager = new PostManager(this.loggedInUser);
         storyManager = new StoryManager(this.loggedInUser);
         System.out.println(jPanel1.getWidth());
-        PostsPanel x = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight());
+        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), type);
+        storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight(), type);
         jPanel1.setBackground(Color.WHITE);
         jPanel1.setLayout(new BorderLayout());
-        jPanel1.add(x, BorderLayout.CENTER);
+        jPanel1.add(postsPanel, BorderLayout.CENTER);
         jPanel1.revalidate();
         jPanel1.repaint();
-        x.setVisible(true);
+        postsPanel.setVisible(true);
         this.setVisible(true);
+
+        /*Setup Refresh manager*/
+        refreshManager = new RefreshManager(List.of(postsPanel, storiesPanel));
     }
 
     /**
@@ -364,11 +378,15 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_showProfileButtonMouseClicked
 
     private void showFriendsPostsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsPostsButtonMouseClicked
-        // TODO add your handling code here:
+        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), "Friends");
+        jPanel1.removeAll();
+        jPanel1.add(postsPanel);
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }//GEN-LAST:event_showFriendsPostsButtonMouseClicked
 
     private void showFriendsStoriesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsStoriesButtonMouseClicked
-        // TODO add your handling code here:
+        storiesPanel = new StoriesPanel(this.loggedInUser, postManager, jPanel1.getWidth(), jPanel1.getHeight(), "Friends");
     }//GEN-LAST:event_showFriendsStoriesButtonMouseClicked
 
     private void blockCurrentFriendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blockCurrentFriendButtonMouseClicked
@@ -457,7 +475,7 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void createNewPostButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewPostButtonMouseClicked
-
+        new CreatePostPanel(postManager, refreshManager);
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void updateCurrentFriendsList () {

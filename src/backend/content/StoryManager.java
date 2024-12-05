@@ -13,12 +13,12 @@ public class StoryManager extends ContentManagerFactory{
     }
 
     public void removeExpired(){
-        readFromDB();
+        readFromDB("All");
         for(Content x : content){
             if(x.expired()){
                 removeContent(x);
             }
-            saveToDB();
+            saveToDB(content);
         }
     }
 }
