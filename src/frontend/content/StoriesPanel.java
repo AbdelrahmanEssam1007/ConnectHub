@@ -7,8 +7,8 @@ import backend.content.StoryFactory;
 import backend.content.StoryManager;
 
 public class StoriesPanel extends ContentPanel implements Refreshable {
-    public StoriesPanel(User user, ContentManagerFactory contentManager, int width, int height){
-        super(user, contentManager, width, height);
+    public StoriesPanel(User user, ContentManagerFactory contentManager, int width, int height, String type){
+        super(user, contentManager, width, height, type);
     }
 
     @Override
@@ -16,7 +16,7 @@ public class StoriesPanel extends ContentPanel implements Refreshable {
         if(contentManagerFactory instanceof StoryManager){
             ((StoryManager)contentManagerFactory).removeExpired();
         }
-        loadContent();
+        loadContent(type);
         revalidate();
         repaint();
     }

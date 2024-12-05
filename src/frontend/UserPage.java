@@ -4,11 +4,8 @@
  */
 package frontend;
 
-import backend.FriendManager;
-import backend.CustomCellRenderer;
-import backend.Profile;
-import backend.User;
-import backend.UserDB;
+import backend.*;
+
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,9 @@ import backend.content.Post;
 import backend.content.PostManager;
 import backend.content.Story;
 import backend.content.StoryManager;
+import frontend.content.CreatePostPanel;
 import frontend.content.PostsPanel;
+import frontend.content.StoriesPanel;
 import utils.ImageUtils;
 
 import javax.swing.*;
@@ -44,6 +43,7 @@ public class UserPage extends javax.swing.JFrame {
     private FriendManager FM;
     private PostManager postManager;
     private StoryManager storyManager;
+    private RefreshManager refreshManager;
 
     public UserPage() {
         initComponents();
@@ -60,17 +60,22 @@ public class UserPage extends javax.swing.JFrame {
         this.updateFriendRequestsList();
         this.updateFriendSuggestionsList();
 
-        postManager = new PostManager(this.loggedInUser);
-        storyManager = new StoryManager(this.loggedInUser);
+        String type = "Profile";
+        postManager = new PostManager(this.loggedInUser, type);
+        storyManager = new StoryManager(this.loggedInUser, type);
         System.out.println(jPanel1.getWidth());
-        PostsPanel x = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight());
+        PostsPanel postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), type);
+        StoriesPanel storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight(), type);
         jPanel1.setBackground(Color.WHITE);
         jPanel1.setLayout(new BorderLayout());
-        jPanel1.add(x, BorderLayout.CENTER);
+        jPanel1.add(postsPanel, BorderLayout.CENTER);
         jPanel1.revalidate();
         jPanel1.repaint();
-        x.setVisible(true);
+        postsPanel.setVisible(true);
         this.setVisible(true);
+
+        /*Setup Refresh manager*/
+        refreshManager = new RefreshManager(List.of(postsPanel, storiesPanel));
     }
 
     /**
@@ -454,7 +459,12 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void createNewPostButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewPostButtonMouseClicked
-
+        new CreatePostPanel(postManager);
+        refreshManager.refreshAll();
+        jPanel1.revalidate();
+        jPanel1.repaint();
+        revalidate();
+        repaint();
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void updateCurrentFriendsList () {

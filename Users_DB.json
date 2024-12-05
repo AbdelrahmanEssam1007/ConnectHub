@@ -64,7 +64,7 @@
   "userName" : "AwkAmr",
   "password" : "47c94bca3024af4e2c31d8bdab267903ec44aed20913fd17729d6b4370c87172",
   "dateOfBirth" : [ 2020, 5, 19 ],
-  "status" : false,
+  "status" : true,
   "profile" : {
     "friends" : [ ],
     "blocked" : [ ],

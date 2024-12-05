@@ -15,11 +15,14 @@ public class ContentPanel extends JPanel{
     protected final User user;
     protected final ContentManagerFactory contentManagerFactory;
     protected final JPanel contentContainer;
+    protected final String type;
+    protected final JPanel scrollContentPanel;
 
-    public ContentPanel(User user, ContentManagerFactory contentManagerFactory, int width, int height) {
+    public ContentPanel(User user, ContentManagerFactory contentManagerFactory, int width, int height, String type) {
         /*Initializing class variables*/
         this.user = user;
         this.contentManagerFactory = contentManagerFactory;
+        this.type = type;
 
         /*Configuring main content panel*/
         setLayout(new BorderLayout());
@@ -33,24 +36,28 @@ public class ContentPanel extends JPanel{
 
         /*Configuring scroll*/
         JScrollPane scrollContent = new JScrollPane(contentContainer);
+        scrollContentPanel = (JPanel) scrollContent.getViewport().getView();
         add(scrollContent, BorderLayout.CENTER);
 
         /*Loading Content*/
-        loadContent();
+        loadContent(type);
     }
 
     /*Loading method*/
-    public void loadContent(){
-        contentManagerFactory.readFromDB();
+    public void loadContent(String type){
+        contentManagerFactory.readFromDB(type);
         List<Content> content = contentManagerFactory.getContent();
+        contentContainer.removeAll();
         for(Content x : content)
             addContent(x);
     }
 
     public void addContent(Content content){
+
         contentContainer.add(createContentPanel(content));
         contentContainer.revalidate();
         contentContainer.repaint();
+        System.out.println("Component Count:" + contentContainer.getComponentCount());
     }
 
     /*Creating panel from post*/
