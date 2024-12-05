@@ -8,8 +8,8 @@ import backend.User;
 import utils.FileNames;
 
 public class StoryManager extends ContentManagerFactory{
-    public StoryManager(User user, String type){
-        super(FileNames.POSTS, new StoryLoader(), new StoryFactory(), user, type);
+    public StoryManager(User user){
+        super(FileNames.POSTS, new StoryLoader(), new StoryFactory(), user);
     }
 
     public void removeExpired(){

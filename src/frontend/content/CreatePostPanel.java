@@ -1,5 +1,6 @@
 package frontend.content;
 
+import backend.RefreshManager;
 import backend.content.PostManager;
 import utils.ImageUtils;
 
@@ -18,10 +19,12 @@ public class CreatePostPanel extends JFrame{
     private JButton uploadImageButton;
     private final PostManager postManager;
     private File imageFile;
+    private final RefreshManager refreshManager;
 
-    public CreatePostPanel(PostManager postManager) throws HeadlessException {
+    public CreatePostPanel(PostManager postManager, RefreshManager refreshManager) throws HeadlessException {
         /*Initializing needed variables*/
         this.postManager = postManager;
+        this.refreshManager = refreshManager;
 
         /*Setting up main creation panel*/
         setTitle("Create Post");
@@ -68,6 +71,7 @@ public class CreatePostPanel extends JFrame{
                         JOptionPane.showMessageDialog(null, ex.getMessage(),
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     }
+                    refreshManager.refreshAll();
                     dispose();
                 }
                 else if(imageFile != null){
@@ -79,12 +83,14 @@ public class CreatePostPanel extends JFrame{
                         JOptionPane.showMessageDialog(null, ex.getMessage(),
                                 "Error", JOptionPane.ERROR_MESSAGE);
                     }
+                    refreshManager.refreshAll();
                     dispose();
                 }
                 else if(!text.isEmpty()){
                     postManager.createTextOnlyContent(text);
                     JOptionPane.showMessageDialog(null, "Successfully made post!",
                             "Post Creation", JOptionPane.INFORMATION_MESSAGE);
+                    refreshManager.refreshAll();
                     dispose();
                 }
                 else{

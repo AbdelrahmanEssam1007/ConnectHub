@@ -61,8 +61,8 @@ public class UserPage extends javax.swing.JFrame {
         this.updateFriendSuggestionsList();
 
         String type = "Profile";
-        postManager = new PostManager(this.loggedInUser, type);
-        storyManager = new StoryManager(this.loggedInUser, type);
+        postManager = new PostManager(this.loggedInUser);
+        storyManager = new StoryManager(this.loggedInUser);
         System.out.println(jPanel1.getWidth());
         PostsPanel postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), type);
         StoriesPanel storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight(), type);
@@ -459,12 +459,7 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void createNewPostButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewPostButtonMouseClicked
-        new CreatePostPanel(postManager);
-        refreshManager.refreshAll();
-        jPanel1.revalidate();
-        jPanel1.repaint();
-        revalidate();
-        repaint();
+        new CreatePostPanel(postManager, refreshManager);
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void updateCurrentFriendsList () {

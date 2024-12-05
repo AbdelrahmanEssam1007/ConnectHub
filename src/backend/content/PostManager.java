@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PostManager extends ContentManagerFactory{
     PostFactory postFactory = new PostFactory();
-    public PostManager(User user, String type){
-        super(FileNames.POSTS, new PostLoader(), new PostFactory(), user, type);
+    public PostManager(User user){
+        super(FileNames.POSTS, new PostLoader(), new PostFactory(), user);
     }
 }

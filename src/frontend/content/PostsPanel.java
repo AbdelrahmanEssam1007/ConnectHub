@@ -20,10 +20,6 @@ public class PostsPanel extends ContentPanel implements Refreshable {
     @Override
     public void refresh() {
         loadContent(type);
-        contentContainer.revalidate();
-        contentContainer.repaint();
-        scrollContentPanel.revalidate();
-        scrollContentPanel.repaint();
         revalidate();
         repaint();
     }

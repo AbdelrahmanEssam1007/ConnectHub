@@ -19,7 +19,7 @@ public abstract class ContentManagerFactory {
     List<Content> content = new ArrayList<>();
 
     public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory,
-                                 User user, String type) {
+                                 User user) {
         this.fileName = fileName;
         this.contentLoader = contentLoader;
         this.contentFactory = contentFactory;
