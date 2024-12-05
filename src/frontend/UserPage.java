@@ -28,6 +28,7 @@ public class UserPage extends javax.swing.JFrame {
      */
     
     private User loggedInUser;
+    private FriendManager FM;
     
     public UserPage() {
         initComponents();
