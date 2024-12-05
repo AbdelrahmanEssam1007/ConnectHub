@@ -44,11 +44,20 @@ public class UserPage extends javax.swing.JFrame {
     private PostManager postManager;
     private StoryManager storyManager;
     private RefreshManager refreshManager;
+    private PostsPanel postsPanel;
+    private StoriesPanel storiesPanel;
 
     public UserPage() {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (800, 700));
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                loggedInUser.setStatus(false);
+                UserDB.getInstance().SaveDB();
+            }
+        });
     }
 
     public UserPage (User user) {
@@ -64,8 +73,8 @@ public class UserPage extends javax.swing.JFrame {
         postManager = new PostManager(this.loggedInUser);
         storyManager = new StoryManager(this.loggedInUser);
         System.out.println(jPanel1.getWidth());
-        PostsPanel postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), type);
-        StoriesPanel storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight(), type);
+        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), type);
+        storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight(), type);
         jPanel1.setBackground(Color.WHITE);
         jPanel1.setLayout(new BorderLayout());
         jPanel1.add(postsPanel, BorderLayout.CENTER);
@@ -362,15 +371,23 @@ public class UserPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void showProfileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showProfileButtonMouseClicked
-        // TODO add your handling code here:
+        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), "Profile");
+        jPanel1.removeAll();
+        jPanel1.add(postsPanel);
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }//GEN-LAST:event_showProfileButtonMouseClicked
 
     private void showFriendsPostsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsPostsButtonMouseClicked
-        // TODO add your handling code here:
+        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), "Friends");
+        jPanel1.removeAll();
+        jPanel1.add(postsPanel);
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }//GEN-LAST:event_showFriendsPostsButtonMouseClicked
 
     private void showFriendsStoriesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsStoriesButtonMouseClicked
-        // TODO add your handling code here:
+        storiesPanel = new StoriesPanel(this.loggedInUser, postManager, jPanel1.getWidth(), jPanel1.getHeight(), "Friends");
     }//GEN-LAST:event_showFriendsStoriesButtonMouseClicked
 
     private void blockCurrentFriendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blockCurrentFriendButtonMouseClicked
