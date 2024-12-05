@@ -46,7 +46,7 @@ public class ImageUtils implements Constants{
     }
 
     /*Image uploader*/
-    private File uploadImage() {
+    public static File uploadImage() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select an image file");
         fileChooser.setAcceptAllFileFilterUsed(false);

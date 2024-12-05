@@ -71,14 +71,14 @@ public abstract class ContentManagerFactory {
     }
 
     public void createTextOnlyContent(String text){
-        content.add(contentFactory.createTextOnlyContent(text, user));
+        addContent(contentFactory.createTextOnlyContent(text, user));
     }
 
     public void createImageOnlyContent(File imageFile) throws IOException{
-        content.add(contentFactory.createImageOnlyContent(imageFile, user));
+        addContent(contentFactory.createImageOnlyContent(imageFile, user));
     }
 
     public void createTextImageContent(String text, File imageFile) throws IOException{
-        content.add(contentFactory.createTextImageContent(text, imageFile, user));
+        addContent(contentFactory.createTextImageContent(text, imageFile, user));
     }
 }

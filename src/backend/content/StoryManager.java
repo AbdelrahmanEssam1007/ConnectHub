@@ -15,7 +15,7 @@ public class StoryManager extends ContentManagerFactory{
     public void removeExpired(){
         readFromDB();
         for(Content x : content){
-            if(x.isExpired()){
+            if(x.expired()){
                 removeContent(x);
             }
             saveToDB();

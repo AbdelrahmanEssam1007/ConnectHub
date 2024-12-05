@@ -28,7 +28,7 @@ public class Content {
         this.username = username;
     }
 
-    public boolean isExpired(){ return false; }
+    public boolean expired(){ return false; }
 
     public String getUsername() {
         return username;

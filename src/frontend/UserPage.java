@@ -8,9 +8,12 @@ import backend.User;
 import backend.content.Post;
 import backend.content.PostManager;
 import frontend.content.PostsPanel;
+import utils.ImageUtils;
 
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
@@ -27,9 +30,15 @@ public class UserPage extends javax.swing.JFrame {
         this.setTitle("ConnectHub - <username>");
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (600, 630));
-        PostsPanel x = new PostsPanel(user, new PostManager(user),getWidth()-100,getHeight()-100);
-        x.setBackground(Color.WHITE);
-        x.setBorder(new EmptyBorder(0,0,0,0));
+        PostManager postManager = new PostManager(user);
+
+        File imageFile = ImageUtils.uploadImage();
+        try {
+            postManager.createTextImageContent("Testing you", imageFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        PostsPanel x = new PostsPanel(user, postManager,getWidth()-20,getHeight()-20);
         jPanel1.setBackground(Color.WHITE);
         jPanel1.add(x);
         jPanel1.revalidate();
