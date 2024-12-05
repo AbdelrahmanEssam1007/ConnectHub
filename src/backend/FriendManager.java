@@ -92,4 +92,9 @@ public class FriendManager {
     userProfile.getBlocked().remove(targetId);
     System.out.println("User has been unblocked.");
   }
+  
+  public void removeUserFriend (User targetUser) {
+      this.userProfile.getFriends().remove(targetUser.getUserId());
+      targetUser.getProfile().getFriends().remove(this.user.getUserId());
+  }
 }

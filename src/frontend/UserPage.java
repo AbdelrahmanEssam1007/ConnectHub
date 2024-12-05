@@ -4,7 +4,18 @@
  */
 package frontend;
 
+import backend.FriendManager;
+import backend.CustomCellRenderer;
+import backend.Profile;
+import backend.User;
+import backend.UserDB;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 /**
  *
@@ -15,6 +26,9 @@ public class UserPage extends javax.swing.JFrame {
     /**
      * Creates new form UserPage
      */
+    
+    private User loggedInUser;
+    
     public UserPage() {
         initComponents();
         
@@ -22,6 +36,18 @@ public class UserPage extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (600, 630));
         this.setVisible(true);
+        
+        
+    }
+    
+    public UserPage (User user) {
+        this ();
+        
+        this.loggedInUser = user;
+        
+        this.updateCurrentFriendsList();
+        
+        
     }
 
     /**
@@ -89,11 +115,9 @@ public class UserPage extends javax.swing.JFrame {
 
         jLabel1.setText("Current Friends");
 
-        currentFriendsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        currentFriendsList.setModel(new DefaultListModel<String>()
+        );
+        this.currentFriendsList.setCellRenderer(new CustomCellRenderer ());
         jScrollPane1.setViewportView(currentFriendsList);
 
         removeCurrentFriendButton.setText("Remove");
@@ -112,11 +136,9 @@ public class UserPage extends javax.swing.JFrame {
 
         jLabel2.setText("Friend Requests");
 
-        friendRequestsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        friendRequestsList.setModel(new DefaultListModel<String>()
+        );
+        this.friendRequestsList.setCellRenderer(new CustomCellRenderer ());
         jScrollPane2.setViewportView(friendRequestsList);
 
         acceptRequestButton.setText("Accept");
@@ -135,11 +157,8 @@ public class UserPage extends javax.swing.JFrame {
 
         jLabel3.setText("Friend Suggestions");
 
-        friendSuggestionsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        friendSuggestionsList.setModel(new DefaultListModel<String>());
+        this.friendSuggestionsList.setCellRenderer(new CustomCellRenderer ());
         jScrollPane3.setViewportView(friendSuggestionsList);
 
         sendRequestToSuggestedButton.setText("Send Friend Request");
@@ -151,11 +170,8 @@ public class UserPage extends javax.swing.JFrame {
 
         jLabel4.setText("Search For New Friends");
 
-        searchedUsersList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        searchedUsersList.setModel(new DefaultListModel<String>());
+        this.searchedUsersList.setCellRenderer(new CustomCellRenderer ());
         jScrollPane4.setViewportView(searchedUsersList);
 
         sendRequestToSearchedButton.setText("Send Friend Request");
@@ -327,11 +343,23 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_showFriendsStoriesButtonMouseClicked
 
     private void blockCurrentFriendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blockCurrentFriendButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.currentFriendsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        
+        new FriendManager(this.loggedInUser).blockUser(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        this.updateCurrentFriendsList();
     }//GEN-LAST:event_blockCurrentFriendButtonMouseClicked
 
     private void removeCurrentFriendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCurrentFriendButtonMouseClicked
-        // TODO add your handling code here:
+        if (this.currentFriendsList.getSelectedIndex() < 0) {
+            JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
+            return ;
+        }
+        
+        new FriendManager(this.loggedInUser).removeUserFriend(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        this.updateCurrentFriendsList();
     }//GEN-LAST:event_removeCurrentFriendButtonMouseClicked
 
     private void rejectRequestButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rejectRequestButtonMouseClicked
@@ -366,6 +394,14 @@ public class UserPage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
+    private void updateCurrentFriendsList () {
+        List <String> friends = new ArrayList<>();
+        for (String friendID : loggedInUser.getProfile().getFriends()) {
+            friends.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
+        }
+        this.currentFriendsList.setListData(new Vector<String>(friends));
+    }
+    
     /**
      * @param args the command line arguments
      */
