@@ -14,17 +14,26 @@ import utils.FileNames;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
 
-public class UserDB {
+public class UserDB implements Refreshable{
 
   private List<User> users;
   private static final UserDB USERDB = new UserDB();
 
   private UserDB() {
-      try {
-          this.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
-      } catch (IOException ex) {
-          Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
-      }
+      readDB();
+  }
+
+  @Override
+  public void refresh() {
+    readDB();
+  }
+
+  public void readDB(){
+    try {
+      this.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
+    } catch (IOException ex) {
+      Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
 
   public static UserDB getInstance () {
