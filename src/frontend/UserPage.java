@@ -54,13 +54,6 @@ public class UserPage extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (800, 700));
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                loggedInUser.setStatus(false);
-                UserDB.getInstance().SaveDB();
-            }
-        });
     }
 
     public UserPage (User user) {
@@ -90,6 +83,14 @@ public class UserPage extends javax.swing.JFrame {
         jPanel1.repaint();
         postsPanel.setVisible(true);
         this.setVisible(true);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                UserDB.getInstance().refreshDB();
+                UserDB.getInstance().searchUserByUserId(loggedInUser.getUserId()).setStatus(false);
+                UserDB.getInstance().SaveDB();
+            }
+        });
     }
 
     /**
@@ -518,7 +519,8 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_sendRequestToSearchedButtonMouseClicked
 
     private void quitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitButtonMouseClicked
-        this.loggedInUser.setStatus(false);
+        UserDB.getInstance().refreshDB();
+        UserDB.getInstance().searchUserByUserId(this.loggedInUser.getUserId()).setStatus(false);
         UserDB.getInstance().SaveDB();
         this.dispose();
     }//GEN-LAST:event_quitButtonMouseClicked
@@ -528,7 +530,8 @@ public class UserPage extends javax.swing.JFrame {
             Main main = Main.getInstance();
             main.setVisible(true);
         });
-        this.loggedInUser.setStatus(false);
+        UserDB.getInstance().refreshDB();
+        UserDB.getInstance().searchUserByUserId(this.loggedInUser.getUserId()).setStatus(false);
         UserDB.getInstance().SaveDB();
         this.dispose();
 
@@ -556,6 +559,7 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        UserDB.getInstance().refreshDB();
         this.updateCurrentFriendsList();
         this.updateFriendRequestsList();
         this.updateFriendSuggestionsList();
