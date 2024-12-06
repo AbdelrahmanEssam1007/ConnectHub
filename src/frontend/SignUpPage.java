@@ -5,17 +5,16 @@
 package frontend;
 
 import backend.User;
-
-import java.awt.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.List;
-import javax.swing.*;
-
+import backend.UserDB;
+import utils.FileNames;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
 import utils.Validation;
+
+import javax.swing.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 
 /**
  *
@@ -27,16 +26,24 @@ public class SignUpPage extends javax.swing.JFrame {
      * Creates new form SignUpPage
      */
 
-    private static final String USERS_DB = "Users_DB.json";
+    UserDB userdb = UserDB.getInstance();
+    private static SignUpPage pageInstance = null;
 
-    public SignUpPage() {
+
+    public static synchronized SignUpPage getInstance(){
+        if(pageInstance == null)
+            pageInstance = new SignUpPage();
+        return pageInstance;
+    }
+
+    private SignUpPage() {
         initComponents();
 
         this.setLocationRelativeTo(null);
         this.setTitle("Sign Up");
         this.setVisible(true);
-
         this.dateOfBirthChooser.setDate(new java.util.Date());
+        getRootPane().setDefaultButton(signUpButton);
     }
 
     /**
@@ -185,13 +192,13 @@ public class SignUpPage extends javax.swing.JFrame {
         // will have to check whether handle already exists
         String username = this.usernameField.getText();
         String password = this.passwordField.getText();
-        String email = this.emailField.getText();
+        String email = this.emailField.getText().toLowerCase();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(this.dateOfBirthChooser.getDate());
         LocalDate date = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         try {
+            this.userdb.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
             if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
                 throw new IllegalArgumentException("Fields can't be empty");
             }
@@ -205,7 +212,8 @@ public class SignUpPage extends javax.swing.JFrame {
                                                    4) At least one number
                                                    5) At least one special character
                                                    6) No whitespaces (i.e: spaces and tabs)
-                                                   """);
+                                                   """
+                );
             }
 
             if (!Validation.validateEmail(email)) {
@@ -226,34 +234,48 @@ public class SignUpPage extends javax.swing.JFrame {
                 throw new IllegalArgumentException("Invalid Date of Birth");
             }
 
-            if (JSONFileReader.doesUserNameExist(username, "Users_DB.json")) {
+            if (userdb.searchUserByUserName(username) != null) {
                 throw new IllegalArgumentException("An account with this username already exists");
             }
 
-            if (JSONFileReader.doesEmailExist(email, "Users_DB.json")) { // still don't know the
+            if (userdb.searchUserByEmail(email) != null) { // still don't know the
                 throw new IllegalArgumentException("An account with this email already exists");
             }
 
             User user = new User();
-            user.setDateOfBirth(date.format(formatter));
-            user.setEmail(email);
+            user.setDateOfBirth(date);
             user.setPassword(utils.SimpleHash.hash(password));
             user.setUserName(username);
+            user.setEmail(email.toLowerCase());
             user.setStatus(false);
-
-            List <User> users = JSONFileReader.readJson(SignUpPage.USERS_DB, User.class); // error here
-            users.add(user);
-            JSONFileWriter.writeJson(SignUpPage.USERS_DB, users);
-
+            userdb.addUser(user);
+            JSONFileWriter.writeJson(FileNames.USERS.getFileName(), userdb.getUsers());
+            JOptionPane.showMessageDialog(null, "Account created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            this.usernameField.setText("");
+            this.passwordField.setText("");
+            this.emailField.setText("");
+            this.dateOfBirthChooser.setDate(new java.util.Date());
+            SwingUtilities.invokeLater(() -> {
+                SignInPage signInPage = SignInPage.getInstance();
+                signInPage.setVisible(true);
+            });
+            this.dispose();
         }
         catch (Exception e) {
-            UIManager.put("OptionPane.minimumSize",new Dimension(300,200));
+//            UIManager.put("OptionPane.minimumSize",new Dimension(300,200));
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_signUpButtonMouseClicked
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        new Main();
+        this.usernameField.setText("");
+        this.passwordField.setText("");
+        this.emailField.setText("");
+        this.dateOfBirthChooser.setDate(new java.util.Date());
+        SwingUtilities.invokeLater(() -> {
+            Main main = Main.getInstance();
+            main.setVisible(true);
+        });
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 

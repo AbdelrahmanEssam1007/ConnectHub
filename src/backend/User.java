@@ -1,22 +1,22 @@
 package backend;
 
+import utils.IDGenerator;
+
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class User {
   private String userId;
-  private static int numID = 0;
   private String email;
   private String userName;
   private String password;
-  private String dateOfBirth;
+  private LocalDate dateOfBirth;
   private boolean status;
+  private Profile profile;
 
-    public User() {
-        numID ++;
-        this.userId = "u"+ User.numID;
-    }
-
+  public User() {
+      this.userId = IDGenerator.generateUserId();
+      profile = new Profile();
+  }
 
   public String getUserId() {
     return userId;
@@ -34,17 +34,13 @@ public class User {
     return password;
   }
 
-  public String getDateOfBirth() {
+  public LocalDate getDateOfBirth() {
     return dateOfBirth;
   }
 
   public boolean getStatus() {
     return status;
   }
-
-//  public void setUserId(String userId) {
-//    this.userId = userId;
-//  }
 
   public void setEmail(String email) {
     this.email = email;
@@ -58,7 +54,7 @@ public class User {
     this.password = password;
   }
 
-  public void setDateOfBirth(String dateOfBirth) {
+  public void setDateOfBirth(LocalDate dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
 
@@ -66,5 +62,12 @@ public class User {
     this.status = status;
   }
 
+  public Profile getProfile() {
+    return profile;
+  }
+
+  public void setProfile(Profile profile) {
+    this.profile = profile;
+  }
 }
 
