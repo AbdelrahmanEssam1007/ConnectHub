@@ -9,8 +9,8 @@ package utils;
  * @author Amr
  */
 public interface Constants {
-    /*Story time expiry in minutes*/
-    int STORY_EXPIRY = 30;
+    /*Story time expiry in seconds*/
+    int STORY_EXPIRY = 10000;
     /*Images folder directory*/
     String IMAGES_DIRECTORY = "images/";
     String DEFAULT_PFP = "images/__Blank_PFP.jpg";

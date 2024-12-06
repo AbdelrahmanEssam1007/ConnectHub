@@ -391,10 +391,13 @@ public class UserPage extends javax.swing.JFrame {
         refreshManager.refreshAll();
         profilePanel = new ProfilePanel(this.loggedInUser, jPanel1.getWidth(), 200);
         type = "Profile";
-        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), type);
+        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight()/2, type);
+        storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight()/2, type);
+        jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
         jPanel1.removeAll();
-        jPanel1.add(profilePanel, BorderLayout.PAGE_START);
-        jPanel1.add(postsPanel, BorderLayout.CENTER);
+        jPanel1.add(profilePanel);
+        jPanel1.add(postsPanel);
+        jPanel1.add(storiesPanel);
         jPanel1.revalidate();
         jPanel1.repaint();
     }//GEN-LAST:event_showProfileButtonMouseClicked
@@ -538,11 +541,16 @@ public class UserPage extends javax.swing.JFrame {
         else{
             storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight(), type);
         }
+
         jPanel1.removeAll();
         jPanel1.add(profilePanel, BorderLayout.PAGE_START);
         jPanel1.add(postsPanel, BorderLayout.CENTER);
         jPanel1.revalidate();
         jPanel1.repaint();
+
+        if(type.equals("Profile")){
+            showProfileButtonMouseClicked(null);
+        }
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
