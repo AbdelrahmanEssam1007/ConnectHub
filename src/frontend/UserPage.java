@@ -456,20 +456,24 @@ public class UserPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
             return ;
         }
-        FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendSuggestionsList.getSelectedValue()));
-        this.updateFriendSuggestionsList();
+        try {
+            FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendSuggestionsList.getSelectedValue()));
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, "Friend request already sent.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_sendRequestToSuggestedButtonMouseClicked
 
     private void searchForUsersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchForUsersButtonMouseClicked
         refreshManager.refreshAll();
         List <String> searchedUsers = new ArrayList<>();
         for (User user : UserDB.getInstance().getUsers()) {
-            if (user.getUserName().contains(this.searchCriteriaField.getText()) && // search criteria
+            if ( user.getUserName().contains(this.searchCriteriaField.getText()) && // search criteria
                     !user.getUserName().equals(this.loggedInUser.getUserName()) && // not the user himself
                     !this.loggedInUser.getProfile().getFriends().contains(user.getUserId()) && // not already friends
-                    !this.loggedInUser.getProfile().getBlocked().contains(user.getUserId())) { // not blocked
+                    !user.getProfile().getBlocked().contains(this.loggedInUser.getUserId())) { // not blocked by user
                 searchedUsers.add(user.getUserName());
             }
+
         }
         this.searchedUsersList.setListData(new Vector<String>(searchedUsers));
     }//GEN-LAST:event_searchForUsersButtonMouseClicked
@@ -478,10 +482,23 @@ public class UserPage extends javax.swing.JFrame {
         refreshManager.refreshAll();
         if (this.searchedUsersList.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
-            return ;
+            return;
         }
-        FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.searchedUsersList.getSelectedValue()));
-        this.updateFriendSuggestionsList();
+        if(this.loggedInUser.getProfile().getBlocked().contains(UserDB.getInstance().searchUserByUserName(this.searchedUsersList.getSelectedValue()).getUserId())){
+            int response = JOptionPane.showConfirmDialog(null, "You have blocked this user. Do you want to unblock them?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+                FM.unblockUser(UserDB.getInstance().searchUserByUserName(this.searchedUsersList.getSelectedValue()));
+            } else {
+                JOptionPane.showMessageDialog(null, "You cannot send a friend request to a user you have blocked.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        try {
+            FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.searchedUsersList.getSelectedValue()));
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(null, "Friend request already sent.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_sendRequestToSearchedButtonMouseClicked
 
     private void quitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitButtonMouseClicked
@@ -536,7 +553,9 @@ public class UserPage extends javax.swing.JFrame {
             for (String suggestedFriendID : UserDB.getInstance().searchUserByUserId(friendID).getProfile().getFriends()) {
                 if (!loggedInUser.getProfile().getFriends().contains(suggestedFriendID) // not already friends
                         && !loggedInUser.getProfile().getPending().contains(suggestedFriendID) // not already sent a request
-                        && !suggestedFriendID.equals(loggedInUser.getUserId())) { // not the user himself
+                        && !suggestedFriendID.equals(loggedInUser.getUserId())// not the user himself
+                        && !loggedInUser.getProfile().getBlocked().contains(suggestedFriendID)// not blocked
+                        && !UserDB.getInstance().searchUserByUserId(suggestedFriendID).getProfile().getBlocked().contains(loggedInUser.getUserId())) { // not blocked by the suggested friend
                  friendSuggestions.add(UserDB.getInstance().searchUserByUserId(suggestedFriendID).getUserName());
                 }
             }

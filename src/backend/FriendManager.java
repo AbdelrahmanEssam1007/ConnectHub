@@ -32,17 +32,17 @@ public class FriendManager {
 
     if (userProfile.getBlocked().contains(targetUser.getUserId())) {
       System.out.println("You cannot send a friend request to a user you have blocked.");
-      return;
+      throw new IllegalArgumentException("You cannot send a friend request to a user you have blocked.");
     }
 
     if (targetProfile.getBlocked().contains(user.getUserId())) {
-      System.out.println("You are blocked by this user.");
-      return;
+      System.out.println("You cannot send a friend request to a user who has blocked you.");
+      throw new IllegalArgumentException("You cannot send a friend request to a user who has blocked you.");
     }
 
     if (targetProfile.getPending().contains(user.getUserId())) {
       System.out.println("Friend request already sent.");
-      return;
+      throw new IllegalArgumentException("Friend request already sent.");
     }
 
     targetProfile.getPending().add(user.getUserId());
