@@ -67,6 +67,9 @@ public class CreatePostPanel extends JDialog{
                         dispose();
                     }
                 }
+                else{
+                    return;
+                }
             }
         });
 
