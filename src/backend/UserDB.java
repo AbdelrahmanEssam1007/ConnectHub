@@ -44,7 +44,7 @@ public class UserDB implements Refreshable{
     return new ArrayList<>(users);
   }
 
-  public void SaveDB() {
+  public synchronized void SaveDB() {
       try {
         JSONFileWriter.writeJson(FileNames.USERS.getFileName(), users);
       } catch (IOException ex) {
@@ -87,4 +87,11 @@ public class UserDB implements Refreshable{
     return null;
   }
 
+  public synchronized void refreshDB() {
+    try {
+      this.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
+    } catch (IOException ex) {
+      Logger.getLogger(UserDB.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
 }

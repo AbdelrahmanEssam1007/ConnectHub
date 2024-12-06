@@ -41,6 +41,7 @@ public class UserPage extends javax.swing.JFrame {
 
     private User loggedInUser;
     private FriendManager FM;
+    private UserDB UDB;
     private PostManager postManager;
     private StoryManager storyManager;
     private RefreshManager refreshManager;
@@ -54,13 +55,6 @@ public class UserPage extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setSize(new Dimension (800, 700));
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                loggedInUser.setStatus(false);
-                UserDB.getInstance().SaveDB();
-            }
-        });
     }
 
     public UserPage (User user) {
@@ -68,6 +62,7 @@ public class UserPage extends javax.swing.JFrame {
         this.loggedInUser = user;
         this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
         this.FM = FriendManager.getInstance(user);
+        this.UDB = UserDB.getInstance();
         this.updateCurrentFriendsList();
         this.updateFriendRequestsList();
         this.updateFriendSuggestionsList();
@@ -90,6 +85,13 @@ public class UserPage extends javax.swing.JFrame {
         jPanel1.repaint();
         postsPanel.setVisible(true);
         this.setVisible(true);
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                loggedInUser.setStatus(false);
+                UDB.SaveDB();
+            }
+        });
     }
 
     /**
@@ -430,7 +432,7 @@ public class UserPage extends javax.swing.JFrame {
             return ;
         }
 
-        FM.blockUser(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        FM.blockUser(UDB.searchUserByUserName(this.currentFriendsList.getSelectedValue()));
         this.updateCurrentFriendsList();
     }//GEN-LAST:event_blockCurrentFriendButtonMouseClicked
 
@@ -441,7 +443,7 @@ public class UserPage extends javax.swing.JFrame {
             return ;
         }
 
-        FM.removeUserFriend(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
+        FM.removeUserFriend(UDB.searchUserByUserName(this.currentFriendsList.getSelectedValue()));
         this.updateCurrentFriendsList();
     }//GEN-LAST:event_removeCurrentFriendButtonMouseClicked
 
@@ -451,7 +453,7 @@ public class UserPage extends javax.swing.JFrame {
             return ;
         }
 
-        FM.declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendRequestsList.getSelectedValue()));
+        FM.declineFriendRequest(UDB.searchUserByUserName(this.friendRequestsList.getSelectedValue()));
         this.updateFriendRequestsList();
     }//GEN-LAST:event_rejectRequestButtonMouseClicked
 
@@ -461,7 +463,7 @@ public class UserPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
             return ;
         }
-        FM.acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendRequestsList.getSelectedValue()));
+        FM.acceptFriendRequest(UDB.searchUserByUserName(this.friendRequestsList.getSelectedValue()));
         this.updateFriendRequestsList();
         this.updateCurrentFriendsList();
     }//GEN-LAST:event_acceptRequestButtonMouseClicked
@@ -473,7 +475,7 @@ public class UserPage extends javax.swing.JFrame {
             return ;
         }
         try {
-            FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendSuggestionsList.getSelectedValue()));
+            FM.sendFriendRequest(UDB.searchUserByUserName(this.friendSuggestionsList.getSelectedValue()));
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, "Friend request already sent.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -482,7 +484,7 @@ public class UserPage extends javax.swing.JFrame {
     private void searchForUsersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchForUsersButtonMouseClicked
         refreshManager.refreshAll();
         List <String> searchedUsers = new ArrayList<>();
-        for (User user : UserDB.getInstance().getUsers()) {
+        for (User user : UDB.getUsers()) {
             if ( user.getUserName().contains(this.searchCriteriaField.getText()) && // search criteria
                     !user.getUserName().equals(this.loggedInUser.getUserName()) && // not the user himself
                     !this.loggedInUser.getProfile().getFriends().contains(user.getUserId()) && // not already friends
@@ -500,10 +502,10 @@ public class UserPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(this.loggedInUser.getProfile().getBlocked().contains(UserDB.getInstance().searchUserByUserName(this.searchedUsersList.getSelectedValue()).getUserId())){
+        if(this.loggedInUser.getProfile().getBlocked().contains(UDB.searchUserByUserName(this.searchedUsersList.getSelectedValue()).getUserId())){
             int response = JOptionPane.showConfirmDialog(null, "You have blocked this user. Do you want to unblock them?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
-                FM.unblockUser(UserDB.getInstance().searchUserByUserName(this.searchedUsersList.getSelectedValue()));
+                FM.unblockUser(UDB.searchUserByUserName(this.searchedUsersList.getSelectedValue()));
             } else {
                 JOptionPane.showMessageDialog(null, "You cannot send a friend request to a user you have blocked.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -511,7 +513,7 @@ public class UserPage extends javax.swing.JFrame {
         }
 
         try {
-            FM.sendFriendRequest(UserDB.getInstance().searchUserByUserName(this.searchedUsersList.getSelectedValue()));
+            FM.sendFriendRequest(UDB.searchUserByUserName(this.searchedUsersList.getSelectedValue()));
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, "Friend request already sent.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -519,7 +521,7 @@ public class UserPage extends javax.swing.JFrame {
 
     private void quitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitButtonMouseClicked
         this.loggedInUser.setStatus(false);
-        UserDB.getInstance().SaveDB();
+        UDB.SaveDB();
         this.dispose();
     }//GEN-LAST:event_quitButtonMouseClicked
 
@@ -528,8 +530,9 @@ public class UserPage extends javax.swing.JFrame {
             Main main = Main.getInstance();
             main.setVisible(true);
         });
-        this.loggedInUser.setStatus(false);
-        UserDB.getInstance().SaveDB();
+        UDB.refreshDB();
+        UDB.searchUserByUserId(this.loggedInUser.getUserId()).setStatus(false);
+        UDB.SaveDB();
         this.dispose();
 
     }//GEN-LAST:event_logoutButtonMouseClicked
@@ -556,6 +559,7 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        UDB.refreshDB();
         this.updateCurrentFriendsList();
         this.updateFriendRequestsList();
         this.updateFriendSuggestionsList();
@@ -578,7 +582,7 @@ public class UserPage extends javax.swing.JFrame {
     private void updateCurrentFriendsList () {
         List <String> friends = new ArrayList<>();
         for (String friendID : loggedInUser.getProfile().getFriends()) {
-            friends.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
+            friends.add(UDB.searchUserByUserId(friendID).getUserName());
         }
         this.currentFriendsList.setListData(new Vector<String>(friends));
     }
@@ -586,7 +590,7 @@ public class UserPage extends javax.swing.JFrame {
     private void updateFriendRequestsList () {
         List <String> friendRequests = new ArrayList<>();
         for (String friendID : loggedInUser.getProfile().getPending()) {
-            friendRequests.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
+            friendRequests.add(UDB.searchUserByUserId(friendID).getUserName());
         }
         this.friendRequestsList.setListData(new Vector<String>(friendRequests));
     }
@@ -594,13 +598,13 @@ public class UserPage extends javax.swing.JFrame {
     private void updateFriendSuggestionsList () {
         List <String> friendSuggestions = new ArrayList<>();
         for (String friendID : loggedInUser.getProfile().getFriends()) {
-            for (String suggestedFriendID : UserDB.getInstance().searchUserByUserId(friendID).getProfile().getFriends()) {
+            for (String suggestedFriendID : UDB.searchUserByUserId(friendID).getProfile().getFriends()) {
                 if (!loggedInUser.getProfile().getFriends().contains(suggestedFriendID) // not already friends
                         && !loggedInUser.getProfile().getPending().contains(suggestedFriendID) // not already sent a request
                         && !suggestedFriendID.equals(loggedInUser.getUserId())// not the user himself
                         && !loggedInUser.getProfile().getBlocked().contains(suggestedFriendID)// not blocked
-                        && !UserDB.getInstance().searchUserByUserId(suggestedFriendID).getProfile().getBlocked().contains(loggedInUser.getUserId())) { // not blocked by the suggested friend
-                 friendSuggestions.add(UserDB.getInstance().searchUserByUserId(suggestedFriendID).getUserName());
+                        && !UDB.searchUserByUserId(suggestedFriendID).getProfile().getBlocked().contains(loggedInUser.getUserId())) { // not blocked by the suggested friend
+                 friendSuggestions.add(UDB.searchUserByUserId(suggestedFriendID).getUserName());
                 }
             }
         }
