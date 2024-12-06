@@ -560,12 +560,15 @@ public class UserPage extends javax.swing.JFrame {
         this.updateFriendRequestsList();
         this.updateFriendSuggestionsList();
         if (type.equals("Profile")) {
+            refreshManager.refreshAll();
             this.showProfileButtonMouseClicked(evt);
         }
         else if (type.equals("Friends") && typeFeed.equals("Post")) {
+            refreshManager.refreshAll();
             this.showFriendsPostsButtonMouseClicked(evt);
         }
         else if (type.equals("Friends") && typeFeed.equals("Stories")) {
+            refreshManager.refreshAll();
             this.showFriendsStoriesButtonMouseClicked(evt);
         }
     }//GEN-LAST:event_refreshButtonMouseClicked
