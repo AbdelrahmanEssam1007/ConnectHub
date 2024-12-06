@@ -61,75 +61,60 @@
             <mxPoint x="250" y="210" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-19" value="Show Profile" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="286" y="240" width="80" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-21" value="" style="endArrow=none;html=1;rounded=0;endFill=0;" edge="1" parent="1">
+        <mxCell id="Nie33L1LGUIJ3v2TZJb5-22" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endFill=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="250" y="210" as="sourcePoint" />
-            <mxPoint x="160" y="210" as="targetPoint" />
+            <mxPoint x="250" y="260" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-32" value="Press" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Nie33L1LGUIJ3v2TZJb5-21">
-          <mxGeometry x="0.0444" y="1" relative="1" as="geometry">
+        <mxCell id="Nie33L1LGUIJ3v2TZJb5-40" value="Press" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Nie33L1LGUIJ3v2TZJb5-22">
+          <mxGeometry x="-0.56" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-22" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endFill=0;" edge="1" parent="1">
+        <mxCell id="Nie33L1LGUIJ3v2TZJb5-23" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="160" y="210" as="sourcePoint" />
-            <mxPoint x="160" y="260" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-23" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Nie33L1LGUIJ3v2TZJb5-19">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="280" y="260" as="sourcePoint" />
-            <mxPoint x="160" y="260" as="targetPoint" />
+            <mxPoint x="376" y="260" as="sourcePoint" />
+            <mxPoint x="250" y="260" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Nie33L1LGUIJ3v2TZJb5-33" value="Profile Button" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Nie33L1LGUIJ3v2TZJb5-23">
           <mxGeometry x="0.3333" relative="1" as="geometry">
-            <mxPoint x="-2" as="offset" />
+            <mxPoint x="28" as="offset" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-25" value="Show Posts" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="286" y="310" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="Nie33L1LGUIJ3v2TZJb5-27" value="" style="endArrow=none;html=1;rounded=0;endFill=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="160" y="260" as="sourcePoint" />
-            <mxPoint x="160" y="330" as="targetPoint" />
+            <mxPoint x="250" y="260" as="sourcePoint" />
+            <mxPoint x="250" y="330" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-28" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Nie33L1LGUIJ3v2TZJb5-25">
+        <mxCell id="Nie33L1LGUIJ3v2TZJb5-28" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="280" y="330" as="sourcePoint" />
-            <mxPoint x="160" y="330" as="targetPoint" />
+            <mxPoint x="376" y="330" as="sourcePoint" />
+            <mxPoint x="250" y="330" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Nie33L1LGUIJ3v2TZJb5-34" value="Posts Button" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Nie33L1LGUIJ3v2TZJb5-28">
           <mxGeometry x="0.4286" relative="1" as="geometry">
-            <mxPoint x="4" as="offset" />
+            <mxPoint x="34" as="offset" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-29" value="Show Stories" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="286" y="380" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="Nie33L1LGUIJ3v2TZJb5-30" value="" style="endArrow=none;html=1;rounded=0;endFill=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="160" y="330" as="sourcePoint" />
-            <mxPoint x="160" y="400" as="targetPoint" />
+            <mxPoint x="250" y="330" as="sourcePoint" />
+            <mxPoint x="250" y="400" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-31" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Nie33L1LGUIJ3v2TZJb5-29">
+        <mxCell id="Nie33L1LGUIJ3v2TZJb5-31" value="" style="endArrow=none;html=1;rounded=0;endFill=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="280" y="400" as="sourcePoint" />
-            <mxPoint x="160" y="400" as="targetPoint" />
+            <mxPoint x="376" y="400" as="sourcePoint" />
+            <mxPoint x="250" y="400" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Nie33L1LGUIJ3v2TZJb5-35" value="Stories Button" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Nie33L1LGUIJ3v2TZJb5-31">
           <mxGeometry x="0.5238" y="1" relative="1" as="geometry">
-            <mxPoint x="10" y="-1" as="offset" />
+            <mxPoint x="46" y="-1" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="Nie33L1LGUIJ3v2TZJb5-36" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.935;entryY=1.05;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" target="Nie33L1LGUIJ3v2TZJb5-4">
@@ -138,22 +123,22 @@
             <mxPoint x="440" y="360" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-37" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Nie33L1LGUIJ3v2TZJb5-29">
+        <mxCell id="Nie33L1LGUIJ3v2TZJb5-37" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="230" y="520" as="sourcePoint" />
+            <mxPoint x="366" y="400" as="sourcePoint" />
             <mxPoint x="400" y="400" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-38" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Nie33L1LGUIJ3v2TZJb5-25">
+        <mxCell id="Nie33L1LGUIJ3v2TZJb5-38" value="" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="376" y="410" as="sourcePoint" />
+            <mxPoint x="366" y="330" as="sourcePoint" />
             <mxPoint x="400" y="330" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Nie33L1LGUIJ3v2TZJb5-39" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="Nie33L1LGUIJ3v2TZJb5-19">
+        <mxCell id="Nie33L1LGUIJ3v2TZJb5-39" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="400" y="260" as="sourcePoint" />
-            <mxPoint x="420" y="420" as="targetPoint" />
+            <mxPoint x="366" y="260" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
