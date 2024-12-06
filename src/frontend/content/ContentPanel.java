@@ -53,11 +53,9 @@ public class ContentPanel extends JPanel{
     }
 
     public void addContent(Content content){
-
         contentContainer.add(createContentPanel(content));
         contentContainer.revalidate();
         contentContainer.repaint();
-        System.out.println("Component Count:" + contentContainer.getComponentCount());
     }
 
     /*Creating panel from post*/

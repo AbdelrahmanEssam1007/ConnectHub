@@ -16,7 +16,7 @@ public class Content {
     private String authorID;
     private String username;
 
-    /*TODO: Replace it with json creator constructor*/
+    /*TODO: Replace it with json creator constructor if enough time*/
     /*Do not remove empty constructor for now, needed for Jackson*/
     public Content(){};
 
@@ -77,5 +77,13 @@ public class Content {
 
     public ContentData getContentData() {
         return contentData;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(obj == null || getClass() != obj.getClass()) return false;
+        Content objContent = (Content)obj;
+        return getPostID().equals(objContent.getPostID());
     }
 }

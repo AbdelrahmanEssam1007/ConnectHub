@@ -60,6 +60,7 @@ public abstract class ContentManagerFactory {
     public void saveToDB(List<Content> contentToSave){
         try {
             List<Content> allContent = new ArrayList<>(contentLoader.loadContent());
+            System.out.println("Content count is " + allContent.size());
             allContent.addAll(contentToSave);
             JSONFileWriter.writeJson(fileName.getFileName(), allContent);
         } catch (IOException ex) {
@@ -68,16 +69,11 @@ public abstract class ContentManagerFactory {
     }
 
     public  void removeContent(Content item){
-        if(!user.getUserId().equals(item.getAuthorID())){
-            JOptionPane.showMessageDialog(null,
-                    "You don't have permission to remove this content.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
         try {
             List<Content> allContent = new ArrayList<>(contentLoader.loadContent());
-            allContent.remove(item);
+            boolean changed = allContent.remove(item);
             JSONFileWriter.writeJson(fileName.getFileName(), allContent);
+            System.out.println("Content Removed: " + contentLoader +" Changed " + changed);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -93,6 +89,7 @@ public abstract class ContentManagerFactory {
 
     protected void addContent(Content content){
         this.content.add(content);
+        System.out.println("saved to db");
         saveToDB(List.of(content));
     }
 

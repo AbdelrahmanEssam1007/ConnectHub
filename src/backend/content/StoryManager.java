@@ -6,19 +6,20 @@ package backend.content;
 
 import backend.User;
 import utils.FileNames;
+import utils.JSONFileWriter;
 
 public class StoryManager extends ContentManagerFactory{
     public StoryManager(User user){
-        super(FileNames.POSTS, new StoryLoader(), new StoryFactory(), user);
+        super(FileNames.STORIES, new StoryLoader(), new StoryFactory(), user);
     }
 
     public void removeExpired(){
         readFromDB("All");
         for(Content x : content){
             if(x.expired()){
+                System.out.println("Sent x");
                 removeContent(x);
             }
-            saveToDB(content);
         }
     }
 }

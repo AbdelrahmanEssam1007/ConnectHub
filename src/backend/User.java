@@ -1,6 +1,6 @@
 package backend;
 
-import utils.UserIDGenerator;
+import utils.IDGenerator;
 
 import java.time.LocalDate;
 
@@ -14,7 +14,7 @@ public class User {
   private Profile profile;
 
   public User() {
-      this.userId = UserIDGenerator.generateUserId();
+      this.userId = IDGenerator.generateUserId();
       profile = new Profile();
   }
 

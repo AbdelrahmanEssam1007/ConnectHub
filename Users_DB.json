@@ -24,9 +24,9 @@
     "friends" : [ "cb2b9573-b77b-4897-83f2-99c422c3e9c8", "a0951309-15c0-46c6-b66a-d341c2499332" ],
     "blocked" : [ ],
     "pending" : [ ],
-    "profilePhoto" : null,
-    "coverPhoto" : null,
-    "bio" : null
+    "profilePhoto" : "C:\\Users\\Amr\\Documents\\Screenshot (18).png",
+    "coverPhoto" : "C:\\Users\\Amr\\Documents\\Screenshot (9).jpg",
+    "bio" : "my bio"
   }
 }, {
   "userId" : "cb2b9573-b77b-4897-83f2-99c422c3e9c8",
@@ -71,6 +71,6 @@
     "pending" : [ ],
     "profilePhoto" : null,
     "coverPhoto" : null,
-    "bio" : null
+    "bio" : "testing"
   }
 } ]

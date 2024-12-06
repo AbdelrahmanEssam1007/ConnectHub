@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class CreatePostPanel extends JFrame{
+public class CreatePostPanel extends JDialog{
     private JPanel panel1;
     private JTextArea contentTextInput;
     private JPanel imageContainer;
@@ -32,6 +32,7 @@ public class CreatePostPanel extends JFrame{
         this.postManager = postManager;
         this.storyManager = storyManager;
         this.refreshManager = refreshManager;
+        setModal(true);
 
         /*Managing button group*/
         contentGroup = new ButtonGroup();
@@ -45,7 +46,6 @@ public class CreatePostPanel extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setContentPane(panel1);
-        setVisible(true);
 
         /*Upload image button listener*/
         uploadImageButton.addActionListener(new ActionListener() {

@@ -1,6 +1,7 @@
 package backend.content;
 
 import backend.User;
+import utils.IDGenerator;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +11,7 @@ public class StoryFactory extends ContentFactory{
         return new Story(
                 contentData,
                 LocalDateTime.now(),
-                "POSTIDTEST",
+                IDGenerator.generateUserId(),
                 user.getUserId(),
                 user.getUserName()
         );

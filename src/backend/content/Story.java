@@ -19,6 +19,6 @@ public class Story extends Content implements Constants{
 
     @Override
     public boolean expired(){
-        return getPostDate().plusMinutes(STORY_EXPIRY).isBefore(LocalDateTime.now());
+        return getPostDate().plusSeconds(STORY_EXPIRY).isBefore(LocalDateTime.now());
     }
 }
