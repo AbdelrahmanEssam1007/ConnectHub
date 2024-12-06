@@ -71,7 +71,7 @@
     "pending" : [ ],
     "profilePhoto" : null,
     "coverPhoto" : null,
-    "bio" : "testing this text"
+    "bio" : "testing this text field"
   }
 }, {
   "userId" : "44023cbe-7916-450d-868a-b8b54f8a9330",

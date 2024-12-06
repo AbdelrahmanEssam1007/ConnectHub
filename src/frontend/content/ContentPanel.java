@@ -48,8 +48,20 @@ public class ContentPanel extends JPanel{
         contentManagerFactory.readFromDB(type);
         List<Content> content = contentManagerFactory.getContent();
         contentContainer.removeAll();
-        for(Content x : content)
-            addContent(x);
+
+        if (content.isEmpty()) {
+            JLabel noContentLabel = new JLabel("No content available.");
+            noContentLabel.setFont(new Font("Arial", Font.ITALIC, 14));
+            noContentLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            contentContainer.add(noContentLabel);
+        } else {
+            for (Content x : content) {
+                addContent(x);
+            }
+        }
+
+        contentContainer.revalidate();
+        contentContainer.repaint();
     }
 
     public void addContent(Content content){
@@ -77,8 +89,11 @@ public class ContentPanel extends JPanel{
         headerPanel.setBackground(Color.WHITE);
         headerPanel.add(header);
         if(type.equals("Profile")){
-            removeContentButton = new JButton();
-            removeContentButton.setText("Remove");
+            removeContentButton = new JButton("Remove");
+            removeContentButton.addActionListener(e -> {
+                contentManagerFactory.removeContent(content);
+                loadContent(type);
+            });
             headerPanel.add(removeContentButton);
         }
         headerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
