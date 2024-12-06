@@ -251,7 +251,14 @@ public class SignUpPage extends javax.swing.JFrame {
             userdb.addUser(user);
             JSONFileWriter.writeJson(FileNames.USERS.getFileName(), userdb.getUsers());
             JOptionPane.showMessageDialog(null, "Account created successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            SignInPage.getInstance();
+            this.usernameField.setText("");
+            this.passwordField.setText("");
+            this.emailField.setText("");
+            this.dateOfBirthChooser.setDate(new java.util.Date());
+            SwingUtilities.invokeLater(() -> {
+                SignInPage signInPage = SignInPage.getInstance();
+                signInPage.setVisible(true);
+            });
             this.dispose();
         }
         catch (Exception e) {
@@ -261,6 +268,10 @@ public class SignUpPage extends javax.swing.JFrame {
     }//GEN-LAST:event_signUpButtonMouseClicked
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        this.usernameField.setText("");
+        this.passwordField.setText("");
+        this.emailField.setText("");
+        this.dateOfBirthChooser.setDate(new java.util.Date());
         SwingUtilities.invokeLater(() -> {
             Main main = Main.getInstance();
             main.setVisible(true);

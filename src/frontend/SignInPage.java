@@ -53,6 +53,8 @@ public class SignInPage extends JFrame {
                 } else if(user != null && checkPassword(password, user.getPassword())) {
                     System.out.println(user.getUserName());
                     System.out.println("Login successful");
+                    usernameTF.setText("");
+                    passTF.setText("");
                     setVisible(false);
                     dispose();
                     user.setStatus(true);
@@ -67,6 +69,8 @@ public class SignInPage extends JFrame {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                usernameTF.setText("");
+                passTF.setText("");
                 SwingUtilities.invokeLater(() -> {
                     Main main = Main.getInstance();
                     main.setVisible(true);
