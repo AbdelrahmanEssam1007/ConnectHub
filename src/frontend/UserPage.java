@@ -388,11 +388,12 @@ public class UserPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void showProfileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showProfileButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         refreshManager.refreshAll();
         profilePanel = new ProfilePanel(this.loggedInUser, jPanel1.getWidth(), 200);
         type = "Profile";
-        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight()/2, type);
-        storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight()/2, type);
+        postsPanel = new PostsPanel(this.loggedInUser, new PostManager(loggedInUser),jPanel1.getWidth(), jPanel1.getHeight()/2, type);
+        storiesPanel = new StoriesPanel(this.loggedInUser, new StoryManager(loggedInUser), jPanel1.getWidth(), jPanel1.getHeight()/2, type);
         jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
         jPanel1.removeAll();
         jPanel1.add(profilePanel);
@@ -400,31 +401,37 @@ public class UserPage extends javax.swing.JFrame {
         jPanel1.add(storiesPanel);
         jPanel1.revalidate();
         jPanel1.repaint();
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_showProfileButtonMouseClicked
 
     private void showFriendsPostsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsPostsButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         refreshManager.refreshAll();
         type = "Friends";
         typeFeed = "Post";
-        postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), type);
+        postsPanel = new PostsPanel(this.loggedInUser, new PostManager(loggedInUser),jPanel1.getWidth(), jPanel1.getHeight(), type);
         jPanel1.removeAll();
         jPanel1.add(postsPanel);
         jPanel1.revalidate();
         jPanel1.repaint();
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_showFriendsPostsButtonMouseClicked
 
     private void showFriendsStoriesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsStoriesButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         refreshManager.refreshAll();
         type = "Friends";
         typeFeed = "Stories";
-        storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight(), type);
+        storiesPanel = new StoriesPanel(this.loggedInUser, new StoryManager(loggedInUser), jPanel1.getWidth(), jPanel1.getHeight(), type);
         jPanel1.removeAll();
         jPanel1.add(storiesPanel);
         jPanel1.revalidate();
         jPanel1.repaint();
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_showFriendsStoriesButtonMouseClicked
 
     private void blockCurrentFriendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_blockCurrentFriendButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         refreshManager.refreshAll();
         if (this.currentFriendsList.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
@@ -433,9 +440,11 @@ public class UserPage extends javax.swing.JFrame {
 
         FM.blockUser(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
         this.updateCurrentFriendsList();
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_blockCurrentFriendButtonMouseClicked
 
     private void removeCurrentFriendButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeCurrentFriendButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         refreshManager.refreshAll();
         if (this.currentFriendsList.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
@@ -444,9 +453,11 @@ public class UserPage extends javax.swing.JFrame {
 
         FM.removeUserFriend(UserDB.getInstance().searchUserByUserName(this.currentFriendsList.getSelectedValue()));
         this.updateCurrentFriendsList();
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_removeCurrentFriendButtonMouseClicked
 
     private void rejectRequestButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rejectRequestButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         if (this.friendRequestsList.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
             return ;
@@ -454,9 +465,11 @@ public class UserPage extends javax.swing.JFrame {
 
         FM.declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendRequestsList.getSelectedValue()));
         this.updateFriendRequestsList();
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_rejectRequestButtonMouseClicked
 
     private void acceptRequestButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acceptRequestButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         refreshManager.refreshAll();
         if (this.friendRequestsList.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
@@ -465,9 +478,11 @@ public class UserPage extends javax.swing.JFrame {
         FM.acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.friendRequestsList.getSelectedValue()));
         this.updateFriendRequestsList();
         this.updateCurrentFriendsList();
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_acceptRequestButtonMouseClicked
 
     private void sendRequestToSuggestedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendRequestToSuggestedButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         refreshManager.refreshAll();
         if (this.friendSuggestionsList.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
@@ -478,9 +493,11 @@ public class UserPage extends javax.swing.JFrame {
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, "Friend request already sent.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_sendRequestToSuggestedButtonMouseClicked
 
     private void searchForUsersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchForUsersButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         refreshManager.refreshAll();
         List <String> searchedUsers = new ArrayList<>();
         for (User user : UserDB.getInstance().getUsers()) {
@@ -493,9 +510,11 @@ public class UserPage extends javax.swing.JFrame {
 
         }
         this.searchedUsersList.setListData(new Vector<String>(searchedUsers));
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_searchForUsersButtonMouseClicked
 
     private void sendRequestToSearchedButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendRequestToSearchedButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         refreshManager.refreshAll();
         if (this.searchedUsersList.getSelectedIndex() < 0) {
             JOptionPane.showMessageDialog(null, "You must select a username", "No Selection Error", JOptionPane.ERROR_MESSAGE);
@@ -516,16 +535,20 @@ public class UserPage extends javax.swing.JFrame {
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null, "Friend request already sent.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_sendRequestToSearchedButtonMouseClicked
 
     private void quitButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         UserDB.getInstance().refreshDB();
         UserDB.getInstance().searchUserByUserId(this.loggedInUser.getUserId()).setStatus(false);
         UserDB.getInstance().SaveDB();
+        this.loggedInUser = FM.refresh();
         this.dispose();
     }//GEN-LAST:event_quitButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         SwingUtilities.invokeLater(() -> {
             Main main = Main.getInstance();
             main.setVisible(true);
@@ -533,11 +556,13 @@ public class UserPage extends javax.swing.JFrame {
         UserDB.getInstance().refreshDB();
         UserDB.getInstance().searchUserByUserId(this.loggedInUser.getUserId()).setStatus(false);
         UserDB.getInstance().SaveDB();
+        this.loggedInUser = FM.refresh();
         this.dispose();
 
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void createNewPostButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewPostButtonMouseClicked
+        this.loggedInUser = FM.refresh();
         new CreatePostPanel(postManager, storyManager, refreshManager).setVisible(true);
         refreshManager.refreshAll();
         profilePanel = new ProfilePanel(this.loggedInUser, jPanel1.getWidth(), 200);
@@ -556,11 +581,12 @@ public class UserPage extends javax.swing.JFrame {
         if(type.equals("Profile")){
             showProfileButtonMouseClicked(null);
         }
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
         UserDB.getInstance().refreshDB();
-        FM.refresh();
+        this.loggedInUser = FM.refresh();
         loggedInUser = UserDB.getInstance().searchUserByUserId(loggedInUser.getUserId());
         this.updateCurrentFriendsList();
         this.updateFriendRequestsList();
@@ -574,25 +600,31 @@ public class UserPage extends javax.swing.JFrame {
         else if (type.equals("Friends") && typeFeed.equals("Stories")) {
             this.showFriendsStoriesButtonMouseClicked(evt);
         }
+        this.loggedInUser = FM.refresh();
     }//GEN-LAST:event_refreshButtonMouseClicked
 
     private void updateCurrentFriendsList () {
+        this.loggedInUser = FM.refresh();
         List <String> friends = new ArrayList<>();
         for (String friendID : loggedInUser.getProfile().getFriends()) {
             friends.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
         }
         this.currentFriendsList.setListData(new Vector<String>(friends));
+        this.loggedInUser = FM.refresh();
     }
 
     private void updateFriendRequestsList () {
+        this.loggedInUser = FM.refresh();
         List <String> friendRequests = new ArrayList<>();
         for (String friendID : loggedInUser.getProfile().getPending()) {
             friendRequests.add(UserDB.getInstance().searchUserByUserId(friendID).getUserName());
         }
         this.friendRequestsList.setListData(new Vector<String>(friendRequests));
+        this.loggedInUser = FM.refresh();
     }
 
     private void updateFriendSuggestionsList() {
+        this.loggedInUser = FM.refresh();
         Set<String> uniqueFriendSuggestions = new HashSet<>();
 
         for (String friendID : loggedInUser.getProfile().getFriends()) {
@@ -608,6 +640,7 @@ public class UserPage extends javax.swing.JFrame {
         }
 
         this.friendSuggestionsList.setListData(new Vector<>(uniqueFriendSuggestions));
+        this.loggedInUser = FM.refresh();
     }
 
 

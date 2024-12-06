@@ -139,10 +139,11 @@ public class FriendManager {
       userDB.SaveDB();
   }
 
-  public void refresh(){
+  public User refresh(){
     userDB = UserDB.getInstance();
     userDB.refreshDB();
     user = userDB.searchUserByUserId(user.getUserId());
     userProfile = user.getProfile();
+    return user;
   }
 }
