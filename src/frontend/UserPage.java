@@ -81,7 +81,7 @@ public class UserPage extends javax.swing.JFrame {
         jPanel1.setLayout(new BorderLayout());
 
         /*Setup Refresh manager*/
-        refreshManager = new RefreshManager(List.of(postsPanel, storiesPanel));
+        refreshManager = new RefreshManager(List.of(postsPanel, storiesPanel, UserDB.getInstance()));
         refreshManager.refreshAll();
 
         /*Adding first panel profile panel*/
@@ -571,6 +571,8 @@ public class UserPage extends javax.swing.JFrame {
             refreshManager.refreshAll();
             this.showFriendsStoriesButtonMouseClicked(evt);
         }
+        revalidate();
+        repaint();
     }//GEN-LAST:event_refreshButtonMouseClicked
 
     private void updateCurrentFriendsList () {
