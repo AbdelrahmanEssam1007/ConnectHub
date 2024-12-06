@@ -47,6 +47,7 @@ public class FriendManager {
     
     if (userProfile.getPending().contains(targetUser.getUserId())) {
         this.acceptFriendRequest(targetUser);
+        return;
     }
 
     targetProfile.getPending().add(user.getUserId());
