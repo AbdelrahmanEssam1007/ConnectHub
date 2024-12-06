@@ -51,6 +51,11 @@ public class CreatePostPanel extends JDialog{
         uploadImageButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(imageFile != null){
+                    JOptionPane.showMessageDialog(null, "Cannot upload multiple images.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 imageFile = ImageUtils.uploadImage();
                 if(imageFile != null){
                     try {
@@ -126,6 +131,7 @@ public class CreatePostPanel extends JDialog{
                     dispose();
                 }
                 else if(!text.isEmpty()){
+                    System.out.println("Text only");
                     if(postRadioButton.isSelected()){
                         postManager.createTextOnlyContent(text);
                         JOptionPane.showMessageDialog(null, "Successfully made post!",
