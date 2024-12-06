@@ -7,9 +7,7 @@ package frontend;
 import backend.*;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+import java.util.*;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
@@ -28,6 +26,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -91,6 +90,7 @@ public class UserPage extends javax.swing.JFrame {
                 UserDB.getInstance().SaveDB();
             }
         });
+        this.showProfileButtonMouseClicked(null);
     }
 
     /**
@@ -592,21 +592,24 @@ public class UserPage extends javax.swing.JFrame {
         this.friendRequestsList.setListData(new Vector<String>(friendRequests));
     }
 
-    private void updateFriendSuggestionsList () {
-        List <String> friendSuggestions = new ArrayList<>();
+    private void updateFriendSuggestionsList() {
+        Set<String> uniqueFriendSuggestions = new HashSet<>();
+
         for (String friendID : loggedInUser.getProfile().getFriends()) {
             for (String suggestedFriendID : UserDB.getInstance().searchUserByUserId(friendID).getProfile().getFriends()) {
                 if (!loggedInUser.getProfile().getFriends().contains(suggestedFriendID) // not already friends
                         && !loggedInUser.getProfile().getPending().contains(suggestedFriendID) // not already sent a request
-                        && !suggestedFriendID.equals(loggedInUser.getUserId())// not the user himself
-                        && !loggedInUser.getProfile().getBlocked().contains(suggestedFriendID)// not blocked
+                        && !suggestedFriendID.equals(loggedInUser.getUserId()) // not the user himself
+                        && !loggedInUser.getProfile().getBlocked().contains(suggestedFriendID) // not blocked
                         && !UserDB.getInstance().searchUserByUserId(suggestedFriendID).getProfile().getBlocked().contains(loggedInUser.getUserId())) { // not blocked by the suggested friend
-                 friendSuggestions.add(UserDB.getInstance().searchUserByUserId(suggestedFriendID).getUserName());
+                    uniqueFriendSuggestions.add(UserDB.getInstance().searchUserByUserId(suggestedFriendID).getUserName());
                 }
             }
         }
-        this.friendSuggestionsList.setListData(new Vector<String>(friendSuggestions));
+
+        this.friendSuggestionsList.setListData(new Vector<>(uniqueFriendSuggestions));
     }
+
 
     /**
      * @param args the command line arguments
