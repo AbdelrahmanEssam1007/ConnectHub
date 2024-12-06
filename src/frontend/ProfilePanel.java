@@ -50,8 +50,7 @@ public class ProfilePanel extends JPanel implements Constants {
         Image scaledPfpImage = pfpImage.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         pfpImage = new ImageIcon(scaledPfpImage);
 
-        coverImage = new ImageIcon(coverImagePath);
-        Image scaledCoverImage = coverImage.getImage().getScaledInstance(250, 100, Image.SCALE_SMOOTH);
+        Image scaledCoverImage = ImageUtils.scaleImageIcon(coverImagePath, 400).getImage();
         coverImage = new ImageIcon(scaledCoverImage);
 
         pfpPanel.setBackground(Color.WHITE);
@@ -146,7 +145,7 @@ public class ProfilePanel extends JPanel implements Constants {
                                 return;
                             }
                             coverImagePath = newFile.getAbsolutePath();
-                            Image scaledCoverImage = ImageUtils.scaleImageIcon(coverImagePath, 250).getImage();
+                            Image scaledCoverImage = ImageUtils.scaleImageIcon(coverImagePath, 400).getImage();
                             coverImage = new ImageIcon(scaledCoverImage);
                             coverLabel.setIcon(coverImage);
                             String newCoverPath;
