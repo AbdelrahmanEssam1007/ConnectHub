@@ -2,6 +2,7 @@ package frontend;
 
 import backend.Profile;
 import backend.User;
+import backend.UserDB;
 import utils.Constants;
 import utils.ImageUtils;
 
@@ -12,6 +13,7 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 
 public class ProfilePanel extends JPanel implements Constants {
     private JTextArea bioTextArea;
@@ -57,7 +59,6 @@ public class ProfilePanel extends JPanel implements Constants {
         coverPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         // Set up bio text area
-        bioTextArea.setText(profile.getBio());
         bioTextArea.setEditable(false);
         bioTextArea.setLineWrap(true);
         bioTextArea.setWrapStyleWord(true);
@@ -81,7 +82,10 @@ public class ProfilePanel extends JPanel implements Constants {
 
         add(mainPanel);
         setSize(width, height);
+        bioTextArea.setText(profile.getBio());
+        bioTextArea.setRows(3);
         setVisible(true);
+        //bioTextArea.setEnabled(false);
 
         cancelButton.setVisible(false);
 
@@ -90,9 +94,12 @@ public class ProfilePanel extends JPanel implements Constants {
             public void actionPerformed(ActionEvent e) {
                 if(editButton.getText().equals("Save")) {
                     profile.setBio(bioTextArea.getText());
+                    UserDB.getInstance().SaveDB();
                 }
                 boolean isEditable = bioTextArea.isEditable();
                 bioTextArea.setEditable(!isEditable);
+                //bioTextArea.setEnabled(!isEditable);
+                //bioTextArea.setFocusable(isEditable);
                 editButton.setText(isEditable ? "Edit" : "Save"); // Toggle button text
                 cancelButton.setVisible(!isEditable);
 
@@ -110,7 +117,15 @@ public class ProfilePanel extends JPanel implements Constants {
                             pfpImage = new ImageIcon(scaledPfpImage);
                             pfpLabel.setIcon(pfpImage);
                             // TODO: save image only if user saves changes
-                            profile.setProfilePhoto(pfpImagePath);
+                            String newPfpPath;
+                            try {
+                                newPfpPath = ImageUtils.saveImage(newFile);
+                                profile.setProfilePhoto(newPfpPath);
+                                UserDB.getInstance().SaveDB();
+                            } catch (IOException ex) {
+                                JOptionPane.showMessageDialog(null, "Error saving image.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+
                         }
                     });
 
@@ -126,7 +141,14 @@ public class ProfilePanel extends JPanel implements Constants {
                             Image scaledCoverImage = ImageUtils.scaleImageIcon(coverImagePath, 250).getImage();
                             coverImage = new ImageIcon(scaledCoverImage);
                             coverLabel.setIcon(coverImage);
-                            profile.setCoverPhoto(coverImagePath);
+                            String newCoverPath;
+                            try {
+                                newCoverPath = ImageUtils.saveImage(newFile);
+                                profile.setCoverPhoto(newCoverPath);
+                                UserDB.getInstance().SaveDB();
+                            } catch (IOException ex) {
+                                JOptionPane.showMessageDialog(null, "Error saving image.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                     });
 
@@ -135,6 +157,7 @@ public class ProfilePanel extends JPanel implements Constants {
                         public void actionPerformed(ActionEvent e) {
                             bioTextArea.setText(profile.getBio());
                             bioTextArea.setEditable(false);
+                            //bioTextArea.setEnabled(false);
                             editButton.setText("Edit");
                             cancelButton.setVisible(false);
                             pfpLabel.removeMouseListener(pfpLabel.getMouseListeners()[0]);
