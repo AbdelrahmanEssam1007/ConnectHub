@@ -525,7 +525,10 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_quitButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        new Main();
+        SwingUtilities.invokeLater(() -> {
+            Main main = Main.getInstance();
+            main.setVisible(true);
+        });
         this.loggedInUser.setStatus(false);
         UserDB.getInstance().SaveDB();
         this.dispose();
