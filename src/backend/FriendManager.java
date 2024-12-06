@@ -61,6 +61,7 @@ public class FriendManager {
 
     userProfile.getFriends().add(senderUser.getUserId());
     userProfile.getPending().remove(senderUser.getUserId());
+    senderProfile.getPending().remove(user.getUserId()); // check to remove potential bug
     senderProfile.getFriends().add(user.getUserId());
     userDB.SaveDB();
   }
