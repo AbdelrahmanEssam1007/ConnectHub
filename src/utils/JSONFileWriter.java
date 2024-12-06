@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,7 +15,12 @@ public class JSONFileWriter {
         objectMapper.registerModule(new JavaTimeModule());
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         File file = new File(filePath);
-        // TODO: handle file not created
+        if (!file.exists()) {
+            file.createNewFile();
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write("[]");
+            }
+        }
         objectWriter.writeValue(file, dataList);
     }
 }
