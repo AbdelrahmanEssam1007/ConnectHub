@@ -128,6 +128,7 @@ public class UserPage extends javax.swing.JFrame {
         quitButton = new javax.swing.JButton();
         logoutButton = new javax.swing.JButton();
         createNewPostButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 630));
@@ -232,8 +233,6 @@ public class UserPage extends javax.swing.JFrame {
         });
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
-        jPanel1.setMinimumSize(new java.awt.Dimension(550, 500));
-        jPanel1.setPreferredSize(new java.awt.Dimension(550, 500));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -267,6 +266,13 @@ public class UserPage extends javax.swing.JFrame {
             }
         });
 
+        refreshButton.setText("Refresh");
+        refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -278,16 +284,6 @@ public class UserPage extends javax.swing.JFrame {
                         .addComponent(quitButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(logoutButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(showProfileButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(showFriendsPostsButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(showFriendsStoriesButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(createNewPostButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,8 +314,21 @@ public class UserPage extends javax.swing.JFrame {
                                 .addComponent(sendRequestToSuggestedButton)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(showProfileButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(showFriendsPostsButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(showFriendsStoriesButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(createNewPostButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(refreshButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,7 +338,8 @@ public class UserPage extends javax.swing.JFrame {
                     .addComponent(showFriendsPostsButton)
                     .addComponent(showFriendsStoriesButton)
                     .addComponent(showProfileButton)
-                    .addComponent(createNewPostButton))
+                    .addComponent(createNewPostButton)
+                    .addComponent(refreshButton))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -390,6 +400,7 @@ public class UserPage extends javax.swing.JFrame {
     private void showFriendsPostsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsPostsButtonMouseClicked
         refreshManager.refreshAll();
         type = "Friends";
+        typeFeed = "Post";
         postsPanel = new PostsPanel(this.loggedInUser, postManager,jPanel1.getWidth(), jPanel1.getHeight(), type);
         jPanel1.removeAll();
         jPanel1.add(postsPanel);
@@ -400,6 +411,7 @@ public class UserPage extends javax.swing.JFrame {
     private void showFriendsStoriesButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsStoriesButtonMouseClicked
         refreshManager.refreshAll();
         type = "Friends";
+        typeFeed = "Stories";
         storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight(), type);
         jPanel1.removeAll();
         jPanel1.add(storiesPanel);
@@ -531,6 +543,21 @@ public class UserPage extends javax.swing.JFrame {
         jPanel1.repaint();
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
+    private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        this.updateCurrentFriendsList();
+        this.updateFriendRequestsList();
+        this.updateFriendSuggestionsList();
+        if (type.equals("Profile")) {
+            this.showProfileButtonMouseClicked(evt);
+        }
+        else if (type.equals("Friends") && typeFeed.equals("Post")) {
+            this.showFriendsPostsButtonMouseClicked(evt);
+        }
+        else if (type.equals("Friends") && typeFeed.equals("Stories")) {
+            this.showFriendsStoriesButtonMouseClicked(evt);
+        }
+    }//GEN-LAST:event_refreshButtonMouseClicked
+
     private void updateCurrentFriendsList () {
         List <String> friends = new ArrayList<>();
         for (String friendID : loggedInUser.getProfile().getFriends()) {
@@ -616,6 +643,7 @@ public class UserPage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton logoutButton;
     private javax.swing.JButton quitButton;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JButton rejectRequestButton;
     private javax.swing.JButton removeCurrentFriendButton;
     private javax.swing.JTextField searchCriteriaField;
