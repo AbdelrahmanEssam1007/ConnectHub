@@ -71,19 +71,34 @@ public class ContentPanel extends JPanel{
         DateTimeFormatter contentDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         JLabel header = new JLabel(content.getUsername() + "    " + content.getPostDate().format(contentDateFormat));
         header.setFont(new Font("Arial", Font.BOLD, 14));
+        //header.setAlignmentX(Component.LEFT_ALIGNMENT);
         contentPanel.add(header);
 
         /*Configuring content text*/
         if(content.returnText() != null){
-            JLabel text =  new JLabel(content.returnText());
+            JTextArea text = new JTextArea(content.returnText());
             text.setFont(new Font("Arial", Font.PLAIN, 12));
-            contentPanel.add(text);
+            text.setEditable(false);
+            text.setLineWrap(true);
+            text.setWrapStyleWord(true);
+            text.setOpaque(false);
+            text.setBorder(null);
+
+            JPanel textPanel = new JPanel();
+            textPanel.setLayout(new BorderLayout());
+            textPanel.setOpaque(false);
+            textPanel.add(text, BorderLayout.CENTER);
+            textPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+            contentPanel.add(textPanel);
         }
 
         /*Configuring content image*/
         if(content.returnImagePath() != null){
             ImageIcon scaledImage = scaleImageIcon(content.returnImagePath(), getWidth() - 60);
-            contentPanel.add(new JLabel(scaledImage));
+            JLabel imageLabel = new JLabel(scaledImage);
+            imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            contentPanel.add(imageLabel);
         }
 
         return contentPanel;

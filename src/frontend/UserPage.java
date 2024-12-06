@@ -508,10 +508,10 @@ public class UserPage extends javax.swing.JFrame {
             storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, jPanel1.getWidth(), jPanel1.getHeight(), type);
         }
         jPanel1.removeAll();
-        jPanel1.add(postsPanel, BorderLayout.PAGE_START);
-        jPanel1.add(profilePanel, BorderLayout.CENTER);
-        revalidate();
-        repaint();
+        jPanel1.add(profilePanel, BorderLayout.PAGE_START);
+        jPanel1.add(postsPanel, BorderLayout.CENTER);
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void updateCurrentFriendsList () {

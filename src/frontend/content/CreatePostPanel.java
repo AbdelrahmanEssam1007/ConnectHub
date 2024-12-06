@@ -57,7 +57,8 @@ public class CreatePostPanel extends JDialog{
                         String imagePath = ImageUtils.saveImage(imageFile);
                         imageContainer.setLayout(new BorderLayout());
                         imageContainer.removeAll();
-                        imageContainer.add(new JLabel(new ImageIcon(imagePath)));
+                        ImageIcon imageTemp = ImageUtils.scaleImageIcon(imagePath, imageContainer.getWidth());
+                        imageContainer.add(new JLabel(imageTemp));
                         imageContainer.revalidate();
                         imageContainer.repaint();
                     } catch (IOException ex) {

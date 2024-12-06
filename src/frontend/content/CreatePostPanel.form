@@ -32,7 +32,7 @@
           <gridbag weightx="0.0" weighty="1.0"/>
         </constraints>
         <properties>
-          <text value="Create Post"/>
+          <text value="Create"/>
         </properties>
       </component>
       <component id="aa1a7" class="javax.swing.JButton" binding="uploadImageButton">
