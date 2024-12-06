@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FriendManager {
   
-  private static final FriendManager FRIEND_MANAGER = null;
+  private static FriendManager FRIEND_MANAGER = null;
   
   private User user;
   private Profile userProfile;
@@ -119,6 +119,30 @@ public class FriendManager {
   public void removeUserFriend (User targetUser) {
       this.userProfile.getFriends().remove(targetUser.getUserId());
       targetUser.getProfile().getFriends().remove(this.user.getUserId());
+
+//      int i;
+//      for (i = 0; i < userDB.getUsers().size(); i++) {
+//        if (userDB.getUsers().get(i).getUserId().equals(targetUser.getUserId())) {
+//          System.out.println("Index of targetUser: " + i);
+//          break;
+//        }
+//      }
+//      userDB.getUsers().get(i).getProfile().getFriends().remove(this.user.getUserId());
+//      for (i = 0; i < userDB.getUsers().size(); i++) {
+//        if (userDB.getUsers().get(i).getUserId().equals(this.user.getUserId())) {
+//          System.out.println("Index of targetUser: " + i);
+//          break;
+//        }
+//      }
+//      userDB.getUsers().get(i).getProfile().getFriends().remove(targetUser.getUserId());
+
       userDB.SaveDB();
+  }
+
+  public void refresh(){
+    userDB = UserDB.getInstance();
+    userDB.refreshDB();
+    user = userDB.searchUserByUserId(user.getUserId());
+    userProfile = user.getProfile();
   }
 }

@@ -560,6 +560,8 @@ public class UserPage extends javax.swing.JFrame {
 
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
         UserDB.getInstance().refreshDB();
+        FM.refresh();
+        loggedInUser = UserDB.getInstance().searchUserByUserId(loggedInUser.getUserId());
         this.updateCurrentFriendsList();
         this.updateFriendRequestsList();
         this.updateFriendSuggestionsList();
