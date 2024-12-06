@@ -34,7 +34,7 @@ public class ImageUtils implements Constants{
         File destinationFile = new File(destinationDir, fileName);
         ImageIO.write(convertedImage, "jpg", destinationFile);
 
-        return destinationFile.getAbsolutePath();
+        return destinationFile.getPath();
     }
 
     /*Returns scaled image and keeps AR*/
