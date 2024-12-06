@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class JSONFileWriter {
-    public static <T>void writeJson(String filePath, List<T> dataList) throws IOException {
+    public static synchronized <T>void writeJson(String filePath, List<T> dataList) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class JSONFileReader {
-    public static <T> List<T> readJson(String filePath, Class<T> CLASS) throws IOException {
+    public static synchronized <T> List<T> readJson(String filePath, Class<T> CLASS) throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
             file.createNewFile();
