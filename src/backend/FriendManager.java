@@ -44,6 +44,11 @@ public class FriendManager {
       System.out.println("Friend request already sent.");
       throw new IllegalArgumentException("Friend request already sent.");
     }
+    
+    if (userProfile.getPending().contains(targetUser.getUserId())) {
+        this.acceptFriendRequest(targetUser);
+        return;
+    }
 
     targetProfile.getPending().add(user.getUserId());
     System.out.println("Friend request sent successfully.");

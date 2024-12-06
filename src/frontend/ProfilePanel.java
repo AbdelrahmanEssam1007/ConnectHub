@@ -22,6 +22,7 @@ public class ProfilePanel extends JPanel implements Constants {
     private JPanel mainPanel;
     private JButton editButton;
     private JButton cancelButton;
+    private JScrollPane bioScroll;
 
     private String pfpImagePath;
     private String coverImagePath;
@@ -65,7 +66,13 @@ public class ProfilePanel extends JPanel implements Constants {
         bioTextArea.setDocument(new PlainDocument() {
             @Override
             public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-                if (str == null || (getLength() + str.length()) <= 250) { // Limit bio to 250 characters
+                if (str == null) {
+                    return;
+                }
+                String currentText = getText(0, getLength());
+                int currentLines = currentText.split("\n").length;
+                int newLines = str.split("\n").length;
+                if ((currentLines + newLines) <= 3 && (getLength() + str.length()) <= 250) { // Limit bio to 250 characters and 3 lines
                     super.insertString(offs, str, a);
                 }
             }
@@ -84,6 +91,7 @@ public class ProfilePanel extends JPanel implements Constants {
         setSize(width, height);
         bioTextArea.setText(profile.getBio());
         bioTextArea.setRows(3);
+        bioScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         setVisible(true);
         //bioTextArea.setEnabled(false);
 
