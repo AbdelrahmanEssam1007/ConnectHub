@@ -71,8 +71,18 @@ public class ContentPanel extends JPanel{
         DateTimeFormatter contentDateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         JLabel header = new JLabel(content.getUsername() + "    " + content.getPostDate().format(contentDateFormat));
         header.setFont(new Font("Arial", Font.BOLD, 14));
-        //header.setAlignmentX(Component.LEFT_ALIGNMENT);
-        contentPanel.add(header);
+        JButton removeContentButton;
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        headerPanel.setBackground(Color.WHITE);
+        headerPanel.add(header);
+        if(type.equals("Profile")){
+            removeContentButton = new JButton();
+            removeContentButton.setText("Remove");
+            headerPanel.add(removeContentButton);
+        }
+        headerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        contentPanel.add(headerPanel);
 
         /*Configuring content text*/
         if(content.returnText() != null){
