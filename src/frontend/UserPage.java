@@ -43,6 +43,8 @@ public class UserPage extends javax.swing.JFrame {
         this.profileContentPanel.setLayout(new BorderLayout());
         this.storiesContentPanel.setLayout(new BorderLayout());
         this.postsContentPanel.setLayout(new BorderLayout());
+
+        this.setVisible(true);
     }
     
     public UserPage (User user) {
@@ -297,7 +299,7 @@ public class UserPage extends javax.swing.JFrame {
         this.type = "Friends";
         this.typeFeed = "Post";
         this.postsPanel = new PostsPanel(this.loggedInUser, new PostManager(this.loggedInUser),this.postsContentPanel.getWidth(), this.postsContentPanel.getHeight(), type);
-        this.postsContentPanel.add(this.profilePanel);
+        this.postsContentPanel.add(this.postsPanel);
         this.postsContentPanel.revalidate();
         this.postsContentPanel.repaint();
     }
@@ -307,7 +309,7 @@ public class UserPage extends javax.swing.JFrame {
         this.type = "Friends";
         this.typeFeed = "Stories";
         this.storiesPanel = new StoriesPanel(this.loggedInUser, new StoryManager(this.loggedInUser),this.storiesContentPanel.getWidth(), this.storiesContentPanel.getHeight(), type);
-        this.storiesContentPanel.add(this.profilePanel);
+        this.storiesContentPanel.add(this.storiesPanel);
         this.storiesContentPanel.revalidate();
         this.storiesContentPanel.repaint();
     }
