@@ -23,6 +23,7 @@ public class ProfilePanel extends JPanel implements Constants {
     private JButton editButton;
     private JButton cancelButton;
     private JScrollPane bioScroll;
+    private User user;
 
     private String pfpImagePath;
     private String coverImagePath;
@@ -32,11 +33,12 @@ public class ProfilePanel extends JPanel implements Constants {
 
     private JLabel pfpLabel;
     private JLabel coverLabel;
+    private UserDB userDB = UserDB.getInstance();
 
-    public ProfilePanel(User user, int width, int height) {
-        Profile profile = user.getProfile();
-        pfpImagePath = profile.getProfilePhoto();
-        coverImagePath = profile.getCoverPhoto();
+  public ProfilePanel(User user, int width, int height) {
+        this.user = user;
+        pfpImagePath = user.getProfile().getProfilePhoto();
+        coverImagePath = user.getProfile().getCoverPhoto();
 
         if(pfpImagePath == null) {
             pfpImagePath = Constants.DEFAULT_PFP; // Default profile picture
@@ -88,7 +90,7 @@ public class ProfilePanel extends JPanel implements Constants {
 
         add(mainPanel);
         setSize(width, height);
-        bioTextArea.setText(profile.getBio());
+        bioTextArea.setText(user.getProfile().getBio());
         bioTextArea.setRows(3);
         bioScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         setVisible(true);
@@ -100,8 +102,8 @@ public class ProfilePanel extends JPanel implements Constants {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(editButton.getText().equals("Save")) {
-                    profile.setBio(bioTextArea.getText());
-                    UserDB.getInstance().SaveDB();
+                    user.getProfile().setBio(bioTextArea.getText());
+                    userDB.setUser(user);
                 }
                 boolean isEditable = bioTextArea.isEditable();
                 bioTextArea.setEditable(!isEditable);
@@ -127,8 +129,8 @@ public class ProfilePanel extends JPanel implements Constants {
                             String newPfpPath;
                             try {
                                 newPfpPath = ImageUtils.saveImage(newFile);
-                                profile.setProfilePhoto(newPfpPath);
-                                UserDB.getInstance().SaveDB();
+                                user.getProfile().setProfilePhoto(newPfpPath);
+                                userDB.setUser(user);
                             } catch (IOException ex) {
                                 JOptionPane.showMessageDialog(null, "Error saving image.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -151,8 +153,8 @@ public class ProfilePanel extends JPanel implements Constants {
                             String newCoverPath;
                             try {
                                 newCoverPath = ImageUtils.saveImage(newFile);
-                                profile.setCoverPhoto(newCoverPath);
-                                UserDB.getInstance().SaveDB();
+                                user.getProfile().setCoverPhoto(newCoverPath);
+                                userDB.setUser(user);
                             } catch (IOException ex) {
                                 JOptionPane.showMessageDialog(null, "Error saving image.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -162,7 +164,7 @@ public class ProfilePanel extends JPanel implements Constants {
                     cancelButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            bioTextArea.setText(profile.getBio());
+                            bioTextArea.setText(user.getProfile().getBio());
                             bioTextArea.setEditable(false);
                             //bioTextArea.setEnabled(false);
                             editButton.setText("Edit");

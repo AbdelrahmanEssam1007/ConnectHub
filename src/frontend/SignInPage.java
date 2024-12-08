@@ -57,8 +57,6 @@ public class SignInPage extends JFrame {
                     passTF.setText("");
                     setVisible(false);
                     dispose();
-                    user.setStatus(true);
-                    UserDB.getInstance().SaveDB();
                     new UserPage(user);
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid credentials", "Error", JOptionPane.ERROR_MESSAGE);
