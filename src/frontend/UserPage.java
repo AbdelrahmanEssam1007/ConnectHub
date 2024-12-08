@@ -32,6 +32,7 @@ public class UserPage extends javax.swing.JFrame {
     private ProfilePanel profilePanel;
     private String type = "Profile";
     private String typeFeed = "Post";
+    private UserDB userDB = UserDB.getInstance();
     
     
     public UserPage() {
@@ -39,6 +40,7 @@ public class UserPage extends javax.swing.JFrame {
         
         this.setLocationRelativeTo(null);
         this.setTitle("ConnectHub - " + "<username>");
+        this.setVisible(true);
         
         this.profileContentPanel.setLayout(new BorderLayout());
         this.storiesContentPanel.setLayout(new BorderLayout());
@@ -68,9 +70,9 @@ public class UserPage extends javax.swing.JFrame {
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                UserDB.getInstance().refreshDB();
-                UserDB.getInstance().searchUserByUserId(loggedInUser.getUserId()).setStatus(false);
-                UserDB.getInstance().SaveDB();
+                userDB.refreshDB();
+                userDB.searchUserByUserId(loggedInUser.getUserId()).setStatus(false);
+                userDB.SaveDB();
             }
         });
         
@@ -285,11 +287,12 @@ public class UserPage extends javax.swing.JFrame {
         this.profileContentPanel.removeAll();
         this.profileContentPanel.setLayout(new BoxLayout(this.profileContentPanel, BoxLayout.Y_AXIS));
         this.type = "Profile";
-        this.postsPanel = new PostsPanel(this.loggedInUser, new PostManager(loggedInUser),this.profileContentPanel.getWidth(), this.profileContentPanel.getHeight()/2, type);
-        this.storiesPanel = new StoriesPanel(this.loggedInUser, new StoryManager(loggedInUser), this.profileContentPanel.getWidth(), this.profileContentPanel.getHeight()/2, type);
+        this.postsPanel = new PostsPanel(this.loggedInUser, new PostManager(loggedInUser),this.profileContentPanel.getWidth(), this.profileContentPanel.getHeight()/3, type);
+        this.storiesPanel = new StoriesPanel(this.loggedInUser, new StoryManager(loggedInUser), this.profileContentPanel.getWidth(), this.profileContentPanel.getHeight()/3, type);
         this.profileContentPanel.add(this.profilePanel);
         this.profileContentPanel.add(this.postsPanel);
         this.profileContentPanel.add(this.storiesPanel);
+        this.profileContentPanel.setVisible(true);
         this.profileContentPanel.revalidate();
         this.profileContentPanel.repaint();
     }
