@@ -43,24 +43,15 @@ public class UserPage extends javax.swing.JFrame {
         this.profileContentPanel.setLayout(new BorderLayout());
         this.storiesContentPanel.setLayout(new BorderLayout());
         this.postsContentPanel.setLayout(new BorderLayout());
-        
-        this.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                UserDB.getInstance().refreshDB();
-                UserDB.getInstance().searchUserByUserId(loggedInUser.getUserId()).setStatus(false);
-                UserDB.getInstance().SaveDB();
-            }
-        });
-        
     }
     
     public UserPage (User user) {
         this ();
         
+        this.loggedInUser = user;
+        
         this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
         
-        this.loggedInUser = user;
         this.FM = FriendManager.getInstance(user);
         this.postManager = new PostManager(this.loggedInUser);
         this.storyManager = new StoryManager(this.loggedInUser);
@@ -71,6 +62,15 @@ public class UserPage extends javax.swing.JFrame {
         this.storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, this.storiesContentPanel.getWidth(), this.storiesContentPanel.getHeight(), type);
         this.profilePanel = new ProfilePanel(this.loggedInUser, this.profileContentPanel.getWidth(), 200);
         this.refreshManager = new RefreshManager(List.of(postsPanel, storiesPanel));
+        
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                UserDB.getInstance().refreshDB();
+                UserDB.getInstance().searchUserByUserId(loggedInUser.getUserId()).setStatus(false);
+                UserDB.getInstance().SaveDB();
+            }
+        });
         
         this.refreshButtonMouseClicked(null);
     }
@@ -101,6 +101,11 @@ public class UserPage extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(600, 630));
 
         logoutButton.setText("Log Out");
+        logoutButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutButtonMouseClicked(evt);
+            }
+        });
 
         refreshButton.setText("Refresh");
         refreshButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -254,7 +259,9 @@ public class UserPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mainPanelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainPanelStateChanged
-        this.refreshButtonMouseClicked(null);
+        if (this.loggedInUser != null) {
+            this.refreshButtonMouseClicked(null);
+        }
     }//GEN-LAST:event_mainPanelStateChanged
 
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
@@ -266,6 +273,10 @@ public class UserPage extends javax.swing.JFrame {
         this.setPostsContentPanel();
         this.setStoriesContentPanel();
     }//GEN-LAST:event_refreshButtonMouseClicked
+
+    private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutButtonMouseClicked
 
     
     void setProfileContentPanel () {
