@@ -4,8 +4,10 @@
  */
 package frontend;
 
+import java.awt.Color;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -16,12 +18,24 @@ public class FriendsPages extends javax.swing.JPanel {
     /**
      * Creates new form FriendsPages
      */
+    JPanel currentFriends;
+    JPanel friendRequests;
+    JPanel suggestedFriends;
+    JPanel searchFriends;
     public FriendsPages() {
         initComponents();
-        this.currentFriendsPanel.setLayout(new BoxLayout (this.currentFriendsPanel, BoxLayout.Y_AXIS));
-        this.friendRequestsPanel.setLayout(new BoxLayout (this.friendRequestsPanel, BoxLayout.Y_AXIS));
-        this.suggestedFriendsPanel.setLayout(new BoxLayout (this.suggestedFriendsPanel, BoxLayout.Y_AXIS));
-        this.searchedFriendsPanel.setLayout(new BoxLayout (this.suggestedFriendsPanel, BoxLayout.Y_AXIS));
+        this.currentFriends.setLayout(new BoxLayout (this.currentFriends, BoxLayout.Y_AXIS));
+        this.currentFriends.setBackground(Color.WHITE);
+        this.friendRequests.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
+        this.friendRequests.setBackground(Color.WHITE);
+        this.suggestedFriends.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
+        this.suggestedFriends.setBackground(Color.WHITE);
+        this.searchFriends.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
+        this.searchFriends.setBackground(Color.WHITE);
+//        this.currentFriendsPanel.setLayout(new BoxLayout (this.currentFriendsPanel, BoxLayout.Y_AXIS));
+//        this.friendRequestsPanel.setLayout(new BoxLayout (this.friendRequestsPanel, BoxLayout.Y_AXIS));
+//        this.suggestedFriendsPanel.setLayout(new BoxLayout (this.suggestedFriendsPanel, BoxLayout.Y_AXIS));
+//        this.searchedFriendsPanel.setLayout(new BoxLayout (this.suggestedFriendsPanel, BoxLayout.Y_AXIS));
     }
 
     /**
@@ -169,31 +183,55 @@ public class FriendsPages extends javax.swing.JPanel {
 
 
     public void addToCurrentFriendsPanel (JPanel panel) {
-        this.currentFriendsPanel.add(panel);
+        this.currentFriends.add(panel);
     }
     public void removeAllCurrentFriendsPanel () {
         this.currentFriendsPanel.removeAll();
+        this.currentFriends.removeAll();
+    }
+    public void setCurrentFriends () {
+        this.currentFriendsPanel = new JScrollPane(this.currentFriends);
+        this.currentFriendsPanel.revalidate();
+        this.currentFriendsPanel.repaint();
     }
     
     public void addToFriendRequestsPanel (JPanel panel) {
-        this.friendRequestsPanel.add(panel);
+        this.friendRequests.add(panel);
     }
     public void removeAllFriendRequestsPanel () {
         this.friendRequestsPanel.removeAll();
+        this.friendRequests.removeAll();
+    }
+    public void setFriendRequests () {
+        this.friendRequestsPanel = new JScrollPane(this.friendRequests);
+        this.friendRequestsPanel.revalidate();
+        this.friendRequestsPanel.repaint();
     }
     
     public void addToSuggestedFriendsPanel (JPanel panel) {
-        this.suggestedFriendsPanel.add(panel);
+        this.suggestedFriends.add(panel);
     }
     public void removeAllSuggestedFriendsPanel () {
         this.suggestedFriendsPanel.removeAll();
+        this.suggestedFriends.removeAll();
+    }
+    public void setSuggestedFriends () {
+        this.suggestedFriendsPanel = new JScrollPane(this.suggestedFriends);
+        this.suggestedFriendsPanel.revalidate();
+        this.suggestedFriendsPanel.repaint();
     }
     
     public void addToSearchedFriendsPanel (JPanel panel) {
-        this.searchedFriendsPanel.add(panel);
+        this.searchFriends.add(panel);
     }
     public void removeAllSearchedFriendsPanel () {
         this.searchedFriendsPanel.removeAll();
+        this.searchFriends.removeAll();
+    }
+    public void setSearchedFriends () {
+        this.searchedFriendsPanel = new JScrollPane(this.searchFriends);
+        this.searchedFriendsPanel.revalidate();
+        this.searchedFriendsPanel.repaint();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -359,6 +359,7 @@ public class UserPage extends javax.swing.JFrame {
         for (String userID : this.loggedInUser.getProfile().getFriends()) {
             this.friendsPages.addToCurrentFriendsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, this, "Current"));
         }
+        this.friendsPages.setCurrentFriends();
     }
     
     void setFriendRequestsPanel () {
@@ -367,6 +368,7 @@ public class UserPage extends javax.swing.JFrame {
         for (String userID : this.loggedInUser.getProfile().getPending()) {
             this.friendsPages.addToFriendRequestsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, this, "Request"));
         }
+        this.friendsPages.setFriendRequests();
     }
     
     void setSuggestedFriendsPanel () {
@@ -383,6 +385,7 @@ public class UserPage extends javax.swing.JFrame {
                 }
             }
         }
+        this.friendsPages.setSuggestedFriends();
     }
     
     public void pressRefreshButton () {
