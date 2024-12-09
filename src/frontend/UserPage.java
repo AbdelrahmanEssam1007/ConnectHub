@@ -102,6 +102,7 @@ public class UserPage extends javax.swing.JFrame {
         storiesContentPanel = new javax.swing.JPanel();
         friendsPostsPanel = new javax.swing.JPanel();
         postsContentPanel = new javax.swing.JPanel();
+        notificationsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 630));
@@ -256,6 +257,13 @@ public class UserPage extends javax.swing.JFrame {
 
         mainPanel.addTab("Friends' Posts", friendsPostsPanel);
 
+        notificationsButton.setText("Notifications");
+        notificationsButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                notificationsButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -267,6 +275,8 @@ public class UserPage extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(logoutButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(notificationsButton)
+                        .addGap(18, 18, 18)
                         .addComponent(refreshButton)))
                 .addContainerGap())
         );
@@ -276,7 +286,8 @@ public class UserPage extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(logoutButton)
-                    .addComponent(refreshButton))
+                    .addComponent(refreshButton)
+                    .addComponent(notificationsButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mainPanel)
                 .addContainerGap())
@@ -303,6 +314,8 @@ public class UserPage extends javax.swing.JFrame {
         this.setFriendRequestsPanel();
         this.setSuggestedFriendsPanel();
         this.friendsContentPanel.add(this.friendsPages);
+        this.friendsContentPanel.revalidate();
+        this.friendsContentPanel.repaint();
     }//GEN-LAST:event_refreshButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
@@ -317,6 +330,10 @@ public class UserPage extends javax.swing.JFrame {
         this.loggedInUser = FM.refresh();
         this.dispose();
     }//GEN-LAST:event_logoutButtonMouseClicked
+
+    private void notificationsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notificationsButtonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_notificationsButtonMouseClicked
 
     
     void setProfileContentPanel () {
@@ -434,6 +451,7 @@ public class UserPage extends javax.swing.JFrame {
     private javax.swing.JPanel friendsStoriesPanel;
     private javax.swing.JButton logoutButton;
     private javax.swing.JTabbedPane mainPanel;
+    private javax.swing.JButton notificationsButton;
     private javax.swing.JPanel postsContentPanel;
     private javax.swing.JPanel profileContentPanel;
     private javax.swing.JButton refreshButton;

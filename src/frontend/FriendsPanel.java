@@ -41,6 +41,7 @@ public class FriendsPanel extends javax.swing.JPanel {
     
     public FriendsPanel() {
         initComponents();
+        this.setVisible(true);
     }
     
     public FriendsPanel (User loggedinUser, User friendUser, FriendManager FM, UserPage userPage, String type) {
@@ -187,11 +188,11 @@ public class FriendsPanel extends javax.swing.JPanel {
                             .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(userStatusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(veiwProfileButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton1)
-                                .addComponent(jButton2)))))
+                                .addComponent(jButton2))
+                            .addComponent(veiwProfileButton))))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -242,7 +243,6 @@ public class FriendsPanel extends javax.swing.JPanel {
             FM.declineFriendRequest(this.friendUser);
         }
     }//GEN-LAST:event_jButton2MouseClicked
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
