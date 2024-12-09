@@ -24,12 +24,20 @@ public class FriendsPages extends javax.swing.JPanel {
     JPanel searchFriends;
     public FriendsPages() {
         initComponents();
+        
+        this.currentFriends = new JPanel();
         this.currentFriends.setLayout(new BoxLayout (this.currentFriends, BoxLayout.Y_AXIS));
         this.currentFriends.setBackground(Color.WHITE);
+        
+        this.friendRequests = new JPanel();
         this.friendRequests.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
         this.friendRequests.setBackground(Color.WHITE);
+        
+        this.suggestedFriends = new JPanel();
         this.suggestedFriends.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
         this.suggestedFriends.setBackground(Color.WHITE);
+        
+        this.searchFriends = new JPanel();
         this.searchFriends.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
         this.searchFriends.setBackground(Color.WHITE);
 //        this.currentFriendsPanel.setLayout(new BoxLayout (this.currentFriendsPanel, BoxLayout.Y_AXIS));
