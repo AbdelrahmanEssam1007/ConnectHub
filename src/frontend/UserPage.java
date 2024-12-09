@@ -15,6 +15,7 @@ import frontend.content.StoriesPanel;
 import java.awt.BorderLayout;
 import java.util.List;
 import javax.swing.BoxLayout;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -33,6 +34,7 @@ public class UserPage extends javax.swing.JFrame {
     private String type = "Profile";
     private String typeFeed = "Post";
     private UserDB userDB = UserDB.getInstance();
+    private FriendsPages friendsPages;
     
     
     public UserPage() {
@@ -66,6 +68,7 @@ public class UserPage extends javax.swing.JFrame {
         this.storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, this.storiesContentPanel.getWidth(), this.storiesContentPanel.getHeight(), type);
         this.profilePanel = new ProfilePanel(this.loggedInUser, this.profileContentPanel.getWidth(), 200);
         this.refreshManager = new RefreshManager(List.of(postsPanel, storiesPanel));
+        this.friendsPages = new FriendsPages();
         
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -94,6 +97,7 @@ public class UserPage extends javax.swing.JFrame {
         userProfilePanel = new javax.swing.JPanel();
         profileContentPanel = new javax.swing.JPanel();
         friendsPanel = new javax.swing.JPanel();
+        friendsContentPanel = new javax.swing.JPanel();
         friendsStoriesPanel = new javax.swing.JPanel();
         storiesContentPanel = new javax.swing.JPanel();
         friendsPostsPanel = new javax.swing.JPanel();
@@ -101,7 +105,6 @@ public class UserPage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(600, 630));
-        setPreferredSize(new java.awt.Dimension(600, 630));
         setSize(new java.awt.Dimension(600, 630));
 
         logoutButton.setText("Log Out");
@@ -156,15 +159,35 @@ public class UserPage extends javax.swing.JFrame {
 
         mainPanel.addTab("Profile", userProfilePanel);
 
+        friendsContentPanel.setBackground(new java.awt.Color(255, 255, 255));
+        friendsContentPanel.setMinimumSize(new java.awt.Dimension(576, 536));
+
+        javax.swing.GroupLayout friendsContentPanelLayout = new javax.swing.GroupLayout(friendsContentPanel);
+        friendsContentPanel.setLayout(friendsContentPanelLayout);
+        friendsContentPanelLayout.setHorizontalGroup(
+            friendsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 576, Short.MAX_VALUE)
+        );
+        friendsContentPanelLayout.setVerticalGroup(
+            friendsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 536, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout friendsPanelLayout = new javax.swing.GroupLayout(friendsPanel);
         friendsPanel.setLayout(friendsPanelLayout);
         friendsPanelLayout.setHorizontalGroup(
             friendsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 588, Short.MAX_VALUE)
+            .addGroup(friendsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(friendsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         friendsPanelLayout.setVerticalGroup(
             friendsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 548, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, friendsPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(friendsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         mainPanel.addTab("Friends", friendsPanel);
@@ -276,10 +299,23 @@ public class UserPage extends javax.swing.JFrame {
         this.setProfileContentPanel();
         this.setPostsContentPanel();
         this.setStoriesContentPanel();
+        this.setCurrentFriendsPanel();
+        this.setFriendRequestsPanel();
+        this.setSuggestedFriendsPanel();
+        this.friendsContentPanel.add(this.friendsPages);
     }//GEN-LAST:event_refreshButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
-        // TODO add your handling code here:
+        this.loggedInUser = FM.refresh();
+        SwingUtilities.invokeLater(() -> {
+            Main main = Main.getInstance();
+            main.setVisible(true);
+        });
+        UserDB.getInstance().refreshDB();
+        UserDB.getInstance().searchUserByUserId(this.loggedInUser.getUserId()).setStatus(false);
+        UserDB.getInstance().SaveDB();
+        this.loggedInUser = FM.refresh();
+        this.dispose();
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     
@@ -315,6 +351,42 @@ public class UserPage extends javax.swing.JFrame {
         this.storiesContentPanel.add(this.storiesPanel);
         this.storiesContentPanel.revalidate();
         this.storiesContentPanel.repaint();
+    }
+    
+    void setCurrentFriendsPanel () {
+        this.friendsContentPanel.removeAll();
+        this.friendsPages.removeAllCurrentFriendsPanel();
+        for (String userID : this.loggedInUser.getProfile().getFriends()) {
+            this.friendsPages.addToCurrentFriendsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, this, "Current"));
+        }
+    }
+    
+    void setFriendRequestsPanel () {
+        this.friendsContentPanel.removeAll();
+        this.friendsPages.removeAllFriendRequestsPanel();
+        for (String userID : this.loggedInUser.getProfile().getPending()) {
+            this.friendsPages.addToFriendRequestsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, this, "Request"));
+        }
+    }
+    
+    void setSuggestedFriendsPanel () {
+        this.friendsContentPanel.removeAll();
+        this.friendsPages.removeAllSuggestedFriendsPanel();
+        for (String friendID : loggedInUser.getProfile().getFriends()) {
+            for (String suggestedFriendID : UserDB.getInstance().searchUserByUserId(friendID).getProfile().getFriends()) {
+                if (!loggedInUser.getProfile().getFriends().contains(suggestedFriendID) // not already friends
+                        && !loggedInUser.getProfile().getPending().contains(suggestedFriendID) // not already sent a request
+                        && !suggestedFriendID.equals(loggedInUser.getUserId()) // not the user himself
+                        && !loggedInUser.getProfile().getBlocked().contains(suggestedFriendID) // not blocked
+                        && !UserDB.getInstance().searchUserByUserId(suggestedFriendID).getProfile().getBlocked().contains(loggedInUser.getUserId())) { // not blocked by the suggested friend
+                    this.friendsPages.addToCurrentFriendsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(suggestedFriendID), this.FM, this, "Searched"));
+                }
+            }
+        }
+    }
+    
+    public void pressRefreshButton () {
+        this.refreshButtonMouseClicked(null);
     }
     
     /**
@@ -353,6 +425,7 @@ public class UserPage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel friendsContentPanel;
     private javax.swing.JPanel friendsPanel;
     private javax.swing.JPanel friendsPostsPanel;
     private javax.swing.JPanel friendsStoriesPanel;
