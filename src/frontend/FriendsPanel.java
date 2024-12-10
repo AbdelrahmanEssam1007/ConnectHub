@@ -33,8 +33,7 @@ public class FriendsPanel extends javax.swing.JPanel {
     User loggedinUser;
     FriendManager FM;
     String type;
-    UserPage userPage;
-    
+
     private String pfpImagePath;
     private ImageIcon pfpImage;
     private JLabel pfpLabel;
@@ -43,15 +42,16 @@ public class FriendsPanel extends javax.swing.JPanel {
         initComponents();
     }
     
-    public FriendsPanel (User loggedinUser, User friendUser, FriendManager FM, UserPage userPage, String type) {
+    public FriendsPanel (User loggedinUser, User friendUser, FriendManager FM, String type, int width, int height) {
         this();
-        
+        setSize(width,height);
+        setVisible(true);
+
         this.loggedinUser = loggedinUser;
         this.friendUser = friendUser;
         this.FM = FM;
         this.type = type;
-        this.userPage = userPage;
-        
+
         pfpImagePath = friendUser.getProfile().getProfilePhoto();
         if(pfpImagePath == null) {
             pfpImagePath = Constants.DEFAULT_PFP; // Default profile picture
@@ -150,7 +150,7 @@ public class FriendsPanel extends javax.swing.JPanel {
         veiwProfileButton.setText("View Profile");
         veiwProfileButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                veiwProfileButtonMouseClicked(evt);
+                viewProfileButtonMouseClicked(evt);
             }
         });
 
@@ -196,7 +196,7 @@ public class FriendsPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void veiwProfileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_veiwProfileButtonMouseClicked
+    private void viewProfileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProfileButtonMouseClicked
         JFrame profilePage = new JFrame("ConnectHub - " + this.friendUser.getUserName() + "'s Profile");
         profilePage.setSize(600, 630);
         profilePage.setLayout(new BoxLayout(profilePage, BoxLayout.Y_AXIS));
@@ -204,10 +204,9 @@ public class FriendsPanel extends javax.swing.JPanel {
         profilePage.add(new PostsPanel(this.friendUser, new PostManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
         profilePage.add(new StoriesPanel(this.friendUser, new StoryManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
         profilePage.setVisible(true);
-    }//GEN-LAST:event_veiwProfileButtonMouseClicked
+    }//GEN-LAST:event_viewProfileButtonMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        this.userPage.pressRefreshButton();
         if (this.type.equals("Current")) {
 //            jButton1.setText("Block");
 //            jButton2.setText("Remove");
@@ -230,7 +229,6 @@ public class FriendsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        this.userPage.pressRefreshButton();
         if (this.type.equals("Current")) {
 //            jButton1.setText("Block");
 //            jButton2.setText("Remove");

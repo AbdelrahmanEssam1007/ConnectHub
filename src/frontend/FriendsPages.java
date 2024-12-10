@@ -22,24 +22,35 @@ public class FriendsPages extends javax.swing.JPanel {
     JPanel friendRequests;
     JPanel suggestedFriends;
     JPanel searchFriends;
-    public FriendsPages() {
+    int setWidth;
+    int setHeight;
+
+    public FriendsPages(int width, int height) {
         initComponents();
-        
+        setSize(width,height);
+
+        this.setWidth = width;
+        this.setHeight = height;
+
         this.currentFriends = new JPanel();
         this.currentFriends.setLayout(new BoxLayout (this.currentFriends, BoxLayout.Y_AXIS));
         this.currentFriends.setBackground(Color.WHITE);
-        
+        this.currentFriends.setSize(setWidth,setHeight);
+
         this.friendRequests = new JPanel();
         this.friendRequests.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
         this.friendRequests.setBackground(Color.WHITE);
-        
+        this.friendRequests.setSize(setWidth,setHeight);
+
         this.suggestedFriends = new JPanel();
-        this.suggestedFriends.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
+        this.suggestedFriends.setLayout(new BoxLayout (this.suggestedFriends, BoxLayout.Y_AXIS));
         this.suggestedFriends.setBackground(Color.WHITE);
-        
+        this.suggestedFriends.setSize(setWidth,setHeight);
+
         this.searchFriends = new JPanel();
-        this.searchFriends.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
+        this.searchFriends.setLayout(new BoxLayout (this.searchFriends, BoxLayout.Y_AXIS));
         this.searchFriends.setBackground(Color.WHITE);
+        this.searchFriends.setSize(setWidth,setHeight);
 //        this.currentFriendsPanel.setLayout(new BoxLayout (this.currentFriendsPanel, BoxLayout.Y_AXIS));
 //        this.friendRequestsPanel.setLayout(new BoxLayout (this.friendRequestsPanel, BoxLayout.Y_AXIS));
 //        this.suggestedFriendsPanel.setLayout(new BoxLayout (this.suggestedFriendsPanel, BoxLayout.Y_AXIS));
@@ -187,11 +198,35 @@ public class FriendsPages extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                mainPanelStateChanged(evt);
+            }
+        });
     }// </editor-fold>//GEN-END:initComponents
 
+    private void mainPanelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainPanelStateChanged
+        setCurrentFriends();
+    }
 
     public void addToCurrentFriendsPanel (JPanel panel) {
+
         this.currentFriends.add(panel);
+        this.currentFriends.setVisible(true);
+        this.currentFriends.setSize(setWidth-100,setHeight);
+        this.currentFriends.revalidate();
+        this.currentFriends.repaint();
+
+        currentFriendsPanel.add(currentFriends);
+        currentFriendsPanel.setVisible(true);
+        currentFriendsPanel.setSize(setWidth-100,setHeight);
+        currentFriendsPanel.revalidate();
+        currentFriendsPanel.repaint();
+
+        jPanel1.setVisible(true);
+        jPanel1.revalidate();
+        jPanel1.repaint();
     }
     public void removeAllCurrentFriendsPanel () {
         this.currentFriendsPanel.removeAll();
@@ -199,8 +234,11 @@ public class FriendsPages extends javax.swing.JPanel {
     }
     public void setCurrentFriends () {
         this.currentFriendsPanel = new JScrollPane(this.currentFriends);
+        this.currentFriendsPanel.setViewportView(this.currentFriends);
         this.currentFriendsPanel.revalidate();
         this.currentFriendsPanel.repaint();
+        this.currentFriends.revalidate();
+        this.currentFriends.repaint();
     }
     
     public void addToFriendRequestsPanel (JPanel panel) {
