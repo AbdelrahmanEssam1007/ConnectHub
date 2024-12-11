@@ -1,13 +1,18 @@
 package backend;
 
+import backend.groups.GroupRole;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Profile {
 
   private List<String> friends;
   private List<String> blocked;
   private List<String> pending;
+  private Map<String, GroupRole> groups;
   private String profilePhoto;
   private String coverPhoto;
   private String bio;
@@ -16,7 +21,15 @@ public class Profile {
     this.friends = new ArrayList<>();
     this.blocked = new ArrayList<>();
     this.pending = new ArrayList<>();
-    //set UID, state friend, pendingr, pendings, blocked
+    this.groups = new HashMap<>();
+  }
+
+  public Map<String, GroupRole> getGroups() {
+    return groups;
+  }
+
+  public void setGroups(Map<String, GroupRole> groups) {
+    this.groups = groups;
   }
 
   public List<String> getFriends() {
