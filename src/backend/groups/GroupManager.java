@@ -8,7 +8,7 @@ public class GroupManager {
   private static GroupManager GROUP_MANAGER;
 
   private GroupManager() {
-    groupDB = new GroupDB();
+    groupDB = GroupDB.getInstance();
   }
 
   public static GroupManager getInstance() {
@@ -18,12 +18,12 @@ public class GroupManager {
     return GROUP_MANAGER;
   }
 
-  public Group createGroup(String name, String description) {
-    return groupDB.createGroup(name, description);
+  public void createGroup(String name, String description, String photo) {
+    groupDB.createGroup(new Group(name, description, photo));
   }
 
-  public void deleteGroup() {
-    // delete group
+  public void deleteGroup( Group group) {
+    groupDB.deleteGroup(group);
   }
 
   public void requestToJoinGroup() {

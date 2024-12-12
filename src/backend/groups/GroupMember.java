@@ -18,12 +18,4 @@ public class GroupMember {
   public void deletePost(){
 
   }
-
-  public void editPost(){
-
-  }
-
-  public void leaveGroup(){
-
-  }
 }

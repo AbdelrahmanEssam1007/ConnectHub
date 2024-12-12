@@ -18,8 +18,7 @@ public abstract class ContentManagerFactory {
     private final User user;
     List<Content> content = new ArrayList<>();
 
-    public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory,
-                                 User user) {
+    public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory, User user) {
         this.fileName = fileName;
         this.contentLoader = contentLoader;
         this.contentFactory = contentFactory;

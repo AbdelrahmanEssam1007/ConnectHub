@@ -16,6 +16,14 @@ public class Admin extends GroupMember {
     return ADMIN;
   }
 
+  public void editPost(){
+
+  }
+
+  public void leaveGroup(){
+
+  }
+
   public void removeMember(){
     // remove member from group
   }

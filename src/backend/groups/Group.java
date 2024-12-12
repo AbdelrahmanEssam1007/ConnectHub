@@ -1,6 +1,7 @@
 package backend.groups;
 
 import backend.content.Content;
+import utils.IDGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,19 +14,19 @@ public class Group {
   private String groupDescription;
   private String groupPhoto;
   private Map<String, GroupRole> groupMembers;
-  private ArrayList<Content> posts;
 
-  public Group(){
+  public Group(){}
+
+  public Group(String groupName, String groupDescription, String groupPhoto) {
+    this.groupID = IDGenerator.generateUserId();
+    this.groupName = groupName;
+    this.groupDescription = groupDescription;
+    this.groupPhoto = groupPhoto;
     this.groupMembers = new HashMap<>();
-    this.posts = new ArrayList<>();
   }
 
   public String getGroupID() {
     return groupID;
-  }
-
-  public void setGroupID(String groupID) {
-    this.groupID = groupID;
   }
 
   public String getGroupName() {
@@ -58,13 +59,5 @@ public class Group {
 
   public void setGroupMembers(Map<String, GroupRole> groupMembers) {
     this.groupMembers = groupMembers;
-  }
-
-  public ArrayList<Content> getPosts() {
-    return posts;
-  }
-
-  public void setPosts(ArrayList<Content> posts) {
-    this.posts = posts;
   }
 }
