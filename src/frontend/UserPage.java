@@ -10,6 +10,7 @@ import backend.Notifications.NotificationsDB;
 import backend.Notifications.NotificationsService;
 import backend.content.PostManager;
 import backend.content.StoryManager;
+import frontend.content.CreatePostPanel;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
 
