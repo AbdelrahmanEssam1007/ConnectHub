@@ -10,8 +10,8 @@ import backend.content.PostManager;
 import backend.content.StoryManager;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
+
+import java.awt.*;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -33,33 +33,38 @@ public class FriendsPanel extends javax.swing.JPanel {
     User loggedinUser;
     FriendManager FM;
     String type;
-    UserPage userPage;
-    
+
     private String pfpImagePath;
     private ImageIcon pfpImage;
     private JLabel pfpLabel;
     
     public FriendsPanel() {
         initComponents();
-        this.setVisible(true);
     }
     
-    public FriendsPanel (User loggedinUser, User friendUser, FriendManager FM, UserPage userPage, String type) {
+    public FriendsPanel (User loggedinUser, User friendUser, FriendManager FM, String type, int width, int height) {
         this();
-        
+        setSize(width,height);
+        setVisible(true);
+
         this.loggedinUser = loggedinUser;
         this.friendUser = friendUser;
         this.FM = FM;
         this.type = type;
-        this.userPage = userPage;
-        
+
         pfpImagePath = friendUser.getProfile().getProfilePhoto();
         if(pfpImagePath == null) {
             pfpImagePath = Constants.DEFAULT_PFP; // Default profile picture
         }
+        pfpImage = new ImageIcon(pfpImagePath);
+        Image scaledPfpImage = pfpImage.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        pfpImage = new ImageIcon(scaledPfpImage);
+
         pfpLabel = new JLabel(pfpImage);
         pfpPanel.setLayout(new BorderLayout());
         pfpPanel.add(pfpLabel, BorderLayout.CENTER);
+        
+        this.usernameLabel.setText(friendUser.getUserName());
         
         if (this.friendUser.getStatus()) {
             this.userStatusPanel.setBackground(Color.GREEN);
@@ -98,7 +103,7 @@ public class FriendsPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         userStatusPanel = new javax.swing.JPanel();
-        veiwProfileButton = new javax.swing.JButton();
+        viewProfileButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -148,10 +153,10 @@ public class FriendsPanel extends javax.swing.JPanel {
             .addGap(0, 40, Short.MAX_VALUE)
         );
 
-        veiwProfileButton.setText("View Profile");
-        veiwProfileButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        viewProfileButton.setText("View Profile");
+        viewProfileButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                veiwProfileButtonMouseClicked(evt);
+                viewProfileButtonMouseClicked(evt);
             }
         });
 
@@ -174,7 +179,7 @@ public class FriendsPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(veiwProfileButton)))
+                        .addComponent(viewProfileButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -192,12 +197,12 @@ public class FriendsPanel extends javax.swing.JPanel {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton1)
                                 .addComponent(jButton2))
-                            .addComponent(veiwProfileButton))))
+                            .addComponent(viewProfileButton))))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void veiwProfileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_veiwProfileButtonMouseClicked
+    private void viewProfileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProfileButtonMouseClicked
         JFrame profilePage = new JFrame("ConnectHub - " + this.friendUser.getUserName() + "'s Profile");
         profilePage.setSize(600, 630);
         profilePage.setLayout(new BoxLayout(profilePage, BoxLayout.Y_AXIS));
@@ -205,10 +210,9 @@ public class FriendsPanel extends javax.swing.JPanel {
         profilePage.add(new PostsPanel(this.friendUser, new PostManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
         profilePage.add(new StoriesPanel(this.friendUser, new StoryManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
         profilePage.setVisible(true);
-    }//GEN-LAST:event_veiwProfileButtonMouseClicked
+    }//GEN-LAST:event_viewProfileButtonMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        this.userPage.pressRefreshButton();
         if (this.type.equals("Current")) {
 //            jButton1.setText("Block");
 //            jButton2.setText("Remove");
@@ -231,7 +235,6 @@ public class FriendsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        this.userPage.pressRefreshButton();
         if (this.type.equals("Current")) {
 //            jButton1.setText("Block");
 //            jButton2.setText("Remove");
@@ -244,12 +247,13 @@ public class FriendsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2MouseClicked
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel pfpPanel;
     private javax.swing.JPanel userStatusPanel;
     private javax.swing.JLabel usernameLabel;
-    private javax.swing.JButton veiwProfileButton;
+    private javax.swing.JButton viewProfileButton;
     // End of variables declaration//GEN-END:variables
 }
