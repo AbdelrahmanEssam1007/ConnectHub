@@ -205,11 +205,13 @@ public class FriendsPanel extends javax.swing.JPanel {
     private void viewProfileButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewProfileButtonMouseClicked
         JFrame profilePage = new JFrame("ConnectHub - " + this.friendUser.getUserName() + "'s Profile");
         profilePage.setSize(600, 630);
-        profilePage.setLayout(new BoxLayout(profilePage, BoxLayout.Y_AXIS));
+        profilePage.setLayout(new BoxLayout(profilePage.getContentPane(), BoxLayout.Y_AXIS));
         profilePage.add(new ProfilePanel(this.friendUser, profilePage.getWidth(), 200));
         profilePage.add(new PostsPanel(this.friendUser, new PostManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
         profilePage.add(new StoriesPanel(this.friendUser, new StoryManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
         profilePage.setVisible(true);
+        profilePage.revalidate();
+        profilePage.repaint();
     }//GEN-LAST:event_viewProfileButtonMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
