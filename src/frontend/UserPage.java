@@ -481,11 +481,25 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_searchGroupsButtonMouseClicked
 
     private void searchUsersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchUsersButtonMouseClicked
-        // TODO add your handling code here:
+        this.refreshButtonMouseClicked(null);
+        this.searchResultsPanel.removeAll();
+        for (User user : UserDB.getInstance().getUsers()) {
+            if ( user.getUserName().contains(this.searchCriteriaField.getText()) && // search criteria
+                    !user.getUserName().equals(this.loggedInUser.getUserName()) && // not the user himself
+                    !this.loggedInUser.getProfile().getFriends().contains(user.getUserId()) && // not already friends
+                    !user.getProfile().getBlocked().contains(this.loggedInUser.getUserId())) { // not blocked by user
+                this.searchResultsPanel.add(new FriendsPanel (this.loggedInUser, user, this.FM, "Searched", getWidth()-20, getHeight()-30));
+            }
+
+        }
+        this.searchResultsPanel.revalidate ();
+        this.searchResultsPanel.repaint();
     }//GEN-LAST:event_searchUsersButtonMouseClicked
 
     private void createNewContentButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewContentButtonMouseClicked
-        // TODO add your handling code here:
+        this.refreshButtonMouseClicked(evt);
+        new CreatePostPanel(postManager, storyManager, refreshManager).setVisible(true);
+        this.refreshButtonMouseClicked(evt);
     }//GEN-LAST:event_createNewContentButtonMouseClicked
 
     private void notificationsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notificationsButtonMouseClicked
