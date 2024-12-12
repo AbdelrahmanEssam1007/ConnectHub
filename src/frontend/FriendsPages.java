@@ -4,10 +4,12 @@
  */
 package frontend;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 /**
  *
@@ -36,16 +38,19 @@ public class FriendsPages extends javax.swing.JPanel {
         this.currentFriends.setLayout(new BoxLayout (this.currentFriends, BoxLayout.Y_AXIS));
         this.currentFriends.setBackground(Color.WHITE);
         this.currentFriends.setSize(setWidth,setHeight);
+        this.currentFriendsPanel.setLayout(new BorderLayout ());
 
         this.friendRequests = new JPanel();
         this.friendRequests.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
         this.friendRequests.setBackground(Color.WHITE);
         this.friendRequests.setSize(setWidth,setHeight);
+        this.friendRequestsPanel.setLayout(new BorderLayout ());
 
         this.suggestedFriends = new JPanel();
         this.suggestedFriends.setLayout(new BoxLayout (this.suggestedFriends, BoxLayout.Y_AXIS));
         this.suggestedFriends.setBackground(Color.WHITE);
         this.suggestedFriends.setSize(setWidth,setHeight);
+        this.suggestedFriendsPanel.setLayout(new BorderLayout ());
 
         this.searchFriends = new JPanel();
         this.searchFriends.setLayout(new BoxLayout (this.searchFriends, BoxLayout.Y_AXIS));
@@ -250,7 +255,7 @@ public class FriendsPages extends javax.swing.JPanel {
     public void setCurrentFriends () {
         this.currentFriends.revalidate();
         this.currentFriends.repaint();
-        this.currentFriendsPanel.add (new JScrollPane(this.currentFriends));
+        this.currentFriendsPanel.add (new JScrollPane(this.currentFriends, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 //        this.currentFriendsPanel.setViewportView(this.currentFriends);
         this.currentFriendsPanel.revalidate();
         this.currentFriendsPanel.repaint();
@@ -267,7 +272,7 @@ public class FriendsPages extends javax.swing.JPanel {
     public void setFriendRequests () {
         this.friendRequests.revalidate();
         this.friendRequests.repaint();
-        this.friendRequestsPanel.add (new JScrollPane(this.friendRequests));
+        this.friendRequestsPanel.add (new JScrollPane(this.friendRequests, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
         this.friendRequestsPanel.revalidate();
         this.friendRequestsPanel.repaint();
         this.friendRequestsPanel.setVisible(true);
@@ -283,7 +288,7 @@ public class FriendsPages extends javax.swing.JPanel {
     public void setSuggestedFriends () {
         this.suggestedFriends.revalidate();
         this.suggestedFriends.repaint();
-        this.suggestedFriendsPanel.add (new JScrollPane(this.suggestedFriends));
+        this.suggestedFriendsPanel.add (new JScrollPane(this.suggestedFriends, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
         this.suggestedFriendsPanel.revalidate();
         this.suggestedFriendsPanel.repaint();
         this.suggestedFriendsPanel.setVisible(true);
