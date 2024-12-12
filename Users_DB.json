@@ -10,7 +10,7 @@
     "blocked" : [ ],
     "pending" : [ ],
     "groups" : { },
-    "profilePhoto" : "images\\342229-1682683695.jpg",
+    "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : "Hello I am Ahmad"
   }
@@ -20,14 +20,14 @@
   "userName" : "Abdo",
   "password" : "108f38515296a2e7800dd44d9e5e151e8c5764686da64a86f7675ffe3b1dd003",
   "dateOfBirth" : [ 2024, 12, 5 ],
-  "status" : false,
+  "status" : true,
   "profile" : {
     "friends" : [ ],
     "blocked" : [ ],
     "pending" : [ ],
     "groups" : { },
-    "profilePhoto" : "C:\\Users\\Amr\\Documents\\Screenshot (18).png",
-    "coverPhoto" : "C:\\Users\\Amr\\Documents\\Screenshot (9).jpg",
+    "profilePhoto" : "images\\Screenshot 2024-12-12 at 13-52-04 Sportiality Leo Messi & Lamine Yamal will face each other at the Finalissima 2025 \uD83C\uDDEA\uD83C\uDDF8\uD83C\uDDE6\uD83C\uDDF7\uD83C\uDFC6 Selección Española de Fútbol (SeFutbol) vs AFA - Selección.jpg",
+    "coverPhoto" : "images\\199-Lamine-Yamal-Lionel-Messi-copy.jpg",
     "bio" : "Hello I am Abdelrahman."
   }
 }, {
