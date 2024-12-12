@@ -60,6 +60,8 @@ public class FriendsPanel extends javax.swing.JPanel {
         pfpPanel.setLayout(new BorderLayout());
         pfpPanel.add(pfpLabel, BorderLayout.CENTER);
         
+        this.usernameLabel.setText(friendUser.getUserName());
+        
         if (this.friendUser.getStatus()) {
             this.userStatusPanel.setBackground(Color.GREEN);
         }
