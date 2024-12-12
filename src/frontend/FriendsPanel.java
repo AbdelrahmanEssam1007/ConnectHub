@@ -206,7 +206,7 @@ public class FriendsPanel extends javax.swing.JPanel {
         JFrame profilePage = new JFrame("ConnectHub - " + this.friendUser.getUserName() + "'s Profile");
         profilePage.setSize(600, 630);
         profilePage.setLayout(new BoxLayout(profilePage.getContentPane(), BoxLayout.Y_AXIS));
-        profilePage.add(new ProfilePanel(this.friendUser, profilePage.getWidth(), 200));
+        profilePage.add(new ProfilePanel(this.friendUser, this.loggedinUser, profilePage.getWidth(), 200));
         profilePage.add(new PostsPanel(this.loggedinUser, new PostManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
         profilePage.add(new StoriesPanel(this.loggedinUser, new StoryManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
         profilePage.setVisible(true);

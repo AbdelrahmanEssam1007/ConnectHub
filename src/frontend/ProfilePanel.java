@@ -23,7 +23,7 @@ public class ProfilePanel extends JPanel implements Constants {
     private JButton editButton;
     private JButton cancelButton;
     private JScrollPane bioScroll;
-    private User user;
+    private User profileUser;
 
     private String pfpImagePath;
     private String coverImagePath;
@@ -35,10 +35,10 @@ public class ProfilePanel extends JPanel implements Constants {
     private JLabel coverLabel;
     private UserDB userDB = UserDB.getInstance();
 
-    public ProfilePanel(User user, int width, int height) {
-        this.user = user;
-        pfpImagePath = user.getProfile().getProfilePhoto();
-        coverImagePath = user.getProfile().getCoverPhoto();
+    public ProfilePanel(User profileUser, User lookingUser, int width, int height) {
+        this.profileUser = profileUser;
+        pfpImagePath = profileUser.getProfile().getProfilePhoto();
+        coverImagePath = profileUser.getProfile().getCoverPhoto();
 
         if(pfpImagePath == null) {
             pfpImagePath = Constants.DEFAULT_PFP; // Default profile picture
@@ -90,7 +90,7 @@ public class ProfilePanel extends JPanel implements Constants {
 
         add(mainPanel);
         setSize(width, height);
-        bioTextArea.setText(user.getProfile().getBio());
+        bioTextArea.setText(profileUser.getProfile().getBio());
         bioTextArea.setRows(3);
         bioScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         setVisible(true);
@@ -98,12 +98,15 @@ public class ProfilePanel extends JPanel implements Constants {
 
         cancelButton.setVisible(false);
 
+        if(!profileUser.getUserId().equals(lookingUser.getUserId()))
+            editButton.setVisible(false);
+
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(editButton.getText().equals("Save")) {
-                    user.getProfile().setBio(bioTextArea.getText());
-                    userDB.setUser(user);
+                    profileUser.getProfile().setBio(bioTextArea.getText());
+                    userDB.setUser(profileUser);
                 }
                 boolean isEditable = bioTextArea.isEditable();
                 bioTextArea.setEditable(!isEditable);
@@ -129,8 +132,8 @@ public class ProfilePanel extends JPanel implements Constants {
                             String newPfpPath;
                             try {
                                 newPfpPath = ImageUtils.saveImage(newFile);
-                                user.getProfile().setProfilePhoto(newPfpPath);
-                                userDB.setUser(user);
+                                profileUser.getProfile().setProfilePhoto(newPfpPath);
+                                userDB.setUser(profileUser);
                             } catch (IOException ex) {
                                 JOptionPane.showMessageDialog(null, "Error saving image.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -153,8 +156,8 @@ public class ProfilePanel extends JPanel implements Constants {
                             String newCoverPath;
                             try {
                                 newCoverPath = ImageUtils.saveImage(newFile);
-                                user.getProfile().setCoverPhoto(newCoverPath);
-                                userDB.setUser(user);
+                                profileUser.getProfile().setCoverPhoto(newCoverPath);
+                                userDB.setUser(profileUser);
                             } catch (IOException ex) {
                                 JOptionPane.showMessageDialog(null, "Error saving image.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -164,7 +167,7 @@ public class ProfilePanel extends JPanel implements Constants {
                     cancelButton.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            bioTextArea.setText(user.getProfile().getBio());
+                            bioTextArea.setText(profileUser.getProfile().getBio());
                             bioTextArea.setEditable(false);
                             //bioTextArea.setEnabled(false);
                             editButton.setText("Edit");
