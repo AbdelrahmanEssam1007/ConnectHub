@@ -88,7 +88,7 @@ public class ContentPanel extends JPanel{
         headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         headerPanel.setBackground(Color.WHITE);
         headerPanel.add(header);
-        if(type.equals("Profile")){
+        if(type.equals("Profile") && user.getUserId().equals(contentManagerFactory.getUser().getUserId())){
             removeContentButton = new JButton("Remove");
             removeContentButton.addActionListener(e -> {
                 contentManagerFactory.removeContent(content);

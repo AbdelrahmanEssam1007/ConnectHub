@@ -104,4 +104,8 @@ public abstract class ContentManagerFactory {
     public void createTextImageContent(String text, File imageFile) throws IOException{
         addContent(contentFactory.createTextImageContent(text, imageFile, user));
     }
+
+    public User getUser() {
+        return user;
+    }
 }
