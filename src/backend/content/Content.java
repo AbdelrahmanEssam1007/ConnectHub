@@ -42,11 +42,11 @@ public class Content {
     public String returnImagePath(){
         return contentData.getImagePath();
     }
-    
+
     public String returnText(){
         return contentData.getText();
     }
-        
+
     public LocalDateTime getPostDate() {
         return postDate;
     }

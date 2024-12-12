@@ -79,6 +79,7 @@ public class UserDB {
   }
 
   public synchronized void refreshDB() {
+    users.clear();
     try {
       this.setUsers(JSONFileReader.readJson(FileNames.USERS.getFileName(), User.class));
     } catch (IOException ex) {
