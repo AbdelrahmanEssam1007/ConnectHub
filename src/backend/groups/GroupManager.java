@@ -1,6 +1,7 @@
 package backend.groups;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GroupManager {
 
@@ -18,8 +19,11 @@ public class GroupManager {
     return GROUP_MANAGER;
   }
 
-  public void createGroup(String name, String description, String photo) {
-    groupDB.createGroup(new Group(name, description, photo));
+  public void createGroup(String name, String description, String photo, String userID) {
+    Group group = new Group(name, description, photo);
+    Map<String, GroupRole> groupMembers = group.getGroupMembers();
+    groupMembers.put(userID, GroupRole.PRIMARY_ADMIN);
+    groupDB.createGroup(group);
   }
 
   public void deleteGroup( Group group) {
@@ -27,7 +31,7 @@ public class GroupManager {
   }
 
   public void requestToJoinGroup() {
-    // request to join group
+
   }
 
   public ArrayList<Group> getGroups() {
@@ -38,33 +42,31 @@ public class GroupManager {
     return true;
   }
 
-  public Group getGroup() {
-    return new Group();
+  public Group getGroup(String groupID) {
+    return groupDB.searchGroupByID(groupID);
   }
 
   public GroupRole getGroupRole() {
     return GroupRole.GROUP_MEMBER;
   }
 
-  public ArrayList<String> getGroupMembers() {
-    return new ArrayList<String>();
+  public ArrayList<String> getGroupMembers(String groupID) {
+    return (ArrayList<String>) groupDB.searchGroupByID( groupID).getGroupMembers();
   }
 
-  public void respondToJoinRequest() {
-    // respond to join request
+  public void respondToJoinRequest(String groupID, String userID) {
+    groupDB.searchGroupByID(groupID).getGroupMembers().put(userID, GroupRole.GROUP_MEMBER);
   }
 
-  public void promoteToAdmin() {
-    // promote to admin
+  public void promoteToAdmin(String groupID, String userID) {
+    groupDB.searchGroupByID(groupID).getGroupMembers().put(userID, GroupRole.ADMIN);
   }
 
-  public void demoteAdmin() {
-    // demote admin
+  public void demoteAdmin(String groupID, String userID) {
+    groupDB.searchGroupByID(groupID).getGroupMembers().put(userID, GroupRole.GROUP_MEMBER);
   }
 
-  public void leaveGroup() {
-    // leave group
+  public void leaveGroup(String groupID, String userID) {
+    groupDB.searchGroupByID(groupID).getGroupMembers().remove(userID);
   }
-
-
 }
