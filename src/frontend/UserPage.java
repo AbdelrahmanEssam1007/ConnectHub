@@ -296,6 +296,7 @@ public class UserPage extends javax.swing.JFrame {
         this.loggedInUser = UserDB.getInstance().searchUserByUserId(this.loggedInUser.getUserId());
         this.loggedInUser = FM.refresh();
         this.refreshManager.refreshAll();
+        this.friendsContentPanel.removeAll();
         this.setProfileContentPanel();
         this.setPostsContentPanel();
         this.setStoriesContentPanel();
@@ -356,7 +357,7 @@ public class UserPage extends javax.swing.JFrame {
     }
     
     void setCurrentFriendsPanel () {
-        this.friendsContentPanel.removeAll();
+//        this.friendsContentPanel.removeAll();
         this.friendsPages.removeAllCurrentFriendsPanel();
         for (String userID : this.loggedInUser.getProfile().getFriends()) {
             this.friendsPages.addToCurrentFriendsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, "Current", getWidth()-20, getHeight()-30));
@@ -368,7 +369,7 @@ public class UserPage extends javax.swing.JFrame {
     }
     
     void setFriendRequestsPanel () {
-        this.friendsContentPanel.removeAll();
+//        this.friendsContentPanel.removeAll();
         this.friendsPages.removeAllFriendRequestsPanel();
         for (String userID : this.loggedInUser.getProfile().getPending()) {
             this.friendsPages.addToFriendRequestsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, "Request", getWidth()-20, getHeight()-30));
@@ -377,7 +378,7 @@ public class UserPage extends javax.swing.JFrame {
     }
     
     void setSuggestedFriendsPanel () {
-        this.friendsContentPanel.removeAll();
+//        this.friendsContentPanel.removeAll();
         this.friendsPages.removeAllSuggestedFriendsPanel();
         for (String friendID : loggedInUser.getProfile().getFriends()) {
             for (String suggestedFriendID : UserDB.getInstance().searchUserByUserId(friendID).getProfile().getFriends()) {

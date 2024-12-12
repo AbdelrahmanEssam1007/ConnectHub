@@ -97,7 +97,7 @@ public class FriendsPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         userStatusPanel = new javax.swing.JPanel();
-        veiwProfileButton = new javax.swing.JButton();
+        viewProfileButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -147,8 +147,8 @@ public class FriendsPanel extends javax.swing.JPanel {
             .addGap(0, 40, Short.MAX_VALUE)
         );
 
-        veiwProfileButton.setText("View Profile");
-        veiwProfileButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        viewProfileButton.setText("View Profile");
+        viewProfileButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 viewProfileButtonMouseClicked(evt);
             }
@@ -173,7 +173,7 @@ public class FriendsPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(veiwProfileButton)))
+                        .addComponent(viewProfileButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -187,11 +187,11 @@ public class FriendsPanel extends javax.swing.JPanel {
                             .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(userStatusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(veiwProfileButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton1)
-                                .addComponent(jButton2)))))
+                                .addComponent(jButton2))
+                            .addComponent(viewProfileButton))))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -248,6 +248,6 @@ public class FriendsPanel extends javax.swing.JPanel {
     private javax.swing.JPanel pfpPanel;
     private javax.swing.JPanel userStatusPanel;
     private javax.swing.JLabel usernameLabel;
-    private javax.swing.JButton veiwProfileButton;
+    private javax.swing.JButton viewProfileButton;
     // End of variables declaration//GEN-END:variables
 }
