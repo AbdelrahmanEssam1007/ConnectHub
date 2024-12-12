@@ -10,6 +10,7 @@ import backend.Notifications.NotificationsDB;
 import backend.Notifications.NotificationsService;
 import backend.content.PostManager;
 import backend.content.StoryManager;
+import backend.groups.Group;
 import frontend.content.CreatePostPanel;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
@@ -17,6 +18,7 @@ import frontend.content.StoriesPanel;
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.*;
@@ -49,6 +51,7 @@ public class UserPage extends javax.swing.JFrame {
     private FriendsPages friendsPages;
 
     private Notifications notifications;
+    private List<Group> userGroups;
 
 
     public UserPage() {
@@ -84,6 +87,7 @@ public class UserPage extends javax.swing.JFrame {
         this ();
 
         this.loggedInUser = user;
+        userGroups = loggedInUser.returnGroups();
 
         this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
 
@@ -109,8 +113,6 @@ public class UserPage extends javax.swing.JFrame {
         });
         
         this.refreshButtonMouseClicked(null);
-
-
 
 
         //NotificationsService notificationsService = new NotificationsService(this.loggedInUser.getUserId());
@@ -499,7 +501,7 @@ public class UserPage extends javax.swing.JFrame {
 
     private void createNewContentButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewContentButtonMouseClicked
         this.refreshButtonMouseClicked(evt);
-        new CreatePostPanel(postManager, storyManager, refreshManager).setVisible(true);
+        new CreatePostPanel(postManager, storyManager, refreshManager, userGroups).setVisible(true);
         this.refreshButtonMouseClicked(evt);
     }//GEN-LAST:event_createNewContentButtonMouseClicked
 

@@ -1,5 +1,6 @@
 package backend;
 
+import backend.groups.Group;
 import backend.groups.GroupRole;
 
 import java.util.ArrayList;

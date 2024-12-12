@@ -1,7 +1,12 @@
 package backend;
 
+import backend.groups.Group;
+import backend.groups.GroupPostLoader;
+import utils.FileNames;
 import utils.IDGenerator;
+import utils.JSONFileReader;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,22 @@ public class User {
 
   public List<String> getGroupIDS() {
     return groupIDS;
+  }
+
+  public List<Group> returnGroups() {
+      List<Group> allGroups = null;
+      try {
+          allGroups = JSONFileReader.readJson(FileNames.GROUPS.getFileName(), Group.class);
+      } catch (IOException e) {
+        System.out.println("Error in returning groups.");
+        throw new RuntimeException(e);
+      }
+      List<Group> myGroups = new ArrayList<>();
+    for(Group x : allGroups){
+      if(groupIDS.contains(x.getGroupID()))
+        myGroups.add(x);
+    }
+    return myGroups;
   }
 
   public void setGroupIDS(List<String> groupIDS) {

@@ -60,4 +60,9 @@ public class Group {
   public void setGroupMembers(Map<String, GroupRole> groupMembers) {
     this.groupMembers = groupMembers;
   }
+
+  @Override
+  public String toString() {
+    return groupName;
+  }
 }
