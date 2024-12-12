@@ -4,15 +4,14 @@
   "userName" : "Ahmad",
   "password" : "416497a10bd4c9b31193e42230a362c21f3564893a696de2afdaf618a8c2e71d",
   "dateOfBirth" : [ 2024, 12, 5 ],
-  "status" : false,
+  "status" : true,
   "profile" : {
     "friends" : [ "44023cbe-7916-450d-868a-b8b54f8a9330", "a0951309-15c0-46c6-b66a-d341c2499332" ],
     "blocked" : [ ],
     "pending" : [ ],
-    "groups" : { },
-    "profilePhoto" : null,
+    "profilePhoto" : "images\\342229-1682683695.jpg",
     "coverPhoto" : null,
-    "bio" : "Hello I am Ahmad."
+    "bio" : "Hello I am Ahmad, Nice to Meet you"
   }
 }, {
   "userId" : "cb2b9573-b77b-4897-83f2-99c422c3e9b8",
@@ -25,7 +24,6 @@
     "friends" : [ ],
     "blocked" : [ ],
     "pending" : [ ],
-    "groups" : { },
     "profilePhoto" : "C:\\Users\\Amr\\Documents\\Screenshot (18).png",
     "coverPhoto" : "C:\\Users\\Amr\\Documents\\Screenshot (9).jpg",
     "bio" : "Hello I am Abdelrahman."
@@ -41,7 +39,6 @@
     "friends" : [ ],
     "blocked" : [ ],
     "pending" : [ ],
-    "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : null
@@ -57,7 +54,6 @@
     "friends" : [ ],
     "blocked" : [ ],
     "pending" : [ ],
-    "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : null
@@ -70,10 +66,9 @@
   "dateOfBirth" : [ 2020, 5, 19 ],
   "status" : false,
   "profile" : {
-    "friends" : [ "e9a28975-62c3-4cba-b586-669918ad4389" ],
+    "friends" : [ "44023cbe-7916-450d-868a-b8b54f8a9330", "e9a28975-62c3-4cba-b586-669918ad4389" ],
     "blocked" : [ ],
     "pending" : [ ],
-    "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : "testing this text field"
@@ -86,10 +81,9 @@
   "dateOfBirth" : [ 2024, 12, 6 ],
   "status" : false,
   "profile" : {
-    "friends" : [ "e9a28975-62c3-4cba-b586-669918ad4389", "a0951309-15c0-46c6-b66a-d341c2499332" ],
+    "friends" : [ "a0951309-15c0-46c6-b66a-d341c2499332", "e9a28975-62c3-4cba-b586-669918ad4389" ],
     "blocked" : [ ],
     "pending" : [ ],
-    "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : null

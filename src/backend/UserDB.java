@@ -96,4 +96,14 @@ public class UserDB {
     SaveDB();
   }
 
+    public void setUser(User user) {
+      for (int i = 0; i < users.size(); i++) {
+          if (users.get(i).getUserId().equals(user.getUserId())) {
+              users.set(i, user);
+              break;
+          }
+      }
+      SaveDB();
+  }
+
 }
