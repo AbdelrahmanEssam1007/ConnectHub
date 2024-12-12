@@ -3,14 +3,16 @@ package backend.Notifications;
 import backend.UserDB;
 import frontend.Item;
 import frontend.Notifications;
+import utils.Constants;
 import utils.TimeUtils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.sql.Time;
 import java.time.ZoneOffset;
 import java.util.Date;
 
-public class NotificationsService extends Thread{
+public class NotificationsService extends Thread implements Constants {
 
     private TrayIcon trayIcon;
     private String userID;
@@ -20,7 +22,7 @@ public class NotificationsService extends Thread{
 
     public NotificationsService(String userID, Notifications notifications) {
         this.userID = userID;
-        notificationsDB = new NotificationsDB(userID);
+        notificationsDB = NotificationsDB.getInstance(userID);
         notificationsPanel = notifications;
         userDB = UserDB.getInstance();
     }
@@ -54,7 +56,7 @@ public class NotificationsService extends Thread{
                         notification.setStatus("read");
                         notificationsDB.updateNotification(notification);
                         trayIcon.displayMessage("Test", notification.getMessage(), TrayIcon.MessageType.INFO);
-                        notificationsPanel.addNoti(new Item(userDB.searchUserByUserId(userID).getUserName(), notification.getMessage(), TimeUtils.getTimeAgo(Date.from(notification.getDate().toInstant(ZoneOffset.UTC)))));
+                        notificationsPanel.addNoti(new Item(new ImageIcon(Constants.DEFAULT_PFP), userDB.searchUserByUserId(userID).getUserName(), notification.getMessage(), TimeUtils.getTimeAgo(Date.from(notification.getDate().toInstant(ZoneOffset.UTC))), notification.getType()));
                     }
                     else {
                         System.out.println("Notification already read");

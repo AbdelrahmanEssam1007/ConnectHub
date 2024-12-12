@@ -12,14 +12,16 @@ public class Notification {
     private String senderUserID;
     private String status;
     private LocalDateTime date;
+    private String type;
 
-    public Notification(String message, String userID, String senderUserID, String status, LocalDateTime date) {
+    public Notification(String message, String userID, String senderUserID, String status, LocalDateTime date, String type) {
         this.notificationID = IDGenerator.generateUserId();
         this.message = message;
         this.userID = userID;
         this.senderUserID = senderUserID;
         this.status = status;
         this.date = date;
+        this.type = type;
     }
 
     public Notification() {
@@ -49,6 +51,10 @@ public class Notification {
         this.date = date;
     }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -71,5 +77,9 @@ public class Notification {
 
     public LocalDateTime getDate() {
         return date;
+    }
+
+    public String getType() {
+        return type;
     }
 }

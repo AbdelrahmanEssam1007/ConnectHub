@@ -11,8 +11,23 @@ public class NotificationsDB {
     private List<Notification> notifications;
     private String userID;
     // TODO: implement singleton pattern (multiple instances)
+    private static ArrayList<NotificationsDB> instances;
 
-    public NotificationsDB(String userID) {
+    public static NotificationsDB getInstance(String userID) {
+        if (instances == null) {
+            instances = new ArrayList<>();
+        }
+        for (NotificationsDB instance : instances) {
+            if (instance.userID.equals(userID)) {
+                return instance;
+            }
+        }
+        NotificationsDB instance = new NotificationsDB(userID);
+        instances.add(instance);
+        return instance;
+    }
+
+    private NotificationsDB(String userID) {
         this.userID = userID;
         try {
             this.setNotifications(JSONFileReader.readJson("noti_" + userID + ".json", Notification.class));

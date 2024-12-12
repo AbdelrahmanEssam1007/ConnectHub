@@ -1,9 +1,11 @@
 package frontend;
 
+import javax.swing.Icon;
+
 import utils.Constants;
 import utils.ImageAvatar;
 
-import javax.swing.Icon;
+import java.lang.constant.Constable;
 
 /**
  *
@@ -11,6 +13,32 @@ import javax.swing.Icon;
  */
 public class Item extends javax.swing.JPanel implements Constants {
 
+    public Item(Icon icon, String name, String des, String time, String type) {
+        initComponents();
+        pic.setIcon(icon);
+        lbName.setText(name);
+        lbDes.setText(des);
+        lbTime.setText(time);
+        if(type.equals("GROUP_ACTIVITY")) {
+            jButton1.setText("");
+            jButton1.setVisible(false);
+            jButton2.setBackground(new java.awt.Color(0, 153, 255));
+            jButton2.setText("Open Group");
+        }
+        else if(type.equals("POST")) {
+            jButton1.setText("");
+            jButton1.setVisible(false);
+            jButton2.setBackground(new java.awt.Color(0, 153, 255));
+            jButton2.setText("Open Post");
+        }
+        else if(type.equals("FRIEND_REQUEST")) {
+            jButton1.setVisible(true);
+            jButton1.setBackground(new java.awt.Color(0, 153, 255));
+            jButton2.setBackground(new java.awt.Color(102, 102, 102));
+            jButton1.setText("Accept");
+            jButton2.setText("Decline");
+        }
+    }
 
     public Item(Icon icon, String name, String des, String time) {
         initComponents();
@@ -44,6 +72,8 @@ public class Item extends javax.swing.JPanel implements Constants {
         lbName = new javax.swing.JLabel();
         lbDes = new javax.swing.JLabel();
         lbTime = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setOpaque(false);
 
@@ -61,6 +91,18 @@ public class Item extends javax.swing.JPanel implements Constants {
         lbTime.setForeground(new java.awt.Color(134, 134, 134));
         lbTime.setText("a day ago");
 
+        jButton1.setBackground(new java.awt.Color(0, 153, 255));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("jButton1");
+        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jButton2.setBackground(new java.awt.Color(102, 102, 102));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("jButton2");
+        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -69,12 +111,17 @@ public class Item extends javax.swing.JPanel implements Constants {
                 .addContainerGap()
                 .addComponent(pic, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbName)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbDes))
-                    .addComponent(lbTime))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbTime)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -83,19 +130,25 @@ public class Item extends javax.swing.JPanel implements Constants {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(pic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lbName)
                             .addComponent(lbDes))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lbTime)
-                        .addGap(0, 8, Short.MAX_VALUE))
-                    .addComponent(pic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbTime)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2))
+                        .addGap(0, 9, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel lbDes;
     private javax.swing.JLabel lbName;
     private javax.swing.JLabel lbTime;
