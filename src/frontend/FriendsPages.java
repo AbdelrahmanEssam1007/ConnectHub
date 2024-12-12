@@ -78,10 +78,6 @@ public class FriendsPages extends javax.swing.JPanel {
         friendRequestsPanel = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         suggestedFriendsPanel = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        searchButton = new javax.swing.JButton();
-        searchCriteriaField = new javax.swing.JTextField();
-        searchedFriendsPanel = new javax.swing.JScrollPane();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(576, 536));
@@ -180,40 +176,6 @@ public class FriendsPages extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Suggested Friends", jPanel3);
 
-        searchButton.setText("Search");
-
-        searchedFriendsPanel.setBackground(new java.awt.Color(255, 255, 255));
-        searchedFriendsPanel.setMinimumSize(new java.awt.Dimension(564, 460));
-        searchedFriendsPanel.setPreferredSize(new java.awt.Dimension(564, 460));
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchedFriendsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(searchCriteriaField)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton)))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(searchCriteriaField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(searchedFriendsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Search For Friends", jPanel4);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -294,30 +256,13 @@ public class FriendsPages extends javax.swing.JPanel {
         this.suggestedFriendsPanel.setVisible(true);
     }
     
-    public void addToSearchedFriendsPanel (JPanel panel) {
-        this.searchFriends.add(panel);
-    }
-    public void removeAllSearchedFriendsPanel () {
-        this.searchedFriendsPanel.removeAll();
-        this.searchFriends.removeAll();
-    }
-    public void setSearchedFriends () {
-        this.searchedFriendsPanel = new JScrollPane(this.searchFriends);
-        this.searchedFriendsPanel.revalidate();
-        this.searchedFriendsPanel.repaint();
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel currentFriendsPanel;
     private javax.swing.JPanel friendRequestsPanel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JButton searchButton;
-    private javax.swing.JTextField searchCriteriaField;
-    private javax.swing.JScrollPane searchedFriendsPanel;
     private javax.swing.JPanel suggestedFriendsPanel;
     // End of variables declaration//GEN-END:variables
 }
