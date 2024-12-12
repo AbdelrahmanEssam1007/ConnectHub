@@ -489,7 +489,7 @@ public class UserPage extends javax.swing.JFrame {
                     !user.getUserName().equals(this.loggedInUser.getUserName()) && // not the user himself
                     !this.loggedInUser.getProfile().getFriends().contains(user.getUserId()) && // not already friends
                     !user.getProfile().getBlocked().contains(this.loggedInUser.getUserId())) { // not blocked by user
-                this.searchResultsPanel.add(new FriendsPanel (this.loggedInUser, user, this.FM, "Searched", getWidth()-20, getHeight()-30));
+                this.searchResultsPanel.add(new FriendsPanel (this.loggedInUser, user, this.FM, "Searched", this.friendsContentPanel.getWidth(), 150));
             }
 
         }
@@ -580,7 +580,7 @@ public class UserPage extends javax.swing.JFrame {
 //        this.friendsContentPanel.removeAll();
         this.friendsPages.removeAllCurrentFriendsPanel();
         for (String userID : this.loggedInUser.getProfile().getFriends()) {
-            this.friendsPages.addToCurrentFriendsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, "Current", getWidth()-20, getHeight()-30));
+            this.friendsPages.addToCurrentFriendsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, "Current", this.friendsContentPanel.getWidth(), 150));
         }
         this.friendsPages.setCurrentFriends();
         this.friendsContentPanel.add(this.friendsPages);
@@ -592,7 +592,7 @@ public class UserPage extends javax.swing.JFrame {
 //        this.friendsContentPanel.removeAll();
         this.friendsPages.removeAllFriendRequestsPanel();
         for (String userID : this.loggedInUser.getProfile().getPending()) {
-            this.friendsPages.addToFriendRequestsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, "Request", getWidth()-20, getHeight()-30));
+            this.friendsPages.addToFriendRequestsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(userID), this.FM, "Request", this.friendsContentPanel.getWidth(), 150));
         }
         this.friendsPages.setFriendRequests();
     }
@@ -607,7 +607,7 @@ public class UserPage extends javax.swing.JFrame {
                         && !suggestedFriendID.equals(loggedInUser.getUserId()) // not the user himself
                         && !loggedInUser.getProfile().getBlocked().contains(suggestedFriendID) // not blocked
                         && !UserDB.getInstance().searchUserByUserId(suggestedFriendID).getProfile().getBlocked().contains(loggedInUser.getUserId())) { // not blocked by the suggested friend
-                    this.friendsPages.addToSuggestedFriendsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(suggestedFriendID), this.FM, "Searched", getWidth()-20, getHeight()-30));
+                    this.friendsPages.addToSuggestedFriendsPanel(new FriendsPanel (this.loggedInUser, userDB.searchUserByUserId(suggestedFriendID), this.FM, "Searched", this.friendsContentPanel.getWidth(), 150));
                 }
             }
         }
