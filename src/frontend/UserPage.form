@@ -35,9 +35,11 @@
                   <Component id="mainPanel" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="logoutButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="createNewContentButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="notificationsButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Component id="refreshButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -53,6 +55,7 @@
                   <Component id="logoutButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="refreshButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="createNewContentButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="notificationsButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="mainPanel" max="32767" attributes="0"/>
@@ -438,9 +441,19 @@
     <Component class="javax.swing.JButton" name="createNewContentButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Create New Content"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="createNewContentButtonMouseClicked"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="notificationsButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Notifications"/>
+        <Property name="horizontalTextPosition" type="int" value="0"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="notificationsButtonMouseClicked"/>
       </Events>
     </Component>
   </SubComponents>
