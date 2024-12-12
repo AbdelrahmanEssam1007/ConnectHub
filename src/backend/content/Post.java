@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 public class Post extends Content{
 
     public Post(){};
-    public Post (ContentData contentData, LocalDateTime postDate, String postID, String authorID, String username) {
-        super(contentData, postDate, postID, authorID, username);
+    public Post (ContentData contentData, LocalDateTime postDate, String postID, String authorID, String groupID, String username) {
+        super(contentData, postDate, postID, authorID, groupID, username);
     }
 
 }

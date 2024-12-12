@@ -3,6 +3,8 @@ package backend;
 import utils.IDGenerator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
   private String userId;
@@ -12,10 +14,23 @@ public class User {
   private LocalDate dateOfBirth;
   private boolean status;
   private Profile profile;
+  private List<String> groupIDS = new ArrayList<>();
 
   public User() {
       this.userId = IDGenerator.generateUserId();
       profile = new Profile();
+  }
+
+  public List<String> getGroupIDS() {
+    return groupIDS;
+  }
+
+  public void setGroupIDS(List<String> groupIDS) {
+    this.groupIDS = groupIDS;
+  }
+
+  public void addGroupID(String groupID){
+    this.groupIDS.add(groupID);
   }
 
   public String getUserId() {

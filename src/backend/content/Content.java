@@ -14,18 +14,20 @@ public class Content {
     private LocalDateTime postDate;
     private String postID;
     private String authorID;
+    private String groupID;
     private String username;
 
     /*TODO: Replace it with json creator constructor if enough time*/
     /*Do not remove empty constructor for now, needed for Jackson*/
     public Content(){};
 
-    public Content(ContentData contentData, LocalDateTime postDate, String postID, String authorID, String username) {
+    public Content(ContentData contentData, LocalDateTime postDate, String postID, String authorID, String groupID, String username) {
         this.contentData = contentData;
         this.postDate = postDate;
         this.postID = postID;
         this.authorID = authorID;
         this.username = username;
+        this.groupID = groupID;
     }
 
     public boolean expired(){ return false; }
@@ -38,15 +40,22 @@ public class Content {
         this.username = username;
     }
 
+    public String getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
+    }
 
     public String returnImagePath(){
         return contentData.getImagePath();
     }
-    
+
     public String returnText(){
         return contentData.getText();
     }
-        
+
     public LocalDateTime getPostDate() {
         return postDate;
     }
