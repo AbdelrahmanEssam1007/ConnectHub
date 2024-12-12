@@ -1,6 +1,7 @@
 package backend.content;
 
 import backend.User;
+import backend.groups.Group;
 import utils.FileNames;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
@@ -92,15 +93,15 @@ public abstract class ContentManagerFactory {
         saveToDB(List.of(content));
     }
 
-    public void createTextOnlyContent(String text){
-        addContent(contentFactory.createTextOnlyContent(text, user));
+    public void createTextOnlyContent(String text, Group group){
+        addContent(contentFactory.createTextOnlyContent(text, user, group));
     }
 
-    public void createImageOnlyContent(File imageFile) throws IOException{
-        addContent(contentFactory.createImageOnlyContent(imageFile, user));
+    public void createImageOnlyContent(File imageFile, Group group) throws IOException{
+        addContent(contentFactory.createImageOnlyContent(imageFile, user, group));
     }
 
-    public void createTextImageContent(String text, File imageFile) throws IOException{
-        addContent(contentFactory.createTextImageContent(text, imageFile, user));
+    public void createTextImageContent(String text, File imageFile, Group group) throws IOException{
+        addContent(contentFactory.createTextImageContent(text, imageFile, user, group));
     }
 }

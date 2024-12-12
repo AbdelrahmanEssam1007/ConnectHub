@@ -404,6 +404,8 @@ public class UserPage extends javax.swing.JFrame {
 
     private void showFriendsPostsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showFriendsPostsButtonMouseClicked
         this.loggedInUser = FM.refresh();
+        loggedInUser.addGroupID("testing this group id");
+        UserDB.getInstance().SaveDB();
         refreshManager.refreshAll();
         type = "Friends";
         typeFeed = "Post";
@@ -583,6 +585,7 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_createNewPostButtonMouseClicked
 
     private void refreshButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshButtonMouseClicked
+        System.out.println(loggedInUser.getGroupIDS().getFirst());
         UDB.refreshDB();
         this.loggedInUser = FM.refresh();
         loggedInUser = UDB.searchUserByUserId(loggedInUser.getUserId());
