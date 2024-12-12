@@ -3,6 +3,7 @@ package frontend.content;
 import backend.User;
 import backend.content.Content;
 import backend.content.ContentManagerFactory;
+import utils.ModernScrollBarUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +37,13 @@ public class ContentPanel extends JPanel{
 
         /*Configuring scroll*/
         JScrollPane scrollContent = new JScrollPane(contentContainer);
+
+        JScrollBar sb = scrollContent.getVerticalScrollBar();
+        sb.setOpaque(false);
+        sb.setForeground(new Color(33, 140, 206));
+        sb.setPreferredSize(new Dimension(20, 15));
+        sb.setUI(new ModernScrollBarUI());
+
         scrollContentPanel = (JPanel) scrollContent.getViewport().getView();
         add(scrollContent, BorderLayout.CENTER);
 
