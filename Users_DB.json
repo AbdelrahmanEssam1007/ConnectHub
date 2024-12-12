@@ -9,10 +9,12 @@
     "friends" : [ "44023cbe-7916-450d-868a-b8b54f8a9330", "a0951309-15c0-46c6-b66a-d341c2499332" ],
     "blocked" : [ ],
     "pending" : [ ],
+    "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : "Hello I am Ahmad. Nice to meet you. NOT"
-  }
+  },
+  "groupIDS" : [ ]
 }, {
   "userId" : "cb2b9573-b77b-4897-83f2-99c422c3e9b8",
   "email" : "abdo@gmail.com",
@@ -24,10 +26,12 @@
     "friends" : [ ],
     "blocked" : [ ],
     "pending" : [ ],
+    "groups" : { },
     "profilePhoto" : "C:\\Users\\Amr\\Documents\\Screenshot (18).png",
     "coverPhoto" : "C:\\Users\\Amr\\Documents\\Screenshot (9).jpg",
     "bio" : "Hello I am Abdelrahman."
-  }
+  },
+  "groupIDS" : [ ]
 }, {
   "userId" : "cb2b9573-b77b-4897-83f2-99c422c3e9c8",
   "email" : "abdo1@gmail.com",
@@ -39,10 +43,12 @@
     "friends" : [ ],
     "blocked" : [ ],
     "pending" : [ ],
+    "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : null
-  }
+  },
+  "groupIDS" : [ ]
 }, {
   "userId" : "cb2b9573-b77b-4897-83f2-99c422c3e9f8",
   "email" : "abdo2@gmail.com",
@@ -54,10 +60,12 @@
     "friends" : [ ],
     "blocked" : [ ],
     "pending" : [ ],
+    "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : null
-  }
+  },
+  "groupIDS" : [ ]
 }, {
   "userId" : "a0951309-15c0-46c6-b66a-d341c2499332",
   "email" : "amr@gmail.com",
@@ -69,10 +77,12 @@
     "friends" : [ "e9a28975-62c3-4cba-b586-669918ad4389" ],
     "blocked" : [ ],
     "pending" : [ ],
+    "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : "testing this text field"
-  }
+  },
+  "groupIDS" : [ ]
 }, {
   "userId" : "44023cbe-7916-450d-868a-b8b54f8a9330",
   "email" : "zaki@gmail.com",
@@ -84,8 +94,10 @@
     "friends" : [ "e9a28975-62c3-4cba-b586-669918ad4389", "a0951309-15c0-46c6-b66a-d341c2499332" ],
     "blocked" : [ ],
     "pending" : [ ],
+    "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
     "bio" : null
-  }
+  },
+  "groupIDS" : [ ]
 } ]
