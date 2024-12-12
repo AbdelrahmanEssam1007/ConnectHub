@@ -35,25 +35,20 @@ public class FriendsPages extends javax.swing.JPanel {
         this.currentFriends = new JPanel();
         this.currentFriends.setLayout(new BoxLayout (this.currentFriends, BoxLayout.Y_AXIS));
         this.currentFriends.setBackground(Color.WHITE);
-        this.currentFriends.setSize(setWidth,setHeight);
+        this.currentFriends.setSize(this.currentFriendsPanel.getWidth(),this.currentFriendsPanel.getHeight());
         this.currentFriendsPanel.setLayout(new BorderLayout ());
 
         this.friendRequests = new JPanel();
         this.friendRequests.setLayout(new BoxLayout (this.friendRequests, BoxLayout.Y_AXIS));
         this.friendRequests.setBackground(Color.WHITE);
-        this.friendRequests.setSize(setWidth,setHeight);
+        this.friendRequests.setSize(this.friendRequestsPanel.getWidth(),this.friendRequestsPanel.getHeight());
         this.friendRequestsPanel.setLayout(new BorderLayout ());
 
         this.suggestedFriends = new JPanel();
         this.suggestedFriends.setLayout(new BoxLayout (this.suggestedFriends, BoxLayout.Y_AXIS));
         this.suggestedFriends.setBackground(Color.WHITE);
-        this.suggestedFriends.setSize(setWidth,setHeight);
+        this.suggestedFriends.setSize(this.suggestedFriendsPanel.getWidth(),this.suggestedFriendsPanel.getHeight());
         this.suggestedFriendsPanel.setLayout(new BorderLayout ());
-
-        this.searchFriends = new JPanel();
-        this.searchFriends.setLayout(new BoxLayout (this.searchFriends, BoxLayout.Y_AXIS));
-        this.searchFriends.setBackground(Color.WHITE);
-        this.searchFriends.setSize(setWidth,setHeight);
 //        this.currentFriendsPanel.setLayout(new BoxLayout (this.currentFriendsPanel, BoxLayout.Y_AXIS));
 //        this.friendRequestsPanel.setLayout(new BoxLayout (this.friendRequestsPanel, BoxLayout.Y_AXIS));
 //        this.suggestedFriendsPanel.setLayout(new BoxLayout (this.suggestedFriendsPanel, BoxLayout.Y_AXIS));
@@ -191,22 +186,7 @@ public class FriendsPages extends javax.swing.JPanel {
 //    }
 
     public void addToCurrentFriendsPanel (JPanel panel) {
-
         this.currentFriends.add(panel);
-//        this.currentFriends.setVisible(true);
-//        this.currentFriends.setSize(setWidth-100,setHeight);
-//        this.currentFriends.revalidate();
-//        this.currentFriends.repaint();
-
-//        currentFriendsPanel.add(currentFriends);
-//        currentFriendsPanel.setVisible(true);
-//        currentFriendsPanel.setSize(setWidth-100,setHeight);
-//        currentFriendsPanel.revalidate();
-//        currentFriendsPanel.repaint();
-
-//        jPanel1.setVisible(true);
-//        jPanel1.revalidate();
-//        jPanel1.repaint();
     }
     public void removeAllCurrentFriendsPanel () {
         this.currentFriendsPanel.removeAll();
@@ -215,13 +195,7 @@ public class FriendsPages extends javax.swing.JPanel {
     public void setCurrentFriends () {
         this.currentFriends.revalidate();
         this.currentFriends.repaint();
-        JScrollPane scrollContent = new JScrollPane(this.currentFriends, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        JScrollBar sb = scrollContent.getVerticalScrollBar();
-        sb.setOpaque(false);
-        sb.setForeground(new Color(33, 140, 206));
-        sb.setPreferredSize(new Dimension(20, 15));
-        sb.setUI(new ModernScrollBarUI());
-        this.currentFriendsPanel.add (scrollContent);
+        this.currentFriendsPanel.add (new JScrollPane(this.currentFriends, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 //        this.currentFriendsPanel.setViewportView(this.currentFriends);
         this.currentFriendsPanel.revalidate();
         this.currentFriendsPanel.repaint();
@@ -238,13 +212,7 @@ public class FriendsPages extends javax.swing.JPanel {
     public void setFriendRequests () {
         this.friendRequests.revalidate();
         this.friendRequests.repaint();
-        JScrollPane scrollContent = new JScrollPane(this.friendRequests, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        JScrollBar sb = scrollContent.getVerticalScrollBar();
-        sb.setOpaque(false);
-        sb.setForeground(new Color(33, 140, 206));
-        sb.setPreferredSize(new Dimension(20, 15));
-        sb.setUI(new ModernScrollBarUI());
-        this.friendRequestsPanel.add (scrollContent);
+        this.friendRequestsPanel.add (new JScrollPane(this.friendRequests, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
         this.friendRequestsPanel.revalidate();
         this.friendRequestsPanel.repaint();
         this.friendRequestsPanel.setVisible(true);
@@ -260,13 +228,7 @@ public class FriendsPages extends javax.swing.JPanel {
     public void setSuggestedFriends () {
         this.suggestedFriends.revalidate();
         this.suggestedFriends.repaint();
-        JScrollPane scrollContent = new JScrollPane(this.suggestedFriends, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        JScrollBar sb = scrollContent.getVerticalScrollBar();
-        sb.setOpaque(false);
-        sb.setForeground(new Color(33, 140, 206));
-        sb.setPreferredSize(new Dimension(20, 15));
-        sb.setUI(new ModernScrollBarUI());
-        this.suggestedFriendsPanel.add (scrollContent);
+        this.suggestedFriendsPanel.add (new JScrollPane(this.suggestedFriends, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
         this.suggestedFriendsPanel.revalidate();
         this.suggestedFriendsPanel.repaint();
         this.suggestedFriendsPanel.setVisible(true);
