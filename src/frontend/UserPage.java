@@ -97,7 +97,7 @@ public class UserPage extends javax.swing.JFrame {
         this.storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, this.storiesContentPanel.getWidth(), this.storiesContentPanel.getHeight(), type);
         this.profilePanel = new ProfilePanel(this.loggedInUser, this.loggedInUser, this.profileContentPanel.getWidth(), 200);
         this.refreshManager = new RefreshManager(List.of(postsPanel, storiesPanel));
-        this.friendsPages = new FriendsPages(getWidth(), getHeight()-20);
+        this.friendsPages = new FriendsPages(this.friendsContentPanel.getWidth(), this.friendsContentPanel.getHeight());
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
