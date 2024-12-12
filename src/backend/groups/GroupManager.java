@@ -30,8 +30,8 @@ public class GroupManager {
     groupDB.deleteGroup(group);
   }
 
-  public void requestToJoinGroup() {
-
+  public void requestToJoinGroup(String groupID, String userID) {
+    groupDB.searchGroupByID(groupID).getGroupMembers().put(userID, GroupRole.PENDING_MEMBER);
   }
 
   public ArrayList<Group> getGroups() {
@@ -50,8 +50,8 @@ public class GroupManager {
     return GroupRole.GROUP_MEMBER;
   }
 
-  public ArrayList<String> getGroupMembers(String groupID) {
-    return (ArrayList<String>) groupDB.searchGroupByID( groupID).getGroupMembers();
+  public Map<String, GroupRole> getGroupMembers(String groupID) {
+    return groupDB.searchGroupByID( groupID).getGroupMembers();
   }
 
   public void respondToJoinRequest(String groupID, String userID) {
