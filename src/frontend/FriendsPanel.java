@@ -10,8 +10,8 @@ import backend.content.PostManager;
 import backend.content.StoryManager;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
-import java.awt.BorderLayout;
-import java.awt.Color;
+
+import java.awt.*;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -56,6 +56,10 @@ public class FriendsPanel extends javax.swing.JPanel {
         if(pfpImagePath == null) {
             pfpImagePath = Constants.DEFAULT_PFP; // Default profile picture
         }
+        pfpImage = new ImageIcon(pfpImagePath);
+        Image scaledPfpImage = pfpImage.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        pfpImage = new ImageIcon(scaledPfpImage);
+
         pfpLabel = new JLabel(pfpImage);
         pfpPanel.setLayout(new BorderLayout());
         pfpPanel.add(pfpLabel, BorderLayout.CENTER);
