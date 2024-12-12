@@ -4,18 +4,29 @@
  */
 package frontend;
 
-import backend.FriendManager;
-import backend.RefreshManager;
-import backend.User;
-import backend.UserDB;
+import backend.*;
+import backend.Notifications.Notification;
+import backend.Notifications.NotificationsDB;
+import backend.Notifications.NotificationsService;
 import backend.content.PostManager;
 import backend.content.StoryManager;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
-import java.awt.BorderLayout;
+
+import java.awt.*;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
-import javax.swing.BoxLayout;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
+
+import java.awt.Component;
+import java.awt.Point;
+import net.miginfocom.layout.ComponentWrapper;
+import net.miginfocom.layout.LayoutCallback;
+import raven.glasspanepopup.DefaultLayoutCallBack;
+import raven.glasspanepopup.DefaultOption;
+import raven.glasspanepopup.GlassPanePopup;
 
 /**
  *
@@ -35,29 +46,46 @@ public class UserPage extends javax.swing.JFrame {
     private String typeFeed = "Post";
     private UserDB userDB = UserDB.getInstance();
     private FriendsPages friendsPages;
-    
-    
+
+    private Notifications notifications;
+
+
     public UserPage() {
         initComponents();
-        
+
         this.setLocationRelativeTo(null);
         this.setTitle("ConnectHub - " + "<username>");
         this.setVisible(true);
-        
+
         this.profileContentPanel.setLayout(new BorderLayout());
         this.storiesContentPanel.setLayout(new BorderLayout());
         this.postsContentPanel.setLayout(new BorderLayout());
 
         this.setVisible(true);
+
+        Notification notification = new Notification("Sent you a friend request.", "e9a28975-62c3-4cba-b586-669918ad4389", "a0951309-15c0-46c6-b66a-d341c2499332", "new", LocalDateTime.now(), "FRIEND_REQUEST");
+        try{
+            NotificationsDB notificationsDB = NotificationsDB.getInstance("e9a28975-62c3-4cba-b586-669918ad4389");
+            notificationsDB.addNotification(notification);
+            notificationsDB.saveDB();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        GlassPanePopup.install(this);
+        this.notifications = new Notifications();
+
+        NotificationsService notificationsService = new NotificationsService("e9a28975-62c3-4cba-b586-669918ad4389", this.notifications);
+        notificationsService.start();
     }
-    
+
     public UserPage (User user) {
         this ();
-        
+
         this.loggedInUser = user;
-        
+
         this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
-        
+
         this.FM = FriendManager.getInstance(user);
         this.postManager = new PostManager(this.loggedInUser);
         this.storyManager = new StoryManager(this.loggedInUser);
@@ -80,6 +108,12 @@ public class UserPage extends javax.swing.JFrame {
         });
         
         this.refreshButtonMouseClicked(null);
+
+
+
+
+        //NotificationsService notificationsService = new NotificationsService(this.loggedInUser.getUserId());
+
     }
 
     /**
@@ -133,29 +167,29 @@ public class UserPage extends javax.swing.JFrame {
         javax.swing.GroupLayout profileContentPanelLayout = new javax.swing.GroupLayout(profileContentPanel);
         profileContentPanel.setLayout(profileContentPanelLayout);
         profileContentPanelLayout.setHorizontalGroup(
-            profileContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 576, Short.MAX_VALUE)
+                profileContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 576, Short.MAX_VALUE)
         );
         profileContentPanelLayout.setVerticalGroup(
-            profileContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 536, Short.MAX_VALUE)
+                profileContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 536, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout userProfilePanelLayout = new javax.swing.GroupLayout(userProfilePanel);
         userProfilePanel.setLayout(userProfilePanelLayout);
         userProfilePanelLayout.setHorizontalGroup(
-            userProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userProfilePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(profileContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                userProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(userProfilePanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(profileContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
         userProfilePanelLayout.setVerticalGroup(
-            userProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(userProfilePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(profileContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                userProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(userProfilePanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(profileContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         mainPanel.addTab("Profile", userProfilePanel);
@@ -166,29 +200,29 @@ public class UserPage extends javax.swing.JFrame {
         javax.swing.GroupLayout friendsContentPanelLayout = new javax.swing.GroupLayout(friendsContentPanel);
         friendsContentPanel.setLayout(friendsContentPanelLayout);
         friendsContentPanelLayout.setHorizontalGroup(
-            friendsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 576, Short.MAX_VALUE)
+                friendsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 576, Short.MAX_VALUE)
         );
         friendsContentPanelLayout.setVerticalGroup(
-            friendsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 536, Short.MAX_VALUE)
+                friendsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 536, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout friendsPanelLayout = new javax.swing.GroupLayout(friendsPanel);
         friendsPanel.setLayout(friendsPanelLayout);
         friendsPanelLayout.setHorizontalGroup(
-            friendsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(friendsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(friendsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                friendsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(friendsPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(friendsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
         friendsPanelLayout.setVerticalGroup(
-            friendsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, friendsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(friendsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                friendsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, friendsPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(friendsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         mainPanel.addTab("Friends", friendsPanel);
@@ -198,29 +232,29 @@ public class UserPage extends javax.swing.JFrame {
         javax.swing.GroupLayout storiesContentPanelLayout = new javax.swing.GroupLayout(storiesContentPanel);
         storiesContentPanel.setLayout(storiesContentPanelLayout);
         storiesContentPanelLayout.setHorizontalGroup(
-            storiesContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 576, Short.MAX_VALUE)
+                storiesContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 576, Short.MAX_VALUE)
         );
         storiesContentPanelLayout.setVerticalGroup(
-            storiesContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 536, Short.MAX_VALUE)
+                storiesContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 536, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout friendsStoriesPanelLayout = new javax.swing.GroupLayout(friendsStoriesPanel);
         friendsStoriesPanel.setLayout(friendsStoriesPanelLayout);
         friendsStoriesPanelLayout.setHorizontalGroup(
-            friendsStoriesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(friendsStoriesPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(storiesContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                friendsStoriesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(friendsStoriesPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(storiesContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
         friendsStoriesPanelLayout.setVerticalGroup(
-            friendsStoriesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(friendsStoriesPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(storiesContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                friendsStoriesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(friendsStoriesPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(storiesContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         mainPanel.addTab("Friends' Stories", friendsStoriesPanel);
@@ -230,29 +264,29 @@ public class UserPage extends javax.swing.JFrame {
         javax.swing.GroupLayout postsContentPanelLayout = new javax.swing.GroupLayout(postsContentPanel);
         postsContentPanel.setLayout(postsContentPanelLayout);
         postsContentPanelLayout.setHorizontalGroup(
-            postsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 576, Short.MAX_VALUE)
+                postsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 576, Short.MAX_VALUE)
         );
         postsContentPanelLayout.setVerticalGroup(
-            postsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 536, Short.MAX_VALUE)
+                postsContentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 536, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout friendsPostsPanelLayout = new javax.swing.GroupLayout(friendsPostsPanel);
         friendsPostsPanel.setLayout(friendsPostsPanelLayout);
         friendsPostsPanelLayout.setHorizontalGroup(
-            friendsPostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(friendsPostsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(postsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                friendsPostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(friendsPostsPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(postsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
         friendsPostsPanelLayout.setVerticalGroup(
-            friendsPostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(friendsPostsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(postsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                friendsPostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(friendsPostsPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(postsContentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         mainPanel.addTab("Friends' Posts", friendsPostsPanel);
@@ -267,30 +301,30 @@ public class UserPage extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainPanel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(logoutButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(notificationsButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(refreshButton)))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(mainPanel)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(logoutButton)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(notificationsButton)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(refreshButton)))
+                                .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(logoutButton)
-                    .addComponent(refreshButton)
-                    .addComponent(notificationsButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mainPanel)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(logoutButton)
+                                        .addComponent(refreshButton)
+                                        .addComponent(notificationsButton))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(mainPanel)
+                                .addContainerGap())
         );
 
         pack();
@@ -334,6 +368,40 @@ public class UserPage extends javax.swing.JFrame {
 
     private void notificationsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notificationsButtonMouseClicked
         // TODO add your handling code here:
+
+        GlassPanePopup.showPopup(this.notifications, new DefaultOption() {
+            @Override
+            public float opacity() {
+                return 0;
+            }
+
+
+            public LayoutCallback getLayoutCallBack(Component parent) {
+                return new DefaultLayoutCallBack(parent) {
+                    @Override
+                    public void correctBounds(ComponentWrapper cw) {
+                        if (parent.isVisible()) {
+                            Point pl = parent.getLocationOnScreen();
+                            Point bl = notificationsButton.getLocationOnScreen();
+                            int x = bl.x - pl.x;
+                            int y = bl.y - pl.y;
+                            y += (1f - getAnimate()) * 10f;
+                            cw.setBounds(x - cw.getWidth() + notificationsButton.getWidth(), y + notificationsButton.getHeight(), cw.getWidth(), cw.getHeight());
+                        } else {
+                            super.correctBounds(cw);
+                        }
+                    }
+                };
+            }
+
+            @Override
+            public String getLayout(Component parent, float animate) {
+                return null;
+            }
+        });
+        this.notifications.addNoti(new Item());
+        this.notifications.revalidate();
+        this.notifications.repaint();
     }//GEN-LAST:event_notificationsButtonMouseClicked
 
     
