@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class TimeUtils {
     public static String getTimeAgo(Date date) {
+        // TODO: remove negative sign
         long diff = new Date().getTime() - date.getTime();
         long diffSeconds = diff / 1000 % 60;
         long diffMinutes = diff / (60 * 1000) % 60;

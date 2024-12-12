@@ -5,6 +5,7 @@ import javax.swing.Icon;
 import utils.Constants;
 import utils.ImageAvatar;
 
+import java.awt.*;
 import java.lang.constant.Constable;
 
 /**
@@ -75,6 +76,10 @@ public class Item extends javax.swing.JPanel implements Constants {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
+        setMinimumSize(new java.awt.Dimension(334, 66));
+        setMaximumSize(new java.awt.Dimension(334, 66));
+        setSize(new java.awt.Dimension(334, 66));
+
         setOpaque(false);
 
         pic.setIcon(new javax.swing.ImageIcon(Constants.DEFAULT_PFP)); // NOI18N
@@ -94,13 +99,13 @@ public class Item extends javax.swing.JPanel implements Constants {
         jButton1.setBackground(new java.awt.Color(0, 153, 255));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("jButton1");
-        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jButton1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jButton2.setBackground(new java.awt.Color(102, 102, 102));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("jButton2");
-        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jButton2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -118,10 +123,10 @@ public class Item extends javax.swing.JPanel implements Constants {
                         .addComponent(lbDes))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lbTime)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

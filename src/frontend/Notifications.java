@@ -29,7 +29,7 @@ public class Notifications extends javax.swing.JPanel {
         JScrollBar sb = scroll.getVerticalScrollBar();
         sb.setOpaque(false);
         sb.setForeground(new Color(33, 140, 206));
-        sb.setPreferredSize(new Dimension(15, 15));
+        sb.setPreferredSize(new Dimension(20, 15));
         sb.setUI(new ModernScrollBarUI());
         scroll.getViewport().setOpaque(false);
         scroll.setViewportBorder(null);

@@ -52,11 +52,13 @@ public class NotificationsService extends Thread implements Constants {
                     return;
                 }
                 for (Notification notification : notificationsDB.getNotifications()) {
+                    // TODO: Delete notification after responding
+                    // TODO: Update notification time
                     if(notification.getStatus().equals("new")) {
                         notification.setStatus("read");
                         notificationsDB.updateNotification(notification);
                         trayIcon.displayMessage("Test", notification.getMessage(), TrayIcon.MessageType.INFO);
-                        notificationsPanel.addNoti(new Item(new ImageIcon(Constants.DEFAULT_PFP), userDB.searchUserByUserId(userID).getUserName(), notification.getMessage(), TimeUtils.getTimeAgo(Date.from(notification.getDate().toInstant(ZoneOffset.UTC))), notification.getType()));
+                        notificationsPanel.addNoti(new Item(new ImageIcon(Constants.DEFAULT_PFP), userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(), notification.getMessage(), TimeUtils.getTimeAgo(Date.from(notification.getDate().toInstant(ZoneOffset.UTC))), notification.getType()));
                     }
                     else {
                         System.out.println("Notification already read");
