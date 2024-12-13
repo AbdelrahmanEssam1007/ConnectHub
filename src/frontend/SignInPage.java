@@ -51,6 +51,8 @@ public class SignInPage extends JFrame {
                 if(email.isEmpty() || password.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Please fill in all fields", "Error", JOptionPane.ERROR_MESSAGE);
                 } else if(user != null && checkPassword(password, user.getPassword())) {
+                    user.setStatus(true);
+                    userDB.setUser(user);
                     System.out.println(user.getUserName());
                     System.out.println("Login successful");
                     usernameTF.setText("");
