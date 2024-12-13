@@ -32,5 +32,7 @@ public class PrimaryAdmin extends Admin {
       demoteAdmin((Admin)memberToRemove);
       super.removeMember(memberToRemove);
     }
+    else
+      super.removeMember(memberToRemove);
   }
 }
