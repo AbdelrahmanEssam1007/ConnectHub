@@ -29,7 +29,7 @@ public class NotificationsDB {
     private NotificationsDB(String userID) {
         this.userID = userID;
         try {
-            this.setNotifications(JSONFileReader.readJson("databases/" + "noti_" + userID + ".json", Notification.class));
+            this.setNotifications(JSONFileReader.readJson("databases/notifications/" + "noti_" + userID + ".json", Notification.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,12 +51,12 @@ public class NotificationsDB {
 
     public synchronized void removeNotification(Notification notification) throws IOException {
         notifications.remove(notification);
-        JSONFileWriter.writeJson("databases/" + "noti_" + notification.getUserID() + ".json", notifications);
+        JSONFileWriter.writeJson("databases/notifications/" + "noti_" + notification.getUserID() + ".json", notifications);
     }
 
     public void refreshNotifications() {
         try {
-            this.setNotifications(JSONFileReader.readJson("databases/" + "noti_" + userID + ".json", Notification.class));
+            this.setNotifications(JSONFileReader.readJson("databases/notifications/" + "noti_" + userID + ".json", Notification.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class NotificationsDB {
 
     public synchronized void saveDB() {
         try {
-            JSONFileWriter.writeJson("databases/" + "noti_" + userID + ".json", notifications);
+            JSONFileWriter.writeJson("databases/notifications/" + "noti_" + userID + ".json", notifications);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
