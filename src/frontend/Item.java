@@ -38,6 +38,9 @@ public class Item extends javax.swing.JPanel implements Constants {
             jButton2.setBackground(new java.awt.Color(102, 102, 102));
             jButton1.setText("Accept");
             jButton2.setText("Decline");
+        } else if (type.equals("BLANK")) {
+            jButton1.setVisible(false);
+            jButton2.setVisible(false);
         }
     }
 

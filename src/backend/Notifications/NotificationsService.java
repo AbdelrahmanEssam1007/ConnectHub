@@ -57,7 +57,7 @@ public class NotificationsService extends Thread implements Constants {
                     if(notification.getStatus().equals("new")) {
                         notification.setStatus("read");
                         notificationsDB.updateNotification(notification);
-                        trayIcon.displayMessage("Test", notification.getMessage(), TrayIcon.MessageType.INFO);
+                        trayIcon.displayMessage(userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(), notification.getMessage(), TrayIcon.MessageType.INFO);
                         notificationsPanel.addNoti(new Item(new ImageIcon(Constants.DEFAULT_PFP), userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(), notification.getMessage(), TimeUtils.getTimeAgo(Date.from(notification.getDate().toInstant(ZoneOffset.UTC))), notification.getType()));
                     }
                     else {

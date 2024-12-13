@@ -67,20 +67,16 @@ public class UserPage extends javax.swing.JFrame {
 
         this.setVisible(true);
 
-        Notification notification = new Notification("Sent you a friend request.", "e9a28975-62c3-4cba-b586-669918ad4389", "a0951309-15c0-46c6-b66a-d341c2499332", "new", LocalDateTime.now(), "FRIEND_REQUEST");
-        try{
-            NotificationsDB notificationsDB = NotificationsDB.getInstance("e9a28975-62c3-4cba-b586-669918ad4389");
-            notificationsDB.addNotification(notification);
-            notificationsDB.saveDB();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        Notification notification = new Notification("Sent you a friend request.", "e9a28975-62c3-4cba-b586-669918ad4389", "a0951309-15c0-46c6-b66a-d341c2499332", "new", LocalDateTime.now(), "FRIEND_REQUEST");
+
+//        NotificationsDB notificationsDB = NotificationsDB.getInstance("e9a28975-62c3-4cba-b586-669918ad4389");
+//        notificationsDB.addNotification(notification);
+//        notificationsDB.saveDB();
+
 
         GlassPanePopup.install(this);
         this.notifications = new Notifications();
 
-        NotificationsService notificationsService = new NotificationsService("e9a28975-62c3-4cba-b586-669918ad4389", this.notifications);
-        notificationsService.start();
     }
 
     public UserPage (User user) {
@@ -114,7 +110,8 @@ public class UserPage extends javax.swing.JFrame {
         
         this.refreshButtonMouseClicked(null);
 
-
+        NotificationsService notificationsService = new NotificationsService(this.loggedInUser.getUserId(), this.notifications);
+        notificationsService.start();
         //NotificationsService notificationsService = new NotificationsService(this.loggedInUser.getUserId());
 
     }
@@ -506,14 +503,11 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_createNewContentButtonMouseClicked
 
     private void notificationsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notificationsButtonMouseClicked
-        // TODO add your handling code here:
-
         GlassPanePopup.showPopup(this.notifications, new DefaultOption() {
             @Override
             public float opacity() {
                 return 0;
             }
-
 
             public LayoutCallback getLayoutCallBack(Component parent) {
                 return new DefaultLayoutCallBack(parent) {
@@ -538,6 +532,7 @@ public class UserPage extends javax.swing.JFrame {
                 return null;
             }
         });
+        // TODO: Remove this line and put text if no notifications found
         this.notifications.addNoti(new Item());
         this.notifications.revalidate();
         this.notifications.repaint();

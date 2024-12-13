@@ -10,7 +10,6 @@ import java.util.List;
 public class NotificationsDB {
     private List<Notification> notifications;
     private String userID;
-    // TODO: implement singleton pattern (multiple instances)
     private static ArrayList<NotificationsDB> instances;
 
     public static NotificationsDB getInstance(String userID) {
@@ -37,6 +36,7 @@ public class NotificationsDB {
     }
 
     public ArrayList<Notification> getNotifications() {
+        this.refreshNotifications();
         return new ArrayList<>(notifications);
     }
 
@@ -44,9 +44,9 @@ public class NotificationsDB {
         this.notifications = notifications;
     }
 
-    public synchronized void addNotification(Notification notification) throws IOException {
+    public synchronized void addNotification(Notification notification) {
         notifications.add(notification);
-        JSONFileWriter.writeJson("noti_" + notification.getUserID() + ".json", notifications);
+        saveDB();
     }
 
     public synchronized void removeNotification(Notification notification) throws IOException {
@@ -54,8 +54,12 @@ public class NotificationsDB {
         JSONFileWriter.writeJson("noti_" + notification.getUserID() + ".json", notifications);
     }
 
-    public void refreshNotifications(Notification notification) throws IOException {
-        this.setNotifications(JSONFileReader.readJson("noti_" + userID + ".json", Notification.class));
+    public void refreshNotifications() {
+        try {
+            this.setNotifications(JSONFileReader.readJson("noti_" + userID + ".json", Notification.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public synchronized void updateNotification(Notification notification) {
