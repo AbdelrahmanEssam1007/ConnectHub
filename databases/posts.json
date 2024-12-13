@@ -98,4 +98,24 @@
   "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
   "groupID" : null,
   "username" : "Ahmad"
+}, {
+  "contentData" : {
+    "imagePath" : null,
+    "text" : "test noti"
+  },
+  "postDate" : [ 2024, 12, 13, 19, 39, 48, 291417500 ],
+  "postID" : "5174b443-3f0f-4195-8a6b-06dec9e165bf",
+  "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "groupID" : null,
+  "username" : "Ahmad"
+}, {
+  "contentData" : {
+    "imagePath" : null,
+    "text" : "test notif 2"
+  },
+  "postDate" : [ 2024, 12, 13, 19, 42, 7, 644402200 ],
+  "postID" : "37c0d530-cf13-425a-be90-f1c2cefb1062",
+  "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "groupID" : null,
+  "username" : "Ahmad"
 } ]

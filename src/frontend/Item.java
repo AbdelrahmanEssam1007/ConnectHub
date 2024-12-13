@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import backend.FriendManager;
 import backend.Notifications.Notification;
+import backend.Notifications.NotificationsDB;
 import backend.UserDB;
 import utils.Constants;
 import utils.ImageAvatar;
@@ -20,8 +21,9 @@ public class Item extends javax.swing.JPanel implements Constants {
     private String type;
     private String senderUserName;
     private String loggedInUserName;
+    private String notificationID;
 
-    public Item(Icon icon, String senderUserName, String loggedInUserName, String des, String time, String type) {
+    public Item(String notificationID, Icon icon, String senderUserName, String loggedInUserName, String des, String time, String type) {
         initComponents();
         pic.setIcon(icon);
         lbName.setText(senderUserName);
@@ -30,6 +32,7 @@ public class Item extends javax.swing.JPanel implements Constants {
         this.type = type;
         this.senderUserName = senderUserName;
         this.loggedInUserName = loggedInUserName;
+        this.notificationID = notificationID;
         if(type.equals("GROUP_ACTIVITY")) {
             jButton1.setText("");
             jButton1.setVisible(false);
@@ -41,6 +44,12 @@ public class Item extends javax.swing.JPanel implements Constants {
             jButton1.setVisible(false);
             jButton2.setBackground(new java.awt.Color(0, 153, 255));
             jButton2.setText("Open Post");
+        }
+        else if(type.equals("STORY")) {
+            jButton1.setText("");
+            jButton1.setVisible(false);
+            jButton2.setBackground(new java.awt.Color(0, 153, 255));
+            jButton2.setText("Open Story");
         }
         else if(type.equals("FRIEND_REQUEST")) {
             jButton1.setVisible(true);
@@ -178,6 +187,9 @@ public class Item extends javax.swing.JPanel implements Constants {
         // TODO add your handling code here:
         if(this.type.equals("FRIEND_REQUEST")) {
             FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
+            Notification tempNoti = NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).searchNotificationByNotificationID(notificationID);
+            tempNoti.setStatus("responded");
+            NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(tempNoti);
         }
     }
 
@@ -185,6 +197,10 @@ public class Item extends javax.swing.JPanel implements Constants {
         // TODO add your handling code here:
         if(this.type.equals("FRIEND_REQUEST")) {
             FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
+            Notification tempNoti = NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).searchNotificationByNotificationID(notificationID);
+            tempNoti.setStatus("responded");
+            NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(tempNoti);
+            //NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserName()).saveDB();
         }
     }
 

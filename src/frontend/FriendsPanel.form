@@ -73,8 +73,8 @@
                           <Component id="userStatusPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="statusLabel" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="statusLabel" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -181,7 +181,7 @@
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton3MouseClicked"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="statusLabel">
+    <Component class="javax.swing.JLabel" name="statusLabel">
     </Component>
   </SubComponents>
 </Form>

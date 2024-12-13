@@ -61,7 +61,8 @@ public class NotificationsService extends Thread implements Constants {
                         notification.setStatus("shown");
                         notificationsDB.updateNotification(notification);
                         trayIcon.displayMessage(userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(), notification.getMessage(), TrayIcon.MessageType.INFO);
-                        notificationsPanel.addNoti(new Item(new ImageIcon(Constants.DEFAULT_PFP),
+                        notificationsPanel.addNoti(new Item(notification.getNotificationID(),
+                                new ImageIcon(Constants.DEFAULT_PFP),
                                 userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(),
                                 userDB.searchUserByUserId(notification.getUserID()).getUserName(),
                                 notification.getMessage(),
@@ -70,7 +71,8 @@ public class NotificationsService extends Thread implements Constants {
                     } else if (notification.getStatus().equals("shown")) {
 //                        System.out.println("Updating shown notification");
                         // get current time and set notification time to time ago
-                        notificationsPanel.addNoti(new Item(new ImageIcon(Constants.DEFAULT_PFP),
+                        notificationsPanel.addNoti(new Item(notification.getNotificationID(),
+                                new ImageIcon(Constants.DEFAULT_PFP),
                                 userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(),
                                 userDB.searchUserByUserId(notification.getUserID()).getUserName(),
                                 notification.getMessage(),

@@ -53,6 +53,7 @@ public class FriendsPanel extends javax.swing.JPanel {
         setVisible(true);
         
         this.jButton3.setVisible(false);
+        this.statusLabel.setVisible(false);
 
         this.loggedinUser = loggedinUser;
         this.friendUser = friendUser;
@@ -111,6 +112,8 @@ public class FriendsPanel extends javax.swing.JPanel {
         
         this.role = GroupManager.getInstance().getGroupRole(group.getGroupID(), loggedinUser.getUserId());
         this.friendRole = GroupManager.getInstance().getGroupRole(group.getGroupID(), friendUser.getUserId());
+        
+        this.statusLabel.setVisible(true);
         
         if (this.friendRole == GroupRole.PRIMARY_ADMIN) {
             this.statusLabel.setText("Primary Admin");
@@ -185,7 +188,7 @@ public class FriendsPanel extends javax.swing.JPanel {
         userStatusPanel = new javax.swing.JPanel();
         viewProfileButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        statusLabel = new javax.swing.JTextField();
+        statusLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -287,8 +290,8 @@ public class FriendsPanel extends javax.swing.JPanel {
                             .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(userStatusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton1)
@@ -395,7 +398,7 @@ public class FriendsPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel pfpPanel;
-    private javax.swing.JTextField statusLabel;
+    private javax.swing.JLabel statusLabel;
     private javax.swing.JPanel userStatusPanel;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JButton viewProfileButton;
