@@ -75,14 +75,21 @@ public class FriendsPanel extends javax.swing.JPanel {
         
         if (this.type.equals("Current")) {
             jButton1.setText("Block");
+            jButton1.setBackground(new java.awt.Color(152, 152, 152));
             jButton2.setText("Remove");
+            jButton2.setBackground(new java.awt.Color(152, 152, 152));
         }
         else if (this.type.equals("Request")) {
             jButton1.setText("Accept");
+            jButton1.setBackground(new java.awt.Color(0, 153, 255));
+            jButton1.setForeground(new java.awt.Color(255, 255, 255));
             jButton2.setText("Reject");
+            jButton2.setBackground(new java.awt.Color(152, 152, 152));
         }
         else if (this.type.equals("Searched")) {
             jButton1.setText("Send Friend Request");
+            jButton1.setBackground(new java.awt.Color(0, 153, 255));
+            jButton1.setForeground(new java.awt.Color(255, 255, 255));
             jButton2.setVisible(false);
         }
     }
