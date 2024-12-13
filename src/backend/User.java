@@ -48,6 +48,11 @@ public class User {
     UserDB.getInstance().SaveDB();
   }
 
+  public void removeGroupID(String groupID){
+    this.groupIDS.remove(groupID);
+    UserDB.getInstance().SaveDB();
+  }
+
   public String getUserId() {
     return userId;
   }

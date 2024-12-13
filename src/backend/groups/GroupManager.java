@@ -26,12 +26,27 @@ public class GroupManager {
   public void createGroup(String name, String description, String photo, String userID) {
     Group group = new Group(name, description, photo);
     group.setGroupPrimaryAdminID(userID);
+    User user = UserDB.getInstance().searchUserByUserId(userID);
+    user.addGroupID(group.getGroupID());
     groupDB.createGroup(group);
   }
 
   public void deleteGroup(Group group, User user) {
-    if(group.getUserRole(user.getUserId()) == GroupRole.PRIMARY_ADMIN)
+    UserDB userDB = UserDB.getInstance();
+    String groupID = group.getGroupID();
+    if(group.getUserRole(user.getUserId()) == GroupRole.PRIMARY_ADMIN){
+      for(String x : group.getGroupMembersIDs()){
+        User tempUser = userDB.searchUserByUserId(x);
+        tempUser.removeGroupID(groupID);
+      }
+      for(String x : group.getGroupAdminsIDs()){
+        User tempUser = userDB.searchUserByUserId(x);
+        tempUser.removeGroupID(groupID);
+      }
+      User primaryAdmin = userDB.searchUserByUserId(group.getGroupPrimaryAdminID());
+      primaryAdmin.removeGroupID(groupID);
       groupDB.deleteGroup(group);
+    }
     else
       throw new RuntimeException("You must be the primary admin to delete group");
   }
@@ -129,7 +144,9 @@ public class GroupManager {
 
   public void leaveGroup(String groupID, String userID) {
     Group group = groupDB.searchGroupByID(groupID);
+    User user = UserDB.getInstance().searchUserByUserId(userID);
     if(group.getGroupMembersIDs().contains(userID)){
+      user.removeGroupID(groupID);
       group.removeUser(userID);
       groupDB.updateGroup(group);
     }
@@ -139,9 +156,11 @@ public class GroupManager {
 
   public void removeMember(String groupID, String adminID, String userID){
     Group group = groupDB.searchGroupByID(groupID);
+    User userToRemove = UserDB.getInstance().searchUserByUserId(userID);
     if(group.getUserRole(adminID) == GroupRole.PRIMARY_ADMIN ||
     group.getUserRole(adminID) == GroupRole.ADMIN){
       if(group.getUserRole(userID) == GroupRole.GROUP_MEMBER){
+        userToRemove.removeGroupID(groupID);
         group.removeUser(userID);
         groupDB.updateGroup(group);
       }

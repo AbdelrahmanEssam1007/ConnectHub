@@ -11,6 +11,7 @@ import backend.Notifications.NotificationsService;
 import backend.content.PostManager;
 import backend.content.StoryManager;
 import backend.groups.Group;
+import backend.groups.GroupContentManager;
 import backend.groups.GroupDB;
 import frontend.content.CreatePostPanel;
 import frontend.content.PostsPanel;
@@ -594,7 +595,7 @@ public class UserPage extends javax.swing.JFrame {
 
     private void createNewGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewGroupButtonMouseClicked
         this.refreshButtonMouseClicked(evt);
-        new CreateGroupsPanel();
+        new CreateGroupsPanel(loggedInUser);
         this.refreshButtonMouseClicked(evt);
     }//GEN-LAST:event_createNewGroupButtonMouseClicked
 

@@ -1,5 +1,8 @@
 package frontend;
 
+import backend.User;
+import backend.groups.GroupContentManager;
+import backend.groups.GroupManager;
 import utils.Constants;
 import utils.ImageUtils;
 
@@ -20,8 +23,12 @@ public class CreateGroupsPanel extends JDialog {
     private String coverImagePath;
     private ImageIcon coverImage;
     private JLabel coverLabel;
+    private File imageFile;
+    private User user;
 
-    public CreateGroupsPanel() {
+    public CreateGroupsPanel(User user) {
+        this.user = user;
+
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -48,11 +55,11 @@ public class CreateGroupsPanel extends JDialog {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // Open file chooser for user to upload new cover photo
-                File newFile = ImageUtils.uploadImage();
-                if (newFile == null) { // User cancelled
+                imageFile = ImageUtils.uploadImage();
+                if (imageFile == null) { // User cancelled
                     return;
                 }
-                coverImagePath = newFile.getAbsolutePath();
+                coverImagePath = imageFile.getAbsolutePath();
                 Image scaledCoverImage = ImageUtils.scaleImageIcon(coverImagePath, 400).getImage();
                 coverImage = new ImageIcon(scaledCoverImage);
                 coverLabel.setIcon(coverImage);
@@ -99,19 +106,30 @@ public class CreateGroupsPanel extends JDialog {
     }
 
     private void onOK() {
-        // TODO: add your code here
+        GroupManager groupManager = GroupManager.getInstance();
+        String groupName = groupNameTF.getText();
+        String groupDescription = groupDescTF.getText();
+        String imagePath = null;
+        try {
+            if(imageFile != null)
+                imagePath = ImageUtils.saveImage(imageFile);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        groupManager.createGroup(groupName, groupDescription, imagePath, user.getUserId());
+        JOptionPane.showMessageDialog(null, "Successfully Made Group!",
+                "Group Creation", JOptionPane.INFORMATION_MESSAGE);
         dispose();
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         CreateGroupsPanel dialog = new CreateGroupsPanel();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
-    }
+    }*/
 }

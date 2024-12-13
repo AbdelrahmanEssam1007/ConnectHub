@@ -26,4 +26,11 @@ public class PrimaryAdmin extends Admin {
     groupManager.deleteGroup(group, user);
   }
 
+  @Override
+  public void removeMember(GroupMember memberToRemove) {
+    if(memberToRemove instanceof Admin){
+      demoteAdmin((Admin)memberToRemove);
+      super.removeMember(memberToRemove);
+    }
+  }
 }
