@@ -8,6 +8,9 @@ import backend.Notifications.NotificationsDB;
 import backend.User;
 import backend.UserDB;
 import backend.content.*;
+import backend.groups.Group;
+import backend.groups.GroupDB;
+import backend.groups.GroupRole;
 import frontend.content.ContentPanel;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
@@ -210,6 +213,10 @@ public class Item extends javax.swing.JPanel implements Constants {
             //NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserName()).saveDB();
         } else if (this.type.equals("GROUP_ACTIVITY")) {
             // Open group
+            User user = UserDB.getInstance().searchUserByUserName(loggedInUserName);
+            Group group = GroupDB.getInstance().searchGroupByID(postID);
+            GroupRole role = group.getUserRole(user.getUserId());
+            new GroupDetails(user, group, role).setVisible(true);
         } else if (this.type.equals("POST")) {
             // Open post
             JFrame frame = new JFrame();

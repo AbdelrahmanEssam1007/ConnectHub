@@ -1,0 +1,28 @@
+[ {
+  "notificationID" : "95d4e8fe-fe9c-424b-b2bf-773fb7333de9",
+  "message" : "created a new post",
+  "userID" : "a0951309-15c0-46c6-b66a-d341c2499332",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "new",
+  "date" : [ 2024, 12, 13, 19, 39, 48, 319324000 ],
+  "type" : "POST",
+  "postID" : null
+}, {
+  "notificationID" : "eb542a0f-96dd-4da8-a4e3-a5073c4f4fc5",
+  "message" : "created a new post",
+  "userID" : "a0951309-15c0-46c6-b66a-d341c2499332",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "new",
+  "date" : [ 2024, 12, 13, 19, 42, 7, 662373900 ],
+  "type" : "POST",
+  "postID" : null
+}, {
+  "notificationID" : "09c10a60-59f3-412e-821b-c14f7e560175",
+  "message" : "created a new post",
+  "userID" : "a0951309-15c0-46c6-b66a-d341c2499332",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "new",
+  "date" : [ 2024, 12, 13, 22, 34, 27, 211582000 ],
+  "type" : "POST",
+  "postID" : "00b6cebc-fe5a-46f6-b1fb-37bd56a2bc8a"
+} ]

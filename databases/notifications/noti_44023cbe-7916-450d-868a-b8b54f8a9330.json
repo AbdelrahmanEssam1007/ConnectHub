@@ -1,0 +1,28 @@
+[ {
+  "notificationID" : "47cbc7b6-3532-4f63-98ad-451450e09241",
+  "message" : "created a new post",
+  "userID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "shown",
+  "date" : [ 2024, 12, 13, 22, 34, 27, 213557200 ],
+  "type" : "POST",
+  "postID" : "00b6cebc-fe5a-46f6-b1fb-37bd56a2bc8a"
+}, {
+  "notificationID" : "38fa4fee-2dc1-4bc1-b948-2200fc99ffbb",
+  "message" : "created a new post in test group",
+  "userID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "shown",
+  "date" : [ 2024, 12, 13, 22, 35, 20, 625471100 ],
+  "type" : "POST",
+  "postID" : "1fcf638d-da53-4ba2-b3fd-b203c7c253e2"
+}, {
+  "notificationID" : "ecf82fb2-679c-4c49-b9a3-1906aa5f1f29",
+  "message" : "requested to join test group zaki",
+  "userID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "shown",
+  "date" : [ 2024, 12, 13, 23, 39, 25, 77578200 ],
+  "type" : "GROUP_ACTIVITY",
+  "postID" : "71aae1b6-ffb4-4896-9a04-066b4cda70c7"
+} ]

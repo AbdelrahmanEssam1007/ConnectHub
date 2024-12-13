@@ -1,0 +1,10 @@
+[ {
+  "notificationID" : "6055247a-3007-44a1-8211-2fbcbe65d3b0",
+  "message" : "created a new post in test group",
+  "userID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "shown",
+  "date" : [ 2024, 12, 13, 22, 35, 20, 627471500 ],
+  "type" : "POST",
+  "postID" : "1fcf638d-da53-4ba2-b3fd-b203c7c253e2"
+} ]

@@ -1,8 +1,11 @@
 package backend.groups;
 
+import backend.Notifications.Notification;
+import backend.Notifications.NotificationsDB;
 import backend.User;
 import backend.UserDB;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +63,10 @@ public class GroupManager {
         return;
       group.getPendingMembersIDs().add(userID);
       groupDB.updateGroup(group);
+      for(String adminID : group.getGroupAdminsIDs()){
+        NotificationsDB.getInstance(adminID).addNotification(new Notification("requested to join " + group.getGroupName(), adminID, userID, "new", LocalDateTime.now(), "GROUP_ACTIVITY", groupID));
+      }
+      NotificationsDB.getInstance(group.getGroupPrimaryAdminID()).addNotification(new Notification("requested to join " + group.getGroupName(), group.getGroupPrimaryAdminID(), userID, "new", LocalDateTime.now(), "GROUP_ACTIVITY", groupID));
     }
     else
       throw new RuntimeException("User is already in the group.");
@@ -99,6 +106,7 @@ public class GroupManager {
           group.getGroupMembersIDs().add(userID);
           User user = UserDB.getInstance().searchUserByUserId(userID);
           user.addGroupID(groupID);
+          NotificationsDB.getInstance(userID).addNotification(new Notification("accepted your requested to join " + group.getGroupName(), userID, adminID, "new", LocalDateTime.now(), "GROUP_ACTIVITY", groupID));
         }
         group.getPendingMembersIDs().remove(userID);
         groupDB.updateGroup(group);
