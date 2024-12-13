@@ -7,6 +7,7 @@ import backend.User;
 import backend.content.PostManager;
 import backend.content.StoryManager;
 import backend.groups.Group;
+import backend.groups.GroupDB;
 import utils.ImageUtils;
 
 import javax.swing.*;

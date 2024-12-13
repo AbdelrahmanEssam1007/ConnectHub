@@ -559,6 +559,9 @@ public class UserPage extends javax.swing.JFrame {
 
     private void createNewContentButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewContentButtonMouseClicked
         this.refreshButtonMouseClicked(evt);
+        GroupDB.getInstance().readFromDB();
+        String userID = loggedInUser.getUserId();
+        userGroups = UserDB.getInstance().searchUserByUserId(userID).returnGroups();
         new CreatePostPanel(postManager, storyManager, refreshManager, userGroups).setVisible(true);
         this.refreshButtonMouseClicked(evt);
     }//GEN-LAST:event_createNewContentButtonMouseClicked

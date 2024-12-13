@@ -218,4 +218,14 @@
   "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
   "groupID" : null,
   "username" : "Ahmad"
+}, {
+  "contentData" : {
+    "imagePath" : null,
+    "text" : "testing gr"
+  },
+  "postDate" : [ 2024, 12, 14, 0, 11, 2, 961913500 ],
+  "postID" : "ba03412a-e7dd-4fed-8f56-b65ba503081e",
+  "authorID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupID" : "71aae1b6-ffb4-4896-9a04-066b4cda70c7",
+  "username" : "ZakiZokZokZakaZiko"
 } ]
