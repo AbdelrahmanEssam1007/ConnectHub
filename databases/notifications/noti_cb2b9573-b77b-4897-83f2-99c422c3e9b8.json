@@ -1,10 +1,1 @@
-[ {
-  "notificationID" : "6b5fef13-7101-423e-921c-ee1450280f23",
-  "message" : "created a new post",
-  "userID" : "cb2b9573-b77b-4897-83f2-99c422c3e9b8",
-  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
-  "status" : "new",
-  "date" : [ 2024, 12, 13, 22, 34, 27, 216141400 ],
-  "type" : "POST",
-  "postID" : "00b6cebc-fe5a-46f6-b1fb-37bd56a2bc8a"
-} ]
+[]
