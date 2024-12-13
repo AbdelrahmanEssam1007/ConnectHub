@@ -1,6 +1,7 @@
 package backend;
 
 import backend.groups.Group;
+import backend.groups.GroupDB;
 import backend.groups.GroupPostLoader;
 import utils.FileNames;
 import utils.IDGenerator;
@@ -31,14 +32,10 @@ public class User {
   }
 
   public List<Group> returnGroups() {
-      List<Group> allGroups = null;
-      try {
-          allGroups = JSONFileReader.readJson(FileNames.GROUPS.getFileName(), Group.class);
-      } catch (IOException e) {
-        System.out.println("Error in returning groups.");
-        throw new RuntimeException(e);
-      }
-      List<Group> myGroups = new ArrayList<>();
+    List<Group> allGroups = null;
+    GroupDB.getInstance().readFromDB();
+    allGroups = GroupDB.getInstance().getGroups();
+    List<Group> myGroups = new ArrayList<>();
     for(Group x : allGroups){
       if(groupIDS.contains(x.getGroupID()))
         myGroups.add(x);

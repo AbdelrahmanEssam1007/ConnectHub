@@ -94,15 +94,18 @@ public class CreatePostPanel extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = contentTextInput.getText();
+                Group selectedGroup = null;
+                if(groupComboBox.getSelectedItem() instanceof Group)
+                    selectedGroup = (Group) groupComboBox.getSelectedItem();
                 if(imageFile != null && !text.isEmpty()){
                     try {
                         if(postRadioButton.isSelected()){
-                            postManager.createTextImageContent(text, imageFile, (Group)groupComboBox.getSelectedItem());
+                            postManager.createTextImageContent(text, imageFile, selectedGroup);
                             JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
                         }
                         else if(storyRadioButton.isSelected()){
-                            storyManager.createTextImageContent(text, imageFile, (Group)groupComboBox.getSelectedItem());
+                            storyManager.createTextImageContent(text, imageFile, selectedGroup);
                             JOptionPane.showMessageDialog(null, "Successfully made story!",
                                     "Story Creation", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -121,11 +124,11 @@ public class CreatePostPanel extends JDialog{
                 else if(imageFile != null){
                     try {
                         if(postRadioButton.isSelected()){
-                            postManager.createImageOnlyContent(imageFile, (Group)groupComboBox.getSelectedItem());
+                            postManager.createImageOnlyContent(imageFile, selectedGroup);
                             JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
                         }else if(storyRadioButton.isSelected()){
-                            storyManager.createImageOnlyContent(imageFile, (Group)groupComboBox.getSelectedItem());
+                            storyManager.createImageOnlyContent(imageFile, selectedGroup);
                             JOptionPane.showMessageDialog(null, "Successfully made story!",
                                     "Story Creation", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -144,11 +147,11 @@ public class CreatePostPanel extends JDialog{
                 else if(!text.isEmpty()){
                     System.out.println("Text only");
                     if(postRadioButton.isSelected()){
-                        postManager.createTextOnlyContent(text, (Group)groupComboBox.getSelectedItem());
+                        postManager.createTextOnlyContent(text, selectedGroup);
                         JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
                     }else if(storyRadioButton.isSelected()){
-                        storyManager.createTextOnlyContent(text, (Group)groupComboBox.getSelectedItem());
+                        storyManager.createTextOnlyContent(text, selectedGroup);
                         JOptionPane.showMessageDialog(null, "Successfully made story!",
                                 "Story Creation", JOptionPane.INFORMATION_MESSAGE);
                     }

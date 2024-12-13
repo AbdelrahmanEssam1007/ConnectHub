@@ -73,7 +73,9 @@ public class GroupDB {
         g.setGroupName(group.getGroupName());
         g.setGroupDescription(group.getGroupDescription());
         g.setGroupPhoto(group.getGroupPhoto());
-        g.setGroupMembers(group.getGroupMembers());
+        g.setGroupPrimaryAdminID(group.getGroupPrimaryAdminID());
+        g.setGroupAdminsIDs(group.getGroupAdminsIDs());
+        g.setGroupMembersIDs(group.getGroupMembersIDs());
       }
     }
    saveToDB();

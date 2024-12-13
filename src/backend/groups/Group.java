@@ -1,10 +1,12 @@
 package backend.groups;
 
+import backend.User;
 import backend.content.Content;
 import utils.IDGenerator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Group {
@@ -13,7 +15,10 @@ public class Group {
   private String groupName;
   private String groupDescription;
   private String groupPhoto;
-  private Map<String, GroupRole> groupMembers;
+  private String groupPrimaryAdminID;
+  private List<String> groupMembersIDs;
+  private List<String> groupAdminsIDs;
+  private List<String> pendingMembersIDs;
 
   public Group(){}
 
@@ -22,7 +27,8 @@ public class Group {
     this.groupName = groupName;
     this.groupDescription = groupDescription;
     this.groupPhoto = groupPhoto;
-    this.groupMembers = new HashMap<>();
+    this.groupMembersIDs = new ArrayList<>();
+    this.groupAdminsIDs = new ArrayList<>();
   }
 
   public String getGroupID() {
@@ -53,12 +59,36 @@ public class Group {
     this.groupPhoto = groupPhoto;
   }
 
-  public Map<String, GroupRole> getGroupMembers() {
-    return groupMembers;
+  public String getGroupPrimaryAdminID() {
+    return groupPrimaryAdminID;
   }
 
-  public void setGroupMembers(Map<String, GroupRole> groupMembers) {
-    this.groupMembers = groupMembers;
+  public void setGroupPrimaryAdminID(String groupPrimaryAdminID) {
+    this.groupPrimaryAdminID = groupPrimaryAdminID;
+  }
+
+  public List<String> getGroupMembersIDs() {
+    return groupMembersIDs;
+  }
+
+  public void setGroupMembersIDs(List<String> groupMembersIDs) {
+    this.groupMembersIDs = groupMembersIDs;
+  }
+
+  public List<String> getGroupAdminsIDs() {
+    return groupAdminsIDs;
+  }
+
+  public void setGroupAdminsIDs(List<String> groupAdminsIDs) {
+    this.groupAdminsIDs = groupAdminsIDs;
+  }
+
+  public List<String> getPendingMembersIDs() {
+    return pendingMembersIDs;
+  }
+
+  public void setPendingMembersIDs(List<String> pendingMembersIDs) {
+    this.pendingMembersIDs = pendingMembersIDs;
   }
 
   @Override

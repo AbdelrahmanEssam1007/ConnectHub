@@ -1,6 +1,7 @@
 package backend.groups;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class GroupManager {
@@ -21,8 +22,7 @@ public class GroupManager {
 
   public void createGroup(String name, String description, String photo, String userID) {
     Group group = new Group(name, description, photo);
-    Map<String, GroupRole> groupMembers = group.getGroupMembers();
-    groupMembers.put(userID, GroupRole.PRIMARY_ADMIN);
+    group.setGroupPrimaryAdminID(userID);
     groupDB.createGroup(group);
   }
 
@@ -31,7 +31,8 @@ public class GroupManager {
   }
 
   public void requestToJoinGroup(String groupID, String userID) {
-    groupDB.searchGroupByID(groupID).getGroupMembers().put(userID, GroupRole.PENDING_MEMBER);
+    groupDB.searchGroupByID(groupID).getPendingMembersIDs().add(userID);
+    groupDB.saveToDB();
   }
 
   public ArrayList<Group> getGroups() {
@@ -50,23 +51,50 @@ public class GroupManager {
     return GroupRole.GROUP_MEMBER;
   }
 
-  public Map<String, GroupRole> getGroupMembers(String groupID) {
-    return groupDB.searchGroupByID( groupID).getGroupMembers();
+  public List<String> getGroupMembers(String groupID) {
+    return groupDB.searchGroupByID(groupID).getGroupMembersIDs();
   }
 
   public void respondToJoinRequest(String groupID, String userID) {
-    groupDB.searchGroupByID(groupID).getGroupMembers().put(userID, GroupRole.GROUP_MEMBER);
+    Group group = groupDB.searchGroupByID(groupID);
+    if(group.getPendingMembersIDs().contains(userID)){
+      group.getGroupMembersIDs().add(userID);
+      group.getPendingMembersIDs().remove(userID);
+    }
+    else
+      throw new RuntimeException("User did not send join request.");
+    groupDB.saveToDB();
   }
 
   public void promoteToAdmin(String groupID, String userID) {
-    groupDB.searchGroupByID(groupID).getGroupMembers().put(userID, GroupRole.ADMIN);
+    Group group = groupDB.searchGroupByID(groupID);
+    if(group.getGroupMembersIDs().contains(userID)){
+      group.getGroupMembersIDs().remove(userID);
+      group.getGroupAdminsIDs().add(userID);
+    }
+    else
+      throw new RuntimeException("User is not a member cannot promote to admin.");
+    groupDB.saveToDB();
   }
 
   public void demoteAdmin(String groupID, String userID) {
-    groupDB.searchGroupByID(groupID).getGroupMembers().put(userID, GroupRole.GROUP_MEMBER);
+    Group group = groupDB.searchGroupByID(groupID);
+    if(group.getGroupAdminsIDs().contains(userID)){
+      group.getGroupMembersIDs().add(userID);
+      group.getGroupAdminsIDs().remove(userID);
+    }
+    else
+      throw new RuntimeException("User is not an admin, cannot demote him.");
+    groupDB.saveToDB();
   }
 
   public void leaveGroup(String groupID, String userID) {
-    groupDB.searchGroupByID(groupID).getGroupMembers().remove(userID);
+    Group group = groupDB.searchGroupByID(groupID);
+    if(group.getGroupMembersIDs().contains(userID)){
+      group.getGroupMembersIDs().remove(userID);
+    }
+    else
+      throw new RuntimeException("User is not a member, cannot leave.");
+    groupDB.saveToDB();
   }
 }
