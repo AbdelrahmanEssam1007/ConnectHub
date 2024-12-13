@@ -461,6 +461,7 @@ public class UserPage extends javax.swing.JFrame {
         this.friendsContentPanel.add(this.friendsPages);
         this.friendsContentPanel.revalidate();
         this.friendsContentPanel.repaint();
+        this.searchResultsPanel.removeAll();
     }//GEN-LAST:event_refreshButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
