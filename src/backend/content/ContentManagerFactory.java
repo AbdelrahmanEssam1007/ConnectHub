@@ -110,22 +110,23 @@ public abstract class ContentManagerFactory {
         this.content = content;
     }
 
-    protected void addContent(Content content){
+    protected String addContent(Content content){
         this.content.add(content);
         System.out.println("saved to db");
         saveToDB(List.of(content));
+        return content.getPostID();
     }
 
-    public void createTextOnlyContent(String text, Group group){
-        addContent(contentFactory.createTextOnlyContent(text, user, group));
+    public String createTextOnlyContent(String text, Group group){
+        return addContent(contentFactory.createTextOnlyContent(text, user, group));
     }
 
-    public void createImageOnlyContent(File imageFile, Group group) throws IOException{
-        addContent(contentFactory.createImageOnlyContent(imageFile, user, group));
+    public String createImageOnlyContent(File imageFile, Group group) throws IOException{
+        return addContent(contentFactory.createImageOnlyContent(imageFile, user, group));
     }
 
-    public void createTextImageContent(String text, File imageFile, Group group) throws IOException{
-        addContent(contentFactory.createTextImageContent(text, imageFile, user, group));
+    public String createTextImageContent(String text, File imageFile, Group group) throws IOException{
+        return addContent(contentFactory.createTextImageContent(text, imageFile, user, group));
     }
 
     public User getUser() {
