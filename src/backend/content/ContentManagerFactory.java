@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ContentManagerFactory {
-    private final FileNames fileName;
-    private final ContentLoader contentLoader;
-    private final ContentFactory contentFactory;
-    private final User user;
+    protected final FileNames fileName;
+    protected final ContentLoader contentLoader;
+    protected final ContentFactory contentFactory;
+    protected final User user;
     protected List<Content> content = new ArrayList<>();
 
     public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory, User user) {
