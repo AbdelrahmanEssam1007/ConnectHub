@@ -9,6 +9,7 @@ import utils.TimeUtils;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Time;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 
@@ -35,10 +36,10 @@ public class NotificationsService extends Thread implements Constants {
                 Thread.sleep(5000);//10000
                 // Read the file and create a notification
                 if(notificationsDB.getNotifications().isEmpty()) {
-                    System.out.println("No notifications");
+//                    System.out.println("No notifications");
                 }
                 else {
-                    System.out.println("Notifications found");
+//                    System.out.println("Notifications found");
                 }
                 SystemTray tray = SystemTray.getSystemTray();
                 Image image = Toolkit.getDefaultToolkit().createImage("icon.png");
@@ -51,23 +52,43 @@ public class NotificationsService extends Thread implements Constants {
                     System.out.println("TrayIcon could not be added.");
                     return;
                 }
+                notificationsPanel.clearNoti();
                 for (Notification notification : notificationsDB.getNotifications()) {
                     // TODO: Delete notification after responding
                     // TODO: Update notification time
+                    // TODO: Update notification status
                     if(notification.getStatus().equals("new")) {
-                        notification.setStatus("read");
+//                        System.out.println("Adding new notification");
+                        notification.setStatus("shown");
                         notificationsDB.updateNotification(notification);
                         trayIcon.displayMessage(userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(), notification.getMessage(), TrayIcon.MessageType.INFO);
-                        notificationsPanel.addNoti(new Item(new ImageIcon(Constants.DEFAULT_PFP), userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(), notification.getMessage(), TimeUtils.getTimeAgo(Date.from(notification.getDate().toInstant(ZoneOffset.UTC))), notification.getType()));
-                    }
-                    else {
-                        System.out.println("Notification already read");
+                        notificationsPanel.addNoti(new Item(new ImageIcon(Constants.DEFAULT_PFP),
+                                userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(),
+                                userDB.searchUserByUserId(notification.getUserID()).getUserName(),
+                                notification.getMessage(),
+                                TimeUtils.getTimeAgo(notification.getDate()),
+                                notification.getType()));
+                    } else if (notification.getStatus().equals("shown")) {
+//                        System.out.println("Updating shown notification");
+                        // get current time and set notification time to time ago
+                        notificationsPanel.addNoti(new Item(new ImageIcon(Constants.DEFAULT_PFP),
+                                userDB.searchUserByUserId(notification.getSenderUserID()).getUserName(),
+                                userDB.searchUserByUserId(notification.getUserID()).getUserName(),
+                                notification.getMessage(),
+                                TimeUtils.getTimeAgo(notification.getDate()),
+                                notification.getType()));
+                    } else if (notification.getStatus().equals("responded")) {
+                        // remove notification
+                    } else {
+//                        System.out.println("Notification already read");
                     }
                 }
+                notificationsPanel.revalidate();
+                notificationsPanel.repaint();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Checking for notifications...");
+//            System.out.println("Checking for notifications...");
         }
     }
 }

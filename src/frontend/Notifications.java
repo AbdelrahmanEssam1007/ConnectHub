@@ -55,6 +55,12 @@ public class Notifications extends javax.swing.JPanel {
 
     public void addNoti(Item item) {
         panel.add(item);
+        panel.repaint();
+    }
+
+    public void clearNoti() {
+        panel.removeAll();
+
     }
 
     @Override

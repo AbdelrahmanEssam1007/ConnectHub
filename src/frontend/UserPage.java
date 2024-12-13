@@ -538,6 +538,7 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_createNewContentButtonMouseClicked
 
     private void notificationsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notificationsButtonMouseClicked
+        this.refreshButtonMouseClicked(null);
         GlassPanePopup.showPopup(this.notifications, new DefaultOption() {
             @Override
             public float opacity() {

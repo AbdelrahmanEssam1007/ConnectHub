@@ -2,6 +2,8 @@ package frontend;
 
 import javax.swing.*;
 
+import backend.FriendManager;
+import backend.Notifications.Notification;
 import backend.UserDB;
 import utils.Constants;
 import utils.ImageAvatar;
@@ -15,12 +17,19 @@ import java.lang.constant.Constable;
  */
 public class Item extends javax.swing.JPanel implements Constants {
 
-    public Item(Icon icon, String name, String des, String time, String type) {
+    private String type;
+    private String senderUserName;
+    private String loggedInUserName;
+
+    public Item(Icon icon, String senderUserName, String loggedInUserName, String des, String time, String type) {
         initComponents();
         pic.setIcon(icon);
-        lbName.setText(name);
+        lbName.setText(senderUserName);
         lbDes.setText(des);
         lbTime.setText(time);
+        this.type = type;
+        this.senderUserName = senderUserName;
+        this.loggedInUserName = loggedInUserName;
         if(type.equals("GROUP_ACTIVITY")) {
             jButton1.setText("");
             jButton1.setVisible(false);
@@ -167,10 +176,16 @@ public class Item extends javax.swing.JPanel implements Constants {
 
     private void jButton1ButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
+        if(this.type.equals("FRIEND_REQUEST")) {
+            FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
+        }
     }
 
     private void jButton2ButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
+        if(this.type.equals("FRIEND_REQUEST")) {
+            FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
