@@ -109,17 +109,17 @@ public class CreatePostPanel extends JDialog{
                 if(imageFile != null && !text.isEmpty()){
                     try {
                         if(postRadioButton.isSelected()){
-                            postManager.createTextImageContent(text, imageFile, selectedGroup);
+                            String postID = postManager.createTextImageContent(text, imageFile, selectedGroup);
                             for (String friendId : userFriendsIDs) {
-                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST"));
+                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
                             }
                             JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
                         }
                         else if(storyRadioButton.isSelected()){
-                            storyManager.createTextImageContent(text, imageFile, selectedGroup);
+                            String postID = storyManager.createTextImageContent(text, imageFile, selectedGroup);
                             for (String friendId : userFriendsIDs) {
-                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY"));
+                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
                             }
                             JOptionPane.showMessageDialog(null, "Successfully made story!",
                                     "Story Creation", JOptionPane.INFORMATION_MESSAGE);
@@ -139,16 +139,16 @@ public class CreatePostPanel extends JDialog{
                 else if(imageFile != null){
                     try {
                         if(postRadioButton.isSelected()){
-                            postManager.createImageOnlyContent(imageFile, selectedGroup);
+                            String postID = postManager.createImageOnlyContent(imageFile, selectedGroup);
                             for (String friendId : userFriendsIDs) {
-                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST"));
+                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
                             }
                             JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
                         }else if(storyRadioButton.isSelected()){
-                            storyManager.createImageOnlyContent(imageFile, selectedGroup);
+                            String postID = storyManager.createImageOnlyContent(imageFile, selectedGroup);
                             for (String friendId : userFriendsIDs) {
-                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY"));
+                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
                             }
                             JOptionPane.showMessageDialog(null, "Successfully made story!",
                                     "Story Creation", JOptionPane.INFORMATION_MESSAGE);
@@ -168,16 +168,16 @@ public class CreatePostPanel extends JDialog{
                 else if(!text.isEmpty()){
                     System.out.println("Text only");
                     if(postRadioButton.isSelected()){
-                        postManager.createTextOnlyContent(text, selectedGroup);
+                        String postID = postManager.createTextOnlyContent(text, selectedGroup);
                         for (String friendId : userFriendsIDs) {
-                            NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST"));
+                            NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
                         }
                         JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
                     }else if(storyRadioButton.isSelected()){
-                        storyManager.createTextOnlyContent(text, selectedGroup);
+                        String postID = storyManager.createTextOnlyContent(text, selectedGroup);
                         for (String friendId : userFriendsIDs) {
-                            NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY"));
+                            NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
                         }
                         JOptionPane.showMessageDialog(null, "Successfully made story!",
                                 "Story Creation", JOptionPane.INFORMATION_MESSAGE);

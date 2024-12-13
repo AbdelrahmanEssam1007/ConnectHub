@@ -54,8 +54,6 @@ public class NotificationsService extends Thread implements Constants {
                 }
                 notificationsPanel.clearNoti();
                 for (Notification notification : notificationsDB.getNotifications()) {
-                    // TODO: Delete notification after responding
-                    // TODO: Update notification status
                     if(notification.getStatus().equals("new")) {
 //                        System.out.println("Adding new notification");
                         notification.setStatus("shown");
@@ -67,7 +65,7 @@ public class NotificationsService extends Thread implements Constants {
                                 userDB.searchUserByUserId(notification.getUserID()).getUserName(),
                                 notification.getMessage(),
                                 TimeUtils.getTimeAgo(notification.getDate()),
-                                notification.getType()));
+                                notification.getType(), notification.getPostID()));
                     } else if (notification.getStatus().equals("shown")) {
 //                        System.out.println("Updating shown notification");
                         // get current time and set notification time to time ago
@@ -77,7 +75,7 @@ public class NotificationsService extends Thread implements Constants {
                                 userDB.searchUserByUserId(notification.getUserID()).getUserName(),
                                 notification.getMessage(),
                                 TimeUtils.getTimeAgo(notification.getDate()),
-                                notification.getType()));
+                                notification.getType(), notification.getPostID()));
                     } else if (notification.getStatus().equals("responded")) {
                         // remove notification
                     } else {

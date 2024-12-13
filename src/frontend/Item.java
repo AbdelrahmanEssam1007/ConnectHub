@@ -6,6 +6,9 @@ import backend.FriendManager;
 import backend.Notifications.Notification;
 import backend.Notifications.NotificationsDB;
 import backend.UserDB;
+import backend.content.Post;
+import backend.content.PostFactory;
+import frontend.content.ContentPanel;
 import utils.Constants;
 import utils.ImageAvatar;
 
@@ -22,8 +25,9 @@ public class Item extends javax.swing.JPanel implements Constants {
     private String senderUserName;
     private String loggedInUserName;
     private String notificationID;
+    private String postID;
 
-    public Item(String notificationID, Icon icon, String senderUserName, String loggedInUserName, String des, String time, String type) {
+    public Item(String notificationID, Icon icon, String senderUserName, String loggedInUserName, String des, String time, String type, String postID) {
         initComponents();
         pic.setIcon(icon);
         lbName.setText(senderUserName);
@@ -33,6 +37,7 @@ public class Item extends javax.swing.JPanel implements Constants {
         this.senderUserName = senderUserName;
         this.loggedInUserName = loggedInUserName;
         this.notificationID = notificationID;
+        this.postID = postID;
         if(type.equals("GROUP_ACTIVITY")) {
             jButton1.setText("");
             jButton1.setVisible(false);
@@ -201,6 +206,17 @@ public class Item extends javax.swing.JPanel implements Constants {
             tempNoti.setStatus("responded");
             NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(tempNoti);
             //NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserName()).saveDB();
+        } else if (this.type.equals("GROUP_ACTIVITY")) {
+            // Open group
+        } else if (this.type.equals("POST")) {
+            // Open post
+            JFrame frame = new JFrame();
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            //frame.add();
+
+        } else if (this.type.equals("STORY")) {
+            // Open story
+
         }
     }
 

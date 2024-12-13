@@ -13,8 +13,9 @@ public class Notification {
     private String status;
     private LocalDateTime date;
     private String type;
+    private String postID;
 
-    public Notification(String message, String userID, String senderUserID, String status, LocalDateTime date, String type) {
+    public Notification(String message, String userID, String senderUserID, String status, LocalDateTime date, String type, String postID) {
         this.notificationID = IDGenerator.generateUserId();
         this.message = message;
         this.userID = userID;
@@ -22,6 +23,7 @@ public class Notification {
         this.status = status;
         this.date = date;
         this.type = type;
+        this.postID = postID;
     }
 
     public Notification() {
@@ -55,6 +57,10 @@ public class Notification {
         this.type = type;
     }
 
+    public void setPostID(String postID) {
+        this.postID = postID;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -81,5 +87,9 @@ public class Notification {
 
     public String getType() {
         return type;
+    }
+
+    public String getPostID() {
+        return postID;
     }
 }

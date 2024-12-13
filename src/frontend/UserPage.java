@@ -594,10 +594,7 @@ public class UserPage extends javax.swing.JFrame {
                 return null;
             }
         });
-        // TODO: Remove this line and put text if no notifications found
-        this.notifications.addNoti(new Item());
-        this.notifications.revalidate();
-        this.notifications.repaint();
+
     }//GEN-LAST:event_notificationsButtonMouseClicked
 
     private void createNewGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewGroupButtonMouseClicked
