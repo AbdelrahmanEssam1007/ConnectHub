@@ -1,22 +1,16 @@
 package backend.groups;
 
+import backend.User;
+
 public class Admin extends GroupMember {
-  private static Admin ADMIN = null;
   private GroupContentManager groupContentManager;
   private GroupManager groupManager;
 
-  Admin(){
-    super();
+  Admin(User user, Group group){
+    super(user, group);
   }
 
-  public static Admin getInstance() {
-    if (ADMIN == null) {
-      ADMIN = new Admin();
-    }
-    return ADMIN;
-  }
-
-  public void editPost(){
+  public void editPost(String postID, String newContent){
 
   }
 

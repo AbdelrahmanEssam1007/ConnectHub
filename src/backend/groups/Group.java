@@ -2,6 +2,7 @@ package backend.groups;
 
 import backend.User;
 import backend.content.Content;
+import backend.content.Post;
 import utils.IDGenerator;
 
 import java.util.ArrayList;
