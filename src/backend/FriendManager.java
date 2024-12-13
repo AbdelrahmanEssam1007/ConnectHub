@@ -119,6 +119,7 @@ public class FriendManager {
   }
 
   // Unblock a user
+  // TODO: Use this function
   public void unblockUser(User targetUser) {
     String targetId = targetUser.getUserId();
     if (!userProfile.getBlocked().contains(targetId)) {

@@ -1,7 +1,8 @@
 package frontend;
 
-import javax.swing.Icon;
+import javax.swing.*;
 
+import backend.UserDB;
 import utils.Constants;
 import utils.ImageAvatar;
 
@@ -104,12 +105,22 @@ public class Item extends javax.swing.JPanel implements Constants {
         jButton1.setText("jButton1");
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1ButtonMouseClicked(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(102, 102, 102));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("jButton2");
         jButton2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2ButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -153,6 +164,14 @@ public class Item extends javax.swing.JPanel implements Constants {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+
+    private void jButton1ButtonMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+    }
+
+    private void jButton2ButtonMouseClicked(java.awt.event.MouseEvent evt) {
+        // TODO add your handling code here:
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
