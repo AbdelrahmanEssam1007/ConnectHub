@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.*;
 
@@ -682,13 +683,19 @@ public class UserPage extends javax.swing.JFrame {
     
     void setSuggestedGroups () {
         this.groupsPages.removeAllSuggestedGroupsPanel();
+        HashMap<String,Group> nonduplicategroups = new HashMap<>();
         for(String friendID : loggedInUser.getProfile().getFriends()) {
             for (String groupID : UserDB.getInstance().searchUserByUserId(friendID).getGroupIDS()) {
                 if (!loggedInUser.getGroupIDS().contains(groupID)) {
-                    this.groupsPages.addToSuggestedGroupsPanel(new GroupPanel (this.loggedInUser, GroupDB.getInstance().searchGroupByID(groupID)));
+                    nonduplicategroups.put(groupID, GroupDB.getInstance().searchGroupByID(groupID));
                 }
             }
         }
+
+        for (String groupID : nonduplicategroups.keySet()) {
+            this.groupsPages.addToSuggestedGroupsPanel(new GroupPanel (this.loggedInUser, GroupDB.getInstance().searchGroupByID(groupID)));
+        }
+
         this.groupsPages.setSuggestedGroups();
     }
     
