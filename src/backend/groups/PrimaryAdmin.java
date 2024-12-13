@@ -1,30 +1,29 @@
 package backend.groups;
 
+import backend.User;
+
 public class PrimaryAdmin extends Admin {
+  private GroupContentManager groupContentManager;
+  private GroupManager groupManager;
+  private GroupDB groupDB;
 
-  private static PrimaryAdmin PRIMARY_ADMIN = null;
-
-  private PrimaryAdmin(){
-    super();
+  private PrimaryAdmin(User user, Group group){
+    super(user, group);
+    this.groupContentManager = new GroupContentManager(user);
+    this.groupManager = GroupManager.getInstance();
+    this.groupDB = GroupDB.getInstance();
   }
 
-  public static PrimaryAdmin getInstance() {
-    if (PRIMARY_ADMIN == null) {
-      PRIMARY_ADMIN = new PrimaryAdmin();
-    }
-    return PRIMARY_ADMIN;
+  public void demoteAdmin(Admin admin){
+    groupManager.demoteAdmin(group.getGroupID(), user.getUserId(), admin.getUser().getUserId());
   }
 
-  public void demoteAdmin(){
-    // remove admin from group
-  }
-
-  public void promoteAdmin(){
-    // add admin to group
+  public void promoteAdmin(GroupMember member){
+    groupManager.promoteToAdmin(group.getGroupID(), user.getUserId(), member.getUser().getUserId());
   }
 
   public void deleteGroup(){
-    // delete group
+    groupManager.deleteGroup(group, user);
   }
 
 }

@@ -49,4 +49,8 @@ public class GroupMember {
   public void leaveGroup(){
     groupManager.leaveGroup(group.getGroupID(), user.getUserId());
   }
+
+  public User getUser() {
+    return user;
+  }
 }

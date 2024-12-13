@@ -26,8 +26,8 @@ public class Admin extends GroupMember {
       post.editImagePath(imagePath);
   }
 
-  public void removeMember(User userToRemove){
-    groupManager.removeMember(group.getGroupID(), user.getUserId(), userToRemove.getUserId());
+  public void removeMember(GroupMember memberToRemove){
+    groupManager.removeMember(group.getGroupID(), user.getUserId(), memberToRemove.getUser().getUserId());
   }
 
   public void respondToMemberRequest(User userToRespondTo, boolean approve){
