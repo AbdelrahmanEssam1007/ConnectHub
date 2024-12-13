@@ -509,7 +509,7 @@ public class UserPage extends javax.swing.JFrame {
         panel.setSize(this.searchResultsPanel.getWidth(), this.searchResultsPanel.getHeight());
         panel.setLayout(new BoxLayout (panel, BoxLayout.Y_AXIS));
         for (Group group : GroupDB.getInstance().getGroups()) {
-            {
+            if(group.getGroupName().contains(this.searchCriteriaField.getText())) {
                 panel.add(new GroupPanel (this.loggedInUser, group));
                 System.out.println(group.getGroupID()); //* group id is displayed, group exists
             }
