@@ -5,6 +5,7 @@ import backend.User;
 import backend.UserDB;
 import utils.Constants;
 import utils.ImageUtils;
+import utils.Validation;
 
 import javax.swing.*;
 import javax.swing.text.AttributeSet;
@@ -23,6 +24,7 @@ public class ProfilePanel extends JPanel implements Constants {
     private JButton editButton;
     private JButton cancelButton;
     private JScrollPane bioScroll;
+    private User profileUser;
 
     private String pfpImagePath;
     private String coverImagePath;
@@ -32,11 +34,12 @@ public class ProfilePanel extends JPanel implements Constants {
 
     private JLabel pfpLabel;
     private JLabel coverLabel;
+    private UserDB userDB = UserDB.getInstance();
 
-    public ProfilePanel(User user, int width, int height) {
-        Profile profile = user.getProfile();
-        pfpImagePath = profile.getProfilePhoto();
-        coverImagePath = profile.getCoverPhoto();
+    public ProfilePanel(User profileUser, User lookingUser, int width, int height) {
+        this.profileUser = profileUser;
+        pfpImagePath = profileUser.getProfile().getProfilePhoto();
+        coverImagePath = profileUser.getProfile().getCoverPhoto();
 
         if(pfpImagePath == null) {
             pfpImagePath = Constants.DEFAULT_PFP; // Default profile picture
@@ -88,27 +91,79 @@ public class ProfilePanel extends JPanel implements Constants {
 
         add(mainPanel);
         setSize(width, height);
-        bioTextArea.setText(profile.getBio());
+        bioTextArea.setText(profileUser.getProfile().getBio());
         bioTextArea.setRows(3);
         bioScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         setVisible(true);
         //bioTextArea.setEnabled(false);
 
-        cancelButton.setVisible(false);
+//        cancelButton.setVisible(false);
+        cancelButton.setText("Change Password");
+
+        if(!profileUser.getUserId().equals(lookingUser.getUserId())){
+            cancelButton.setVisible(false);
+            editButton.setVisible(false);
+        }
+
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(cancelButton.getText().equals("Change Password")) {
+                    String newPassword;
+                    while (true) {
+                        JPasswordField passwordField = new JPasswordField();
+                        int option = JOptionPane.showConfirmDialog(null, passwordField, "Enter your new Password", JOptionPane.OK_CANCEL_OPTION);
+                        if (option == JOptionPane.OK_OPTION) {
+                            newPassword = new String(passwordField.getPassword());
+                        } else {
+                            return;
+                        }
+                        //newPassword = JOptionPane.showInputDialog("Enter your new Password");
+                        if (newPassword == null) {
+                            return;
+                        }
+                        if (!Validation.validatePassword(newPassword)) {
+                            JOptionPane.showMessageDialog(null, """
+                                    Password must follow these rules:\n
+                                    1) At least 8 characters long
+                                    2) At least one small letter
+                                    3) At least one capital letter
+                                    4) At least one number
+                                    5) At least one special character
+                                    6) No whitespaces (i.e: spaces and tabs)
+                                    """, "Error", JOptionPane.ERROR_MESSAGE);
+                            continue;
+                        }
+                        profileUser.setPassword(utils.SimpleHash.hash(newPassword));
+                        userDB.setUser(profileUser);
+                        break;
+                    }
+                    return;
+                }
+                bioTextArea.setText(profileUser.getProfile().getBio());
+                bioTextArea.setEditable(false);
+                //bioTextArea.setEnabled(false);
+                editButton.setText("Edit");
+                cancelButton.setText("Change Password");
+                pfpLabel.removeMouseListener(pfpLabel.getMouseListeners()[0]);
+                coverLabel.removeMouseListener(coverLabel.getMouseListeners()[0]);
+            }
+        });
 
         editButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(editButton.getText().equals("Save")) {
-                    profile.setBio(bioTextArea.getText());
-                    UserDB.getInstance().SaveDB();
+                    profileUser.getProfile().setBio(bioTextArea.getText());
+                    userDB.setUser(profileUser);
                 }
                 boolean isEditable = bioTextArea.isEditable();
                 bioTextArea.setEditable(!isEditable);
                 //bioTextArea.setEnabled(!isEditable);
                 //bioTextArea.setFocusable(isEditable);
                 editButton.setText(isEditable ? "Edit" : "Save"); // Toggle button text
-                cancelButton.setVisible(!isEditable);
+//                cancelButton.setVisible(!isEditable);
+                cancelButton.setText(!isEditable ? "Cancel" : "Change Password");
 
                 if (!isEditable) {
                     pfpLabel.addMouseListener(new MouseAdapter() {
@@ -123,12 +178,11 @@ public class ProfilePanel extends JPanel implements Constants {
                             Image scaledPfpImage = ImageUtils.scaleImageIcon(pfpImagePath, 100).getImage();
                             pfpImage = new ImageIcon(scaledPfpImage);
                             pfpLabel.setIcon(pfpImage);
-                            // TODO: save image only if user saves changes
                             String newPfpPath;
                             try {
                                 newPfpPath = ImageUtils.saveImage(newFile);
-                                profile.setProfilePhoto(newPfpPath);
-                                UserDB.getInstance().SaveDB();
+                                profileUser.getProfile().setProfilePhoto(newPfpPath);
+                                userDB.setUser(profileUser);
                             } catch (IOException ex) {
                                 JOptionPane.showMessageDialog(null, "Error saving image.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -151,26 +205,15 @@ public class ProfilePanel extends JPanel implements Constants {
                             String newCoverPath;
                             try {
                                 newCoverPath = ImageUtils.saveImage(newFile);
-                                profile.setCoverPhoto(newCoverPath);
-                                UserDB.getInstance().SaveDB();
+                                profileUser.getProfile().setCoverPhoto(newCoverPath);
+                                userDB.setUser(profileUser);
                             } catch (IOException ex) {
                                 JOptionPane.showMessageDialog(null, "Error saving image.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
                         }
                     });
 
-                    cancelButton.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            bioTextArea.setText(profile.getBio());
-                            bioTextArea.setEditable(false);
-                            //bioTextArea.setEnabled(false);
-                            editButton.setText("Edit");
-                            cancelButton.setVisible(false);
-                            pfpLabel.removeMouseListener(pfpLabel.getMouseListeners()[0]);
-                            coverLabel.removeMouseListener(coverLabel.getMouseListeners()[0]);
-                        }
-                    });
+
                 } else {
                     pfpLabel.removeMouseListener(pfpLabel.getMouseListeners()[0]);
                     coverLabel.removeMouseListener(coverLabel.getMouseListeners()[0]);

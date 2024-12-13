@@ -1,0 +1,11 @@
+[ {
+  "groupID" : "71aae1b6-ffb4-4896-9a04-066b4cda70c7",
+  "groupName" : "test group zaki",
+  "groupDescription" : "",
+  "groupPhoto" : null,
+  "groupPrimaryAdminID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupMembersIDs" : [ ],
+  "groupAdminsIDs" : [ ],
+  "pendingMembersIDs" : [ "e9a28975-62c3-4cba-b586-669918ad4389" ],
+  "allMembers" : [ "44023cbe-7916-450d-868a-b8b54f8a9330", "e9a28975-62c3-4cba-b586-669918ad4389" ]
+} ]

@@ -1,8 +1,12 @@
 package backend;
 
+import backend.groups.Group;
+import backend.groups.GroupDB;
 import utils.IDGenerator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User {
   private String userId;
@@ -12,10 +16,36 @@ public class User {
   private LocalDate dateOfBirth;
   private boolean status;
   private Profile profile;
+  private List<String> groupIDS = new ArrayList<>();
 
   public User() {
       this.userId = IDGenerator.generateUserId();
       profile = new Profile();
+  }
+
+  public List<String> getGroupIDS() {
+    return groupIDS;
+  }
+
+  public List<Group> returnGroups() {
+    List<Group> myGroups = new ArrayList<>();
+    for(String x : groupIDS)
+      myGroups.add(GroupDB.getInstance().searchGroupByID(x));
+    return myGroups;
+  }
+
+  public void setGroupIDS(List<String> groupIDS) {
+    this.groupIDS = groupIDS;
+  }
+
+  public void addGroupID(String groupID){
+    this.groupIDS.add(groupID);
+    UserDB.getInstance().SaveDB();
+  }
+
+  public void removeGroupID(String groupID){
+    this.groupIDS.remove(groupID);
+    UserDB.getInstance().SaveDB();
   }
 
   public String getUserId() {

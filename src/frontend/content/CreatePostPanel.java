@@ -1,9 +1,12 @@
 package frontend.content;
 
+import backend.Notifications.Notification;
+import backend.Notifications.NotificationsDB;
 import backend.RefreshManager;
-import backend.content.ContentManagerFactory;
+import backend.User;
 import backend.content.PostManager;
 import backend.content.StoryManager;
+import backend.groups.Group;
 import utils.ImageUtils;
 
 import javax.swing.*;
@@ -12,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class CreatePostPanel extends JDialog{
     private JPanel panel1;
@@ -21,18 +26,33 @@ public class CreatePostPanel extends JDialog{
     private JButton uploadImageButton;
     private JRadioButton postRadioButton;
     private JRadioButton storyRadioButton;
+    private JComboBox groupComboBox;
     private ButtonGroup contentGroup;
     private File imageFile;
     private final PostManager postManager;
     private final StoryManager storyManager;
     private final RefreshManager refreshManager;
+    private List<Group> userGroups;
+    private User loggedInUser;
+    private List<String> userFriendsIDs;
 
-    public CreatePostPanel(PostManager postManager, StoryManager storyManager, RefreshManager refreshManager) throws HeadlessException {
+
+    public CreatePostPanel(PostManager postManager, StoryManager storyManager, RefreshManager refreshManager, List<Group> userGroups) throws HeadlessException {
         /*Initializing needed variables*/
         this.postManager = postManager;
         this.storyManager = storyManager;
         this.refreshManager = refreshManager;
+        this.userGroups = userGroups;
+        this.loggedInUser = postManager.getUser();
         setModal(true);
+
+        userFriendsIDs = loggedInUser.getProfile().getFriends();
+
+        /*Group combo box management*/
+        groupComboBox.addItem("Your Feed.");
+        for(Group x : userGroups){
+            groupComboBox.addItem(x);
+        }
 
         /*Managing button group*/
         contentGroup = new ButtonGroup();
@@ -83,15 +103,41 @@ public class CreatePostPanel extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String text = contentTextInput.getText();
+                Group selectedGroup = null;
+                if(groupComboBox.getSelectedItem() instanceof Group)
+                    selectedGroup = (Group) groupComboBox.getSelectedItem();
                 if(imageFile != null && !text.isEmpty()){
                     try {
                         if(postRadioButton.isSelected()){
-                            postManager.createTextImageContent(text, imageFile);
+                            String postID = postManager.createTextImageContent(text, imageFile, selectedGroup);
+                            if(selectedGroup == null){
+                                for (String friendId : userFriendsIDs) {
+                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                }
+                            }
+                            else{
+                                for (String memberID : selectedGroup.getAllMembers()) {
+                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new post in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                }
+                            }
+                            for (String friendId : userFriendsIDs) {
+                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                            }
                             JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
                         }
                         else if(storyRadioButton.isSelected()){
-                            storyManager.createTextImageContent(text, imageFile);
+                            String postID = storyManager.createTextImageContent(text, imageFile, selectedGroup);
+                            if(selectedGroup == null){
+                                for (String friendId : userFriendsIDs) {
+                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                }
+                            }
+                            else{
+                                for (String memberID : selectedGroup.getAllMembers()) {
+                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new story in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                }
+                            }
                             JOptionPane.showMessageDialog(null, "Successfully made story!",
                                     "Story Creation", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -110,11 +156,31 @@ public class CreatePostPanel extends JDialog{
                 else if(imageFile != null){
                     try {
                         if(postRadioButton.isSelected()){
-                            postManager.createImageOnlyContent(imageFile);
+                            String postID = postManager.createImageOnlyContent(imageFile, selectedGroup);
+                            if(selectedGroup == null){
+                                for (String friendId : userFriendsIDs) {
+                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                }
+                            }
+                            else{
+                                for (String memberID : selectedGroup.getAllMembers()) {
+                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new post in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                }
+                            }
                             JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
                         }else if(storyRadioButton.isSelected()){
-                            storyManager.createImageOnlyContent(imageFile);
+                            String postID = storyManager.createImageOnlyContent(imageFile, selectedGroup);
+                            if(selectedGroup == null){
+                                for (String friendId : userFriendsIDs) {
+                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                }
+                            }
+                            else{
+                                for (String memberID : selectedGroup.getAllMembers()) {
+                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new story in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                }
+                            }
                             JOptionPane.showMessageDialog(null, "Successfully made story!",
                                     "Story Creation", JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -133,11 +199,31 @@ public class CreatePostPanel extends JDialog{
                 else if(!text.isEmpty()){
                     System.out.println("Text only");
                     if(postRadioButton.isSelected()){
-                        postManager.createTextOnlyContent(text);
+                        String postID = postManager.createTextOnlyContent(text, selectedGroup);
+                        if(selectedGroup == null){
+                            for (String friendId : userFriendsIDs) {
+                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                            }
+                        }
+                        else{
+                            for (String memberID : selectedGroup.getAllMembers()) {
+                                NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new post in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                            }
+                        }
                         JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
                     }else if(storyRadioButton.isSelected()){
-                        storyManager.createTextOnlyContent(text);
+                        String postID = storyManager.createTextOnlyContent(text, selectedGroup);
+                        if(selectedGroup == null){
+                            for (String friendId : userFriendsIDs) {
+                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                            }
+                        }
+                        else{
+                            for (String memberID : selectedGroup.getAllMembers()) {
+                                NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new story in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                            }
+                        }
                         JOptionPane.showMessageDialog(null, "Successfully made story!",
                                 "Story Creation", JOptionPane.INFORMATION_MESSAGE);
                     }

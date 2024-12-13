@@ -3,6 +3,11 @@ package frontend.content;
 import backend.User;
 import backend.content.Content;
 import backend.content.ContentManagerFactory;
+import backend.groups.Group;
+import backend.groups.GroupDB;
+import backend.groups.GroupManager;
+import backend.groups.GroupRole;
+import utils.ModernScrollBarUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -36,6 +41,13 @@ public class ContentPanel extends JPanel{
 
         /*Configuring scroll*/
         JScrollPane scrollContent = new JScrollPane(contentContainer);
+
+        JScrollBar sb = scrollContent.getVerticalScrollBar();
+        sb.setOpaque(false);
+        sb.setForeground(new Color(33, 140, 206));
+        sb.setPreferredSize(new Dimension(20, 15));
+        sb.setUI(new ModernScrollBarUI());
+
         scrollContentPanel = (JPanel) scrollContent.getViewport().getView();
         add(scrollContent, BorderLayout.CENTER);
 
@@ -84,17 +96,31 @@ public class ContentPanel extends JPanel{
         JLabel header = new JLabel(content.getUsername() + "    " + content.getPostDate().format(contentDateFormat));
         header.setFont(new Font("Arial", Font.BOLD, 14));
         JButton removeContentButton;
+        JButton editContentButton;
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         headerPanel.setBackground(Color.WHITE);
         headerPanel.add(header);
-        if(type.equals("Profile")){
+        GroupRole role = GroupManager.getInstance().getGroupRole(type, user.getUserId());
+        if(user.getUserId().equals(content.getAuthorID()) ||
+        role == GroupRole.ADMIN || role == GroupRole.PRIMARY_ADMIN){
             removeContentButton = new JButton("Remove");
             removeContentButton.addActionListener(e -> {
+                System.out.println("IM INSIDE REMOVE");
                 contentManagerFactory.removeContent(content);
                 loadContent(type);
             });
             headerPanel.add(removeContentButton);
+            editContentButton = new JButton("Edit");
+            editContentButton.addActionListener(e -> {
+                String newText = JOptionPane.showInputDialog("Please input new text.");
+                if(newText != null){
+                    /*TODO: add editing image*/
+                    contentManagerFactory.editContent(content.getPostID(), newText, null);
+                    loadContent(type);
+                }
+            });
+            headerPanel.add(editContentButton);
         }
         headerPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         contentPanel.add(headerPanel);

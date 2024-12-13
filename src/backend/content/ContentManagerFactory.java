@@ -1,6 +1,7 @@
 package backend.content;
 
 import backend.User;
+import backend.groups.Group;
 import utils.FileNames;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
@@ -12,18 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ContentManagerFactory {
-    private final FileNames fileName;
-    private final ContentLoader contentLoader;
-    private final ContentFactory contentFactory;
-    private final User user;
-    List<Content> content = new ArrayList<>();
+    protected final FileNames fileName;
+    protected final ContentLoader contentLoader;
+    protected final ContentFactory contentFactory;
+    protected final User user;
+    protected List<Content> content = new ArrayList<>();
 
-    public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory,
-                                 User user) {
+    public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory, User user) {
         this.fileName = fileName;
         this.contentLoader = contentLoader;
         this.contentFactory = contentFactory;
         this.user = user;
+    }
+
+    public Content searchContentByID(String contentID){
+        for(Content x : content){
+            if(x.getPostID().equals(contentID))
+                return x;
+        }
+        return null;
     }
 
     public void readFromDB(String type){
@@ -72,8 +80,23 @@ public abstract class ContentManagerFactory {
         try {
             List<Content> allContent = new ArrayList<>(contentLoader.loadContent());
             boolean changed = allContent.remove(item);
+            System.out.println("ITEM REMOVED: " + changed + " into " + fileName.getFileName() );
             JSONFileWriter.writeJson(fileName.getFileName(), allContent);
-            System.out.println("Content Removed: " + contentLoader +" Changed " + changed);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void editContent(String contentID, String text, String imagePath){
+        try {
+            this.content = new ArrayList<>(contentLoader.loadContent());
+            Content content = searchContentByID(contentID);
+            if(text != null)
+                content.editText(text);
+            if(imagePath != null)
+                content.editImagePath(imagePath);
+
+            JSONFileWriter.writeJson(fileName.getFileName(), this.content);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -87,21 +110,26 @@ public abstract class ContentManagerFactory {
         this.content = content;
     }
 
-    protected void addContent(Content content){
+    protected String addContent(Content content){
         this.content.add(content);
         System.out.println("saved to db");
         saveToDB(List.of(content));
+        return content.getPostID();
     }
 
-    public void createTextOnlyContent(String text){
-        addContent(contentFactory.createTextOnlyContent(text, user));
+    public String createTextOnlyContent(String text, Group group){
+        return addContent(contentFactory.createTextOnlyContent(text, user, group));
     }
 
-    public void createImageOnlyContent(File imageFile) throws IOException{
-        addContent(contentFactory.createImageOnlyContent(imageFile, user));
+    public String createImageOnlyContent(File imageFile, Group group) throws IOException{
+        return addContent(contentFactory.createImageOnlyContent(imageFile, user, group));
     }
 
-    public void createTextImageContent(String text, File imageFile) throws IOException{
-        addContent(contentFactory.createTextImageContent(text, imageFile, user));
+    public String createTextImageContent(String text, File imageFile, Group group) throws IOException{
+        return addContent(contentFactory.createTextImageContent(text, imageFile, user, group));
+    }
+
+    public User getUser() {
+        return user;
     }
 }

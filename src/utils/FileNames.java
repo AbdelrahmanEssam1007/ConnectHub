@@ -3,7 +3,8 @@ package utils;
 public enum FileNames {
     USERS("Users_DB.json"),
     POSTS("posts.json"),
-    STORIES("stories.json");
+    STORIES("stories.json"),
+    GROUPS("groups.json");
 
     private final String fileName;
 
@@ -12,6 +13,6 @@ public enum FileNames {
     }
 
     public String getFileName() {
-        return fileName;
+        return "databases/" + fileName;
     }
 }

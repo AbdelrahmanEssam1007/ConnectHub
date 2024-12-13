@@ -1,7 +1,13 @@
 package backend;
 
+import backend.Notifications.Notification;
+import backend.Notifications.NotificationsDB;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 public class FriendManager {
   
@@ -31,8 +37,13 @@ public class FriendManager {
     Profile targetProfile = targetUser.getProfile();
 
     if (userProfile.getBlocked().contains(targetUser.getUserId())) {
-      System.out.println("You cannot send a friend request to a user you have blocked.");
-      throw new IllegalArgumentException("You cannot send a friend request to a user you have blocked.");
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to unblock them?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            this.unblockUser(targetUser);
+        } else {
+            JOptionPane.showMessageDialog(null, "You cannot send a friend request to a user you have blocked.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return ;
     }
 
     if (targetProfile.getBlocked().contains(user.getUserId())) {
@@ -49,9 +60,12 @@ public class FriendManager {
         this.acceptFriendRequest(targetUser);
         return;
     }
+    
+    
 
     targetProfile.getPending().add(user.getUserId());
     System.out.println("Friend request sent successfully.");
+    NotificationsDB.getInstance(targetUser.getUserId()).addNotification(new Notification("sent you a friend request", targetUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), "FRIEND_REQUEST", ""));
     userDB.SaveDB();
   }
 
@@ -69,6 +83,7 @@ public class FriendManager {
     senderProfile.getPending().remove(user.getUserId()); // check to remove potential bug
     senderProfile.getFriends().add(user.getUserId());
     userDB.SaveDB();
+    NotificationsDB.getInstance(senderUser.getUserId()).addNotification(new Notification("accepted your friend request", senderUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), "BLANK", ""));
   }
 
   // Decline a friend request
