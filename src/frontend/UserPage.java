@@ -502,7 +502,26 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutButtonMouseClicked
 
     private void searchGroupsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchGroupsButtonMouseClicked
-        // TODO add your handling code here:
+        this.refreshButtonMouseClicked(null);
+        this.searchResultsPanel.removeAll();
+        JPanel panel = new JPanel ();
+        panel.setSize(this.searchResultsPanel.getWidth(), this.searchResultsPanel.getHeight());
+        panel.setLayout(new BoxLayout (panel, BoxLayout.Y_AXIS));
+        for (Group group : GroupDB.getInstance().getGroups()) {
+            {
+                panel.add(new GroupPanel (this.loggedInUser, group));
+                System.out.println(group.getGroupID()); //* group id is displayed, group exists
+            }
+        }
+        JScrollPane scrollContent = new JScrollPane (panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollBar sb = scrollContent.getVerticalScrollBar();
+        sb.setOpaque(false);
+        sb.setForeground(new Color(33, 140, 206));
+        sb.setPreferredSize(new Dimension(20, 15));
+        sb.setUI(new ModernScrollBarUI());
+        this.searchResultsPanel.add(scrollContent);
+        this.searchResultsPanel.revalidate ();
+        this.searchResultsPanel.repaint();
     }//GEN-LAST:event_searchGroupsButtonMouseClicked
 
     private void searchUsersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchUsersButtonMouseClicked
@@ -514,7 +533,6 @@ public class UserPage extends javax.swing.JFrame {
         for (User user : UserDB.getInstance().getUsers()) {
             if ( user.getUserName().contains(this.searchCriteriaField.getText()) && // search criteria
                     !user.getUserName().equals(this.loggedInUser.getUserName()) && // not the user himself
-                    !this.loggedInUser.getProfile().getFriends().contains(user.getUserId()) && // not already friends
                     !user.getProfile().getBlocked().contains(this.loggedInUser.getUserId())) { // not blocked by user
                 panel.add(new FriendsPanel (this.loggedInUser, user, this.FM, "Searched", this.friendsContentPanel.getWidth(), 150));
             }
@@ -575,7 +593,7 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_notificationsButtonMouseClicked
 
     private void createNewGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewGroupButtonMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_createNewGroupButtonMouseClicked
 
 

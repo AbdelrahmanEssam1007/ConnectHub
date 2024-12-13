@@ -30,6 +30,7 @@ public class Group {
     this.groupPhoto = groupPhoto;
     this.groupMembersIDs = new ArrayList<>();
     this.groupAdminsIDs = new ArrayList<>();
+    this.pendingMembersIDs = new ArrayList<>();
   }
 
   public String getGroupID() {
