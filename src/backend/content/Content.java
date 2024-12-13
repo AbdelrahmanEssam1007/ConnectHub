@@ -32,6 +32,14 @@ public class Content {
 
     public boolean expired(){ return false; }
 
+    public void editText(String text){
+        contentData.setText(text);
+    }
+
+    public void editImagePath(String imagePath){
+        contentData.setImagePath(imagePath);
+    }
+
     public String getUsername() {
         return username;
     }

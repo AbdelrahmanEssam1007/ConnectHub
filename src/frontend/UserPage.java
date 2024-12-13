@@ -11,11 +11,13 @@ import backend.Notifications.NotificationsService;
 import backend.content.PostManager;
 import backend.content.StoryManager;
 import backend.groups.Group;
+import backend.groups.GroupDB;
 import frontend.content.CreatePostPanel;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
 
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,10 +29,12 @@ import java.awt.Component;
 import java.awt.Point;
 import net.miginfocom.layout.ComponentWrapper;
 import net.miginfocom.layout.LayoutCallback;
+import org.w3c.dom.ls.LSOutput;
 import raven.glasspanepopup.DefaultLayoutCallBack;
 import raven.glasspanepopup.DefaultOption;
 import raven.glasspanepopup.GlassPanePopup;
 import utils.ModernScrollBarUI;
+import utils.ImageUtils;
 
 /**
  *
@@ -509,9 +513,24 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_searchUsersButtonMouseClicked
 
     private void createNewContentButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewContentButtonMouseClicked
-        this.refreshButtonMouseClicked(evt);
+        /*Adding Group Functionality*/
+        /*try {
+            File imageFile = ImageUtils.uploadImage();
+            String groupName = "test name";
+            String groupBio = "test bio";
+            String groupPhotoPath = ImageUtils.saveImage(imageFile);
+            Group newGroup = new Group(groupName, groupBio, groupPhotoPath);
+            newGroup.setGroupPrimaryAdminID(loggedInUser.getUserId());
+            userGroups.add(newGroup);
+            GroupDB.getInstance().createGroup(newGroup);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }*/
+
+        /*Main functionality currently commented out*/
+        /*this.refreshButtonMouseClicked(evt);
         new CreatePostPanel(postManager, storyManager, refreshManager, userGroups).setVisible(true);
-        this.refreshButtonMouseClicked(evt);
+        this.refreshButtonMouseClicked(evt);*/
     }//GEN-LAST:event_createNewContentButtonMouseClicked
 
     private void notificationsButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notificationsButtonMouseClicked

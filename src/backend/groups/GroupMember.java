@@ -1,21 +1,56 @@
 package backend.groups;
 
+import backend.User;
+import backend.content.Post;
+
+import java.io.File;
+import java.io.IOException;
+
 public class GroupMember {
-  private static GroupMember GROUP_MEMBER;
+  protected User user;
+  protected Group group;
   private GroupContentManager groupContentManager;
   private GroupManager groupManager;
-  public static GroupMember getInstance() {
-    if (GROUP_MEMBER == null) {
-      GROUP_MEMBER = new GroupMember();
+  private GroupDB groupDB;
+
+  public GroupMember(User user, Group group) {
+    this.user = user;
+    this.group = group;
+    this.groupContentManager = new GroupContentManager(user);
+    this.groupManager = GroupManager.getInstance();
+    this.groupDB = GroupDB.getInstance();
+  }
+
+  public void addPost(String text, File imageFile){
+    try {
+      if(imageFile != null && text != null) {
+        groupContentManager.createTextImageContent(text, imageFile, group);
+      }
+      else if(imageFile != null){
+        groupContentManager.createImageOnlyContent(imageFile, group);
+      }
+      else if(text != null)
+        groupContentManager.createTextOnlyContent(text, group);
+      else
+        throw new RuntimeException("Cannot add empty post");
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
-    return GROUP_MEMBER;
   }
 
-  public void addPost(){
-
+  public void deletePost(Post post){
+    if(post.getAuthorID().equals(user.getUserId())){
+      groupContentManager.removeContent(post);
+    }
+    else
+      throw new RuntimeException("As a member, you cannot delete a post not your own.");
   }
 
-  public void deletePost(){
+  public void leaveGroup(){
+    groupManager.leaveGroup(group.getGroupID(), user.getUserId());
+  }
 
+  public User getUser() {
+    return user;
   }
 }

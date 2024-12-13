@@ -17,13 +17,21 @@ public abstract class ContentManagerFactory {
     private final ContentLoader contentLoader;
     private final ContentFactory contentFactory;
     private final User user;
-    List<Content> content = new ArrayList<>();
+    private List<Content> content = new ArrayList<>();
 
     public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory, User user) {
         this.fileName = fileName;
         this.contentLoader = contentLoader;
         this.contentFactory = contentFactory;
         this.user = user;
+    }
+
+    public Content searchContentByID(String contentID){
+        for(Content x : content){
+            if(x.getPostID().equals(contentID))
+                return x;
+        }
+        return null;
     }
 
     public void readFromDB(String type){
@@ -73,7 +81,6 @@ public abstract class ContentManagerFactory {
             List<Content> allContent = new ArrayList<>(contentLoader.loadContent());
             boolean changed = allContent.remove(item);
             JSONFileWriter.writeJson(fileName.getFileName(), allContent);
-            System.out.println("Content Removed: " + contentLoader +" Changed " + changed);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

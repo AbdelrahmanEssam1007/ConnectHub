@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 /*TODO: Check if there are anymore final classes*/
-final class ContentData {
+class ContentData {
     private String imagePath = null;
     private String text = null;
 
