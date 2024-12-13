@@ -72,7 +72,10 @@ public class GroupDetails extends javax.swing.JFrame {
     }
 
     private void refreshButtonPressed() {
-        this.groupMembersDetailsPanel.removeAll();
+        new GroupDetails(UserDB.getInstance().searchUserByUserId(mainUserID), GroupDB.getInstance().searchGroupByID(groupID),
+                GroupDB.getInstance().searchGroupByID(groupID).getUserRole(mainUserID)).setVisible(true);
+        this.dispose();
+        /*this.groupMembersDetailsPanel.removeAll();
         this.groupPostsPanel.removeAll();
         JPanel membersPanel = new JPanel();
         membersPanel.setLayout(new BoxLayout (membersPanel, BoxLayout.Y_AXIS));
@@ -98,7 +101,7 @@ public class GroupDetails extends javax.swing.JFrame {
         this.groupPostsPanel.add(postsPanel);
 
         revalidate();
-        repaint();
+        repaint();*/
     }
 
     /**

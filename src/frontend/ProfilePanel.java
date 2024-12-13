@@ -100,8 +100,10 @@ public class ProfilePanel extends JPanel implements Constants {
 //        cancelButton.setVisible(false);
         cancelButton.setText("Change Password");
 
-        if(!profileUser.getUserId().equals(lookingUser.getUserId()))
+        if(!profileUser.getUserId().equals(lookingUser.getUserId())){
+            cancelButton.setVisible(false);
             editButton.setVisible(false);
+        }
 
         cancelButton.addActionListener(new ActionListener() {
             @Override
