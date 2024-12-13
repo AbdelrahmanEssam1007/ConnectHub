@@ -593,7 +593,9 @@ public class UserPage extends javax.swing.JFrame {
     }//GEN-LAST:event_notificationsButtonMouseClicked
 
     private void createNewGroupButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createNewGroupButtonMouseClicked
-
+        this.refreshButtonMouseClicked(evt);
+        new CreateGroupsPanel();
+        this.refreshButtonMouseClicked(evt);
     }//GEN-LAST:event_createNewGroupButtonMouseClicked
 
 
