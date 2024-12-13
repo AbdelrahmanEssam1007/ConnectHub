@@ -58,7 +58,15 @@ public class FriendsPanel extends javax.swing.JPanel {
         this.loggedinUser = loggedinUser;
         this.friendUser = friendUser;
         this.FM = FM;
-        this.type = type;
+        if (this.loggedinUser.getProfile().getFriends().contains(this.friendUser.getUserId())) {
+            this.type = "Current";
+        }
+        else if (this.loggedinUser.getProfile().getPending().contains(this.friendUser.getUserId())) {
+            this.type = "Request";
+        }
+        else {
+            this.type = type;
+        }
 
         pfpImagePath = friendUser.getProfile().getProfilePhoto();
         if(pfpImagePath == null) {
