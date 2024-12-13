@@ -1,0 +1,17 @@
+[ {
+  "notificationID" : "72ba3bee-01c3-45f2-acad-2a10f76a77d7",
+  "message" : "sent you a friend request",
+  "userID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "read",
+  "date" : [ 2024, 12, 13, 3, 3, 46, 937591300 ],
+  "type" : "FRIEND_REQUEST"
+}, {
+  "notificationID" : "bbd924be-6c52-4b66-850b-4c1f3c21b682",
+  "message" : "sent you a friend request",
+  "userID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "read",
+  "date" : [ 2024, 12, 13, 3, 10, 37, 922461600 ],
+  "type" : "FRIEND_REQUEST"
+} ]

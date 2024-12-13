@@ -4,11 +4,11 @@
   "userName" : "Ahmad",
   "password" : "416497a10bd4c9b31193e42230a362c21f3564893a696de2afdaf618a8c2e71d",
   "dateOfBirth" : [ 2024, 12, 5 ],
-  "status" : false,
+  "status" : true,
   "profile" : {
-    "friends" : [ "44023cbe-7916-450d-868a-b8b54f8a9330", "a0951309-15c0-46c6-b66a-d341c2499332" ],
+    "friends" : [ "a0951309-15c0-46c6-b66a-d341c2499332", "44023cbe-7916-450d-868a-b8b54f8a9330" ],
     "blocked" : [ ],
-    "pending" : [ ],
+    "pending" : [ "cb2b9573-b77b-4897-83f2-99c422c3e9b8" ],
     "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
@@ -21,7 +21,7 @@
   "userName" : "Abdo",
   "password" : "108f38515296a2e7800dd44d9e5e151e8c5764686da64a86f7675ffe3b1dd003",
   "dateOfBirth" : [ 2024, 12, 5 ],
-  "status" : false,
+  "status" : true,
   "profile" : {
     "friends" : [ ],
     "blocked" : [ ],
@@ -91,7 +91,7 @@
   "dateOfBirth" : [ 2024, 12, 6 ],
   "status" : false,
   "profile" : {
-    "friends" : [ "e9a28975-62c3-4cba-b586-669918ad4389", "a0951309-15c0-46c6-b66a-d341c2499332" ],
+    "friends" : [ "a0951309-15c0-46c6-b66a-d341c2499332", "e9a28975-62c3-4cba-b586-669918ad4389" ],
     "blocked" : [ ],
     "pending" : [ ],
     "groups" : { },

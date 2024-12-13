@@ -30,6 +30,7 @@ import net.miginfocom.layout.LayoutCallback;
 import raven.glasspanepopup.DefaultLayoutCallBack;
 import raven.glasspanepopup.DefaultOption;
 import raven.glasspanepopup.GlassPanePopup;
+import utils.ModernScrollBarUI;
 
 /**
  *
@@ -496,7 +497,13 @@ public class UserPage extends javax.swing.JFrame {
             }
 
         }
-        this.searchResultsPanel.add(new JScrollPane (panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
+        JScrollPane scrollContent = new JScrollPane (panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollBar sb = scrollContent.getVerticalScrollBar();
+        sb.setOpaque(false);
+        sb.setForeground(new Color(33, 140, 206));
+        sb.setPreferredSize(new Dimension(20, 15));
+        sb.setUI(new ModernScrollBarUI());
+        this.searchResultsPanel.add(scrollContent);
         this.searchResultsPanel.revalidate ();
         this.searchResultsPanel.repaint();
     }//GEN-LAST:event_searchUsersButtonMouseClicked
