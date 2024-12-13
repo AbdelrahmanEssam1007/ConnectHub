@@ -91,6 +91,25 @@ public class Group {
     this.pendingMembersIDs = pendingMembersIDs;
   }
 
+  public GroupRole getUserRole(String userID){
+    if(groupMembersIDs.contains(userID))
+      return GroupRole.GROUP_MEMBER;
+    else if(groupAdminsIDs.contains(userID))
+      return GroupRole.ADMIN;
+    else if(groupPrimaryAdminID.contains(userID))
+      return GroupRole.PRIMARY_ADMIN;
+    else if(pendingMembersIDs.contains(userID))
+      return GroupRole.PENDING_MEMBER;
+    else
+      return GroupRole.GUEST;
+  }
+
+  public void removeUser(String userID){
+    groupMembersIDs.remove(userID);
+    groupAdminsIDs.remove(userID);
+    pendingMembersIDs.remove(userID);
+  }
+
   @Override
   public String toString() {
     return groupName;
