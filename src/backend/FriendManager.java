@@ -65,7 +65,7 @@ public class FriendManager {
 
     targetProfile.getPending().add(user.getUserId());
     System.out.println("Friend request sent successfully.");
-    NotificationsDB.getInstance(targetUser.getUserId()).addNotification(new Notification("sent you a friend request", targetUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), "FRIEND_REQUEST"));
+    NotificationsDB.getInstance(targetUser.getUserId()).addNotification(new Notification("sent you a friend request", targetUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), "FRIEND_REQUEST", ""));
     userDB.SaveDB();
   }
 
@@ -83,7 +83,7 @@ public class FriendManager {
     senderProfile.getPending().remove(user.getUserId()); // check to remove potential bug
     senderProfile.getFriends().add(user.getUserId());
     userDB.SaveDB();
-    NotificationsDB.getInstance(senderUser.getUserId()).addNotification(new Notification("accepted your friend request", senderUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), "BLANK"));
+    NotificationsDB.getInstance(senderUser.getUserId()).addNotification(new Notification("accepted your friend request", senderUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), "BLANK", ""));
   }
 
   // Decline a friend request

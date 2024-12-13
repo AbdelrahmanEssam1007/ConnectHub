@@ -5,10 +5,12 @@ import javax.swing.*;
 import backend.FriendManager;
 import backend.Notifications.Notification;
 import backend.Notifications.NotificationsDB;
+import backend.User;
 import backend.UserDB;
-import backend.content.Post;
-import backend.content.PostFactory;
+import backend.content.*;
 import frontend.content.ContentPanel;
+import frontend.content.PostsPanel;
+import frontend.content.StoriesPanel;
 import utils.Constants;
 import utils.ImageAvatar;
 
@@ -211,12 +213,25 @@ public class Item extends javax.swing.JPanel implements Constants {
         } else if (this.type.equals("POST")) {
             // Open post
             JFrame frame = new JFrame();
+            frame.setSize(600,300);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            //frame.add();
-
+            User user = UserDB.getInstance().searchUserByUserName(loggedInUserName);
+            PostManager postManager = new PostManager(user);
+            PostsPanel postPanel = new PostsPanel(user, postManager, frame.getHeight(), frame.getWidth(), "All");
+            Post postNotify = (Post)postManager.searchContentByID(postID);
+            frame.add(postPanel.createContentPanel(postNotify));
+            frame.setVisible(true);
         } else if (this.type.equals("STORY")) {
             // Open story
-
+            JFrame frame = new JFrame();
+            frame.setSize(600,300);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            User user = UserDB.getInstance().searchUserByUserName(loggedInUserName);
+            StoryManager storyManager = new StoryManager(user);
+            StoriesPanel storiesPanel = new StoriesPanel(user, storyManager, frame.getHeight(), frame.getWidth(), "All");
+            Story storyNotify = (Story)storyManager.searchContentByID(postID);
+            frame.add(storiesPanel.createContentPanel(storyNotify));
+            frame.setVisible(true);
         }
     }
 
