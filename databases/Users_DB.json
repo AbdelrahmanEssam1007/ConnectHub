@@ -12,7 +12,7 @@
     "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
-    "bio" : "Hello I am Ahmad. Nice to meet you. NOT"
+    "bio" : "Hello I am Ahmad. Nice to meet you."
   },
   "groupIDS" : [ ]
 }, {
@@ -80,7 +80,7 @@
     "groups" : { },
     "profilePhoto" : null,
     "coverPhoto" : null,
-    "bio" : "testing this text field"
+    "bio" : "Hi I am Amr. I am a software engineer."
   },
   "groupIDS" : [ ]
 }, {
