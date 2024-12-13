@@ -55,7 +55,6 @@ public class NotificationsService extends Thread implements Constants {
                 notificationsPanel.clearNoti();
                 for (Notification notification : notificationsDB.getNotifications()) {
                     // TODO: Delete notification after responding
-                    // TODO: Update notification time
                     // TODO: Update notification status
                     if(notification.getStatus().equals("new")) {
 //                        System.out.println("Adding new notification");
