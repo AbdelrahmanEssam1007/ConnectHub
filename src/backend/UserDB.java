@@ -70,6 +70,7 @@ public class UserDB {
   }
 
   public User searchUserByUserId(String userId) {
+    refreshDB();
     for (User user : users) {
       if (user.getUserId().equals(userId)) {
         return user;

@@ -24,29 +24,37 @@ public class GroupDetails extends javax.swing.JFrame {
      * Creates new form GroupDetails
      */
     
-    private User user;
-    private Group group;
+    private String mainUserID;
+    private String groupID;
     private GroupRole role;
     private GroupContentManager groupContentManager;
     private PostsPanel postsPanel;
+    private JButton refresh;
+    private JButton refresh2;
 
     public GroupDetails(User user, Group group, GroupRole role) {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
-        this.user = user;
-        this.group = group;
+        this.mainUserID = user.getUserId();
+        this.groupID = group.getGroupID();
         this.role = role;
         
         JPanel membersPanel = new JPanel();
         membersPanel.setLayout(new BoxLayout (membersPanel, BoxLayout.Y_AXIS));
         this.groupMembersDetailsPanel.setLayout(new BorderLayout ());
-        for (String userID : this.group.getAllMembers()) {
-            membersPanel.add(new FriendsPanel (user, UserDB.getInstance().searchUserByUserId(userID), null, "Group", getWidth(), 150, this.group));
+        for (String userID : GroupDB.getInstance().searchGroupByID(groupID).getAllMembers()) {
+            membersPanel.add(new FriendsPanel (user, UserDB.getInstance().searchUserByUserId(userID), null, "Group", getWidth(), 150, GroupDB.getInstance().searchGroupByID(groupID)));
         }
 
-        JButton refresh = new JButton("Refresh");
+        refresh = new JButton("Refresh");
+        refresh2 = new JButton("Refresh");
         refresh.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                refreshButtonPressed();
+            }
+        } );
+        refresh2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 refreshButtonPressed();
             }
@@ -59,21 +67,34 @@ public class GroupDetails extends javax.swing.JFrame {
         this.groupPostsPanel.setLayout(new BorderLayout());
         this.groupContentManager = new GroupContentManager(user);
         this.postsPanel = new PostsPanel(user, groupContentManager, groupPostsPanel.getWidth(), groupPostsPanel.getHeight(), group.getGroupID());
-        this.groupPostsPanel.add(refresh, BorderLayout.PAGE_START);
+        this.groupPostsPanel.add(refresh2, BorderLayout.PAGE_START);
         this.groupPostsPanel.add(postsPanel);
     }
 
     private void refreshButtonPressed() {
-        JPanel refreshedPanel = new JPanel();
-        refreshedPanel.setLayout(new BoxLayout (refreshedPanel, BoxLayout.Y_AXIS));
-        for (String userID : this.group.getAllMembers()) {
-            refreshedPanel.add(new FriendsPanel (user, UserDB.getInstance().searchUserByUserId(userID), null, "Group", getWidth(), 150, this.group));
+        this.groupMembersDetailsPanel.removeAll();
+        this.groupPostsPanel.removeAll();
+        JPanel membersPanel = new JPanel();
+        membersPanel.setLayout(new BoxLayout (membersPanel, BoxLayout.Y_AXIS));
+        this.groupMembersDetailsPanel.setLayout(new BorderLayout ());
+        GroupDB.getInstance().readFromDB();
+        Group group = GroupDB.getInstance().searchGroupByID(groupID);
+        for (String userID : GroupDB.getInstance().searchGroupByID(groupID).getAllMembers()) {
+            membersPanel.add(new FriendsPanel (UserDB.getInstance().searchUserByUserId(mainUserID), UserDB.getInstance().searchUserByUserId(userID), null, "Group", getWidth(), 150, GroupDB.getInstance().searchGroupByID(groupID)));
         }
-        this.groupMembersDetailsPanel.remove(1);
-        this.groupMembersDetailsPanel.add(new JScrollPane (refreshedPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
 
-        this.postsPanel = new PostsPanel(user, new GroupContentManager(user), groupPostsPanel.getWidth(), groupPostsPanel.getHeight(), group.getGroupID());
-        this.groupMembersDetailsPanel.remove(1);
+        refresh = new JButton("Refresh");
+        refresh2 = new JButton("Refresh");
+
+        this.groupMembersDetailsPanel.add(refresh, BorderLayout.PAGE_START);
+        this.groupMembersDetailsPanel.add(new JScrollPane (membersPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
+        this.groupMembersDetailsPanel.revalidate();
+        this.groupMembersDetailsPanel.repaint();
+
+        this.groupPostsPanel.setLayout(new BorderLayout());
+        this.groupContentManager = new GroupContentManager(UserDB.getInstance().searchUserByUserId(mainUserID));
+        this.postsPanel = new PostsPanel(UserDB.getInstance().searchUserByUserId(mainUserID), groupContentManager, groupPostsPanel.getWidth(), groupPostsPanel.getHeight(), group.getGroupID());
+        this.groupPostsPanel.add(refresh2, BorderLayout.PAGE_START);
         this.groupPostsPanel.add(postsPanel);
 
         revalidate();

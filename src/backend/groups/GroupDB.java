@@ -50,6 +50,7 @@ public class GroupDB {
   }
 
   public Group searchGroupByID(String groupID) {
+    readFromDB();
     for (Group group : groups) {
       if (group.getGroupID().equals(groupID)) {
         return group;
