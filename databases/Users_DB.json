@@ -91,7 +91,7 @@
   "dateOfBirth" : [ 2024, 12, 6 ],
   "status" : false,
   "profile" : {
-    "friends" : [ "a0951309-15c0-46c6-b66a-d341c2499332", "e9a28975-62c3-4cba-b586-669918ad4389" ],
+    "friends" : [ "e9a28975-62c3-4cba-b586-669918ad4389" ],
     "blocked" : [ ],
     "pending" : [ ],
     "groups" : { },
