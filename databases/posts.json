@@ -6,6 +6,7 @@
   "postDate" : [ 2024, 12, 6, 15, 36, 59, 364226700 ],
   "postID" : "9bbb6c92-675e-4c85-b409-287eff03c2d3",
   "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "groupID" : null,
   "username" : "Ahmad"
 }, {
   "contentData" : {
@@ -15,6 +16,7 @@
   "postDate" : [ 2024, 12, 6, 21, 31, 38, 587238200 ],
   "postID" : "7b35d023-77fb-4fa7-a351-150dc6d5802f",
   "authorID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupID" : null,
   "username" : "ZakiZokZokZakaZiko"
 }, {
   "contentData" : {
@@ -24,6 +26,7 @@
   "postDate" : [ 2024, 12, 6, 21, 32, 46, 271193100 ],
   "postID" : "18455ff5-2299-4dca-8ad3-7eb3ab069e52",
   "authorID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupID" : null,
   "username" : "ZakiZokZokZakaZiko"
 }, {
   "contentData" : {
@@ -33,6 +36,7 @@
   "postDate" : [ 2024, 12, 6, 21, 33, 25, 507616800 ],
   "postID" : "4af8852d-32ac-4de3-95dc-4a0d27fda34c",
   "authorID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupID" : null,
   "username" : "ZakiZokZokZakaZiko"
 }, {
   "contentData" : {
@@ -42,6 +46,7 @@
   "postDate" : [ 2024, 12, 6, 21, 54, 38, 221580400 ],
   "postID" : "3cda3d6f-43ca-49e2-83bd-6a6176cb680d",
   "authorID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupID" : null,
   "username" : "ZakiZokZokZakaZiko"
 }, {
   "contentData" : {
@@ -51,6 +56,7 @@
   "postDate" : [ 2024, 12, 6, 21, 55, 24, 952427600 ],
   "postID" : "6e5599db-0728-49db-9f84-949f377611c5",
   "authorID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupID" : null,
   "username" : "ZakiZokZokZakaZiko"
 }, {
   "contentData" : {
@@ -60,6 +66,7 @@
   "postDate" : [ 2024, 12, 6, 21, 56, 43, 145722000 ],
   "postID" : "bf8fe851-49b0-485a-8fdd-88809a43151e",
   "authorID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupID" : null,
   "username" : "ZakiZokZokZakaZiko"
 }, {
   "contentData" : {
@@ -69,6 +76,7 @@
   "postDate" : [ 2024, 12, 6, 22, 0, 44, 852336500 ],
   "postID" : "8814a9de-e5b0-42c7-bd6b-a6eb26227b89",
   "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "groupID" : null,
   "username" : "Ahmad"
 }, {
   "contentData" : {
@@ -78,6 +86,7 @@
   "postDate" : [ 2024, 12, 6, 23, 22, 27, 358897100 ],
   "postID" : "e10ad664-8e76-45f0-92eb-e40ee9dab3b3",
   "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "groupID" : null,
   "username" : "Ahmad"
 }, {
   "contentData" : {
@@ -87,5 +96,26 @@
   "postDate" : [ 2024, 12, 6, 23, 59, 10, 333996800 ],
   "postID" : "14d8a562-c1fa-4bef-bef5-28ca17f4b522",
   "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "groupID" : null,
+  "username" : "Ahmad"
+}, {
+  "contentData" : {
+    "imagePath" : null,
+    "text" : "test noti"
+  },
+  "postDate" : [ 2024, 12, 13, 19, 39, 48, 291417500 ],
+  "postID" : "5174b443-3f0f-4195-8a6b-06dec9e165bf",
+  "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "groupID" : null,
+  "username" : "Ahmad"
+}, {
+  "contentData" : {
+    "imagePath" : null,
+    "text" : "test notif 2"
+  },
+  "postDate" : [ 2024, 12, 13, 19, 42, 7, 644402200 ],
+  "postID" : "37c0d530-cf13-425a-be90-f1c2cefb1062",
+  "authorID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "groupID" : null,
   "username" : "Ahmad"
 } ]

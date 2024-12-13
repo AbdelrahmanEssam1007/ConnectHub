@@ -123,6 +123,12 @@ public class UserPage extends javax.swing.JFrame {
         notificationsService.start();
         //NotificationsService notificationsService = new NotificationsService(this.loggedInUser.getUserId());
         this.searchResultsPanel.setLayout(new BorderLayout ());
+
+        ImageIcon nImage = new ImageIcon("images/noti_bell.png");
+        Image scaledIcon = nImage.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        notificationsButton.setText("");
+        notificationsButton.setIcon(new ImageIcon(scaledIcon));
+
     }
 
     /**

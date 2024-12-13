@@ -72,6 +72,16 @@ public class NotificationsDB {
         }
     }
 
+    public Notification searchNotificationByNotificationID(String notificationID) {
+        refreshNotifications();
+        for (Notification notification : notifications) {
+            if (notification.getNotificationID().equals(notificationID)) {
+                return notification;
+            }
+        }
+        return null;
+    }
+
     public synchronized void saveDB() {
         try {
             JSONFileWriter.writeJson("databases/notifications/" + "noti_" + userID + ".json", notifications);

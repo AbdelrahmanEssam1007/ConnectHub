@@ -1,1 +1,25 @@
-[ ]
+[ {
+  "notificationID" : "80d01a18-578f-4b0a-8e7c-a735b927a8f2",
+  "message" : "sent you a friend request",
+  "userID" : "cb2b9573-b77b-4897-83f2-99c422c3e9b8",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "responded",
+  "date" : [ 2024, 12, 13, 19, 12, 28, 833530800 ],
+  "type" : "FRIEND_REQUEST"
+}, {
+  "notificationID" : "0e151c8c-0b64-40c9-a1ab-5a01182d8ea0",
+  "message" : "created a new post",
+  "userID" : "cb2b9573-b77b-4897-83f2-99c422c3e9b8",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "shown",
+  "date" : [ 2024, 12, 13, 19, 39, 48, 328324700 ],
+  "type" : "POST"
+}, {
+  "notificationID" : "1b5378d2-bd7d-4730-8468-b7408960a85f",
+  "message" : "created a new post",
+  "userID" : "cb2b9573-b77b-4897-83f2-99c422c3e9b8",
+  "senderUserID" : "e9a28975-62c3-4cba-b586-669918ad4389",
+  "status" : "shown",
+  "date" : [ 2024, 12, 13, 19, 42, 7, 667390700 ],
+  "type" : "POST"
+} ]
