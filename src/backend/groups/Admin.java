@@ -18,6 +18,7 @@ public class Admin extends GroupMember {
     this.groupDB = GroupDB.getInstance();
   }
 
+  @Override
   public void editPost(String postID, String text, String imagePath){
     Post post = (Post)groupContentManager.searchContentByID(postID);
     if(text != null)
@@ -34,4 +35,8 @@ public class Admin extends GroupMember {
     groupManager.respondToJoinRequest(group.getGroupID(), user.getUserId(), userToRespondTo.getUserId(), approve);
   }
 
+  @Override
+  public void deletePost(Post post) {
+    groupContentManager.removeContent(post);
+  }
 }

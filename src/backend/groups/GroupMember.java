@@ -53,4 +53,16 @@ public class GroupMember {
   public User getUser() {
     return user;
   }
+
+  public void editPost(String postID, String text, String imagePath){
+    Post post = (Post)groupContentManager.searchContentByID(postID);
+    if(post.getAuthorID().equals(user.getUserId())){
+      if(text != null)
+        post.editText(text);
+      if(imagePath != null)
+        post.editImagePath(imagePath);
+    }
+    else
+      throw new RuntimeException("As a member, you cannot edit a post not your own");
+  }
 }

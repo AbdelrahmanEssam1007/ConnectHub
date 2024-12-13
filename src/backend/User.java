@@ -2,6 +2,7 @@ package backend;
 
 import backend.groups.Group;
 import backend.groups.GroupDB;
+import backend.groups.GroupManager;
 import backend.groups.GroupPostLoader;
 import utils.FileNames;
 import utils.IDGenerator;
@@ -32,14 +33,9 @@ public class User {
   }
 
   public List<Group> returnGroups() {
-    List<Group> allGroups = null;
-    GroupDB.getInstance().readFromDB();
-    allGroups = GroupDB.getInstance().getGroups();
     List<Group> myGroups = new ArrayList<>();
-    for(Group x : allGroups){
-      if(groupIDS.contains(x.getGroupID()))
-        myGroups.add(x);
-    }
+    for(String x : groupIDS)
+      myGroups.add(GroupDB.getInstance().searchGroupByID(x));
     return myGroups;
   }
 
@@ -49,6 +45,7 @@ public class User {
 
   public void addGroupID(String groupID){
     this.groupIDS.add(groupID);
+    UserDB.getInstance().SaveDB();
   }
 
   public String getUserId() {

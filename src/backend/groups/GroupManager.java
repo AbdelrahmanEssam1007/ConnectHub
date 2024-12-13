@@ -1,6 +1,7 @@
 package backend.groups;
 
 import backend.User;
+import backend.UserDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +82,8 @@ public class GroupManager {
       if(group.getPendingMembersIDs().contains(userID)){
         if(approve){
           group.getGroupMembersIDs().add(userID);
+          User user = UserDB.getInstance().searchUserByUserId(userID);
+          user.addGroupID(groupID);
         }
         group.getPendingMembersIDs().remove(userID);
         groupDB.updateGroup(group);
