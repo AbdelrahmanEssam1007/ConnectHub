@@ -26,12 +26,12 @@ public class Admin extends GroupMember {
       post.editImagePath(imagePath);
   }
 
-  public void removeMember(){
-    // remove member from group
+  public void removeMember(User userToRemove){
+    groupManager.removeMember(group.getGroupID(), user.getUserId(), userToRemove.getUserId());
   }
 
-  public void addMember(){
-    // add member to group
+  public void respondToMemberRequest(User userToRespondTo, boolean approve){
+    groupManager.respondToJoinRequest(group.getGroupID(), user.getUserId(), userToRespondTo.getUserId(), approve);
   }
 
 }
