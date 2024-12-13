@@ -8,9 +8,7 @@ import backend.FriendManager;
 import backend.User;
 import backend.content.PostManager;
 import backend.content.StoryManager;
-import backend.groups.Group;
-import backend.groups.GroupManager;
-import backend.groups.GroupRole;
+import backend.groups.*;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
 
@@ -137,6 +135,8 @@ public class FriendsPanel extends javax.swing.JPanel {
             }
             else {
                 this.jButton1.setText("Kick");
+                if(this.friendRole == GroupRole.PENDING_MEMBER)
+                    jButton1.setVisible(false);
                 if (this.friendRole == GroupRole.ADMIN) {
                     this.jButton2.setText("Demote");
                 }
@@ -315,6 +315,20 @@ public class FriendsPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_viewProfileButtonMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        if(jButton1.getText().equals("Kick")){
+            if(this.role == GroupRole.PRIMARY_ADMIN){
+                PrimaryAdmin primaryAdmin = new PrimaryAdmin(loggedinUser, group);
+                GroupMember groupMember = new GroupMember(friendUser, group);
+                primaryAdmin.removeMember(groupMember);
+            }
+            else if(this.role == GroupRole.ADMIN){
+                Admin admin = new Admin(loggedinUser, group);
+                GroupMember groupMember = new GroupMember(friendUser, group);
+                admin.removeMember(groupMember);
+            }
+            setVisible(false);
+        }
+
         if (this.type.equals("Current")) {
 //            jButton1.setText("Block");
 //            jButton2.setText("Remove");
@@ -334,9 +348,26 @@ public class FriendsPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Friend request already sent.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+        repaint();
+        revalidate();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        if(jButton2.getText().equals("Accept")){
+            Admin admin = new Admin(loggedinUser, group);
+            admin.respondToMemberRequest(friendUser, true);
+        }
+        else if(jButton2.getText().equals("Promote")){
+            PrimaryAdmin primaryAdmin = new PrimaryAdmin(loggedinUser, group);
+            GroupMember groupMember = new GroupMember(friendUser, group);
+            primaryAdmin.promoteAdmin(groupMember);
+        }
+        else if(jButton2.getText().equals("Demote")){
+            PrimaryAdmin primaryAdmin = new PrimaryAdmin(loggedinUser, group);
+            Admin groupAdmin = new Admin(friendUser, group);
+            primaryAdmin.demoteAdmin(groupAdmin);
+        }
+
         if (this.type.equals("Current")) {
 //            jButton1.setText("Block");
 //            jButton2.setText("Remove");
@@ -347,10 +378,18 @@ public class FriendsPanel extends javax.swing.JPanel {
 //            jButton2.setText("Reject");
             FM.declineFriendRequest(this.friendUser);
         }
+        repaint();
+        revalidate();
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
+        if(jButton3.getText().equals("Reject")){
+            Admin admin = new Admin(loggedinUser, group);
+            admin.respondToMemberRequest(friendUser, false);
+            setVisible(false);
+        }
+        repaint();
+        revalidate();
     }//GEN-LAST:event_jButton3MouseClicked
 
 

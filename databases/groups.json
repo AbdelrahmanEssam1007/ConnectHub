@@ -1,1 +1,11 @@
-[ ]
+[ {
+  "groupID" : "7265bdfd-4c4c-4f01-889f-5bda3851c32e",
+  "groupName" : "test group",
+  "groupDescription" : "",
+  "groupPhoto" : null,
+  "groupPrimaryAdminID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupMembersIDs" : [ "a0951309-15c0-46c6-b66a-d341c2499332" ],
+  "groupAdminsIDs" : [ ],
+  "pendingMembersIDs" : [ ],
+  "allMembers" : [ "44023cbe-7916-450d-868a-b8b54f8a9330", "a0951309-15c0-46c6-b66a-d341c2499332" ]
+} ]

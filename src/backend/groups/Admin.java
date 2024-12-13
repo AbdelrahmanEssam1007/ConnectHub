@@ -11,7 +11,7 @@ public class Admin extends GroupMember {
   private GroupManager groupManager;
   private GroupDB groupDB;
 
-  Admin(User user, Group group){
+  public Admin(User user, Group group){
     super(user, group);
     this.groupContentManager = new GroupContentManager(user);
     this.groupManager = GroupManager.getInstance();

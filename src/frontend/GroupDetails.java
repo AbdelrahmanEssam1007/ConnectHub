@@ -6,14 +6,12 @@ package frontend;
 
 import backend.User;
 import backend.UserDB;
-import backend.groups.Group;
-import backend.groups.GroupContentManager;
-import backend.groups.GroupRole;
-import java.awt.BorderLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+import backend.groups.*;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
 
 /**
  *
@@ -42,11 +40,29 @@ public class GroupDetails extends javax.swing.JFrame {
         for (String userID : this.group.getAllMembers()) {
             membersPanel.add(new FriendsPanel (user, UserDB.getInstance().searchUserByUserId(userID), null, "Group", getWidth(), 150, this.group));
         }
+
+        JButton refresh = new JButton("Refresh");
+        refresh.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                refreshButtonPressed();
+            }
+        } );
+        this.groupMembersDetailsPanel.add(refresh, BorderLayout.PAGE_START);
         this.groupMembersDetailsPanel.add(new JScrollPane (membersPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
         this.groupMembersDetailsPanel.revalidate();
         this.groupMembersDetailsPanel.repaint();
         
         
+    }
+
+    private void refreshButtonPressed() {
+        JPanel refreshedPanel = new JPanel();
+        refreshedPanel.setLayout(new BoxLayout (refreshedPanel, BoxLayout.Y_AXIS));
+        for (String userID : this.group.getAllMembers()) {
+            refreshedPanel.add(new FriendsPanel (user, UserDB.getInstance().searchUserByUserId(userID), null, "Group", getWidth(), 150, this.group));
+        }
+        this.groupMembersDetailsPanel.remove(1);
+        this.groupMembersDetailsPanel.add(new JScrollPane (refreshedPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
     }
 
     /**
@@ -144,7 +160,13 @@ public class GroupDetails extends javax.swing.JFrame {
 //            }
 //        });
 //    }
-
+    public static void main(String[] args) {
+        String userID = "44023cbe-7916-450d-868a-b8b54f8a9330";
+        String groupID = "7265bdfd-4c4c-4f01-889f-5bda3851c32e";
+        User user = UserDB.getInstance().searchUserByUserId(userID);
+        Group group = GroupDB.getInstance().searchGroupByID(groupID);
+        new GroupDetails(user,group, GroupManager.getInstance().getGroupRole(groupID, userID)).setVisible(true);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel groupMembersDetailsPanel;
     private javax.swing.JPanel groupPostsPanel;

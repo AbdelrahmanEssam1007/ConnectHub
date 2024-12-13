@@ -82,7 +82,7 @@
     "coverPhoto" : null,
     "bio" : "testing this text field"
   },
-  "groupIDS" : [ ]
+  "groupIDS" : [ "7265bdfd-4c4c-4f01-889f-5bda3851c32e" ]
 }, {
   "userId" : "44023cbe-7916-450d-868a-b8b54f8a9330",
   "email" : "zaki@gmail.com",
@@ -99,5 +99,5 @@
     "coverPhoto" : null,
     "bio" : null
   },
-  "groupIDS" : [ ]
+  "groupIDS" : [ "7265bdfd-4c4c-4f01-889f-5bda3851c32e" ]
 } ]
