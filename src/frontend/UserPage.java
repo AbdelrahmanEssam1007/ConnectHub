@@ -113,7 +113,7 @@ public class UserPage extends javax.swing.JFrame {
         NotificationsService notificationsService = new NotificationsService(this.loggedInUser.getUserId(), this.notifications);
         notificationsService.start();
         //NotificationsService notificationsService = new NotificationsService(this.loggedInUser.getUserId());
-
+        this.searchResultsPanel.setLayout(new BorderLayout ());
     }
 
     /**
@@ -483,15 +483,19 @@ public class UserPage extends javax.swing.JFrame {
     private void searchUsersButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchUsersButtonMouseClicked
         this.refreshButtonMouseClicked(null);
         this.searchResultsPanel.removeAll();
+        JPanel panel = new JPanel ();
+        panel.setSize(this.searchResultsPanel.getWidth(), this.searchResultsPanel.getHeight());
+        panel.setLayout(new BoxLayout (panel, BoxLayout.Y_AXIS));
         for (User user : UserDB.getInstance().getUsers()) {
             if ( user.getUserName().contains(this.searchCriteriaField.getText()) && // search criteria
                     !user.getUserName().equals(this.loggedInUser.getUserName()) && // not the user himself
                     !this.loggedInUser.getProfile().getFriends().contains(user.getUserId()) && // not already friends
                     !user.getProfile().getBlocked().contains(this.loggedInUser.getUserId())) { // not blocked by user
-                this.searchResultsPanel.add(new FriendsPanel (this.loggedInUser, user, this.FM, "Searched", this.friendsContentPanel.getWidth(), 150));
+                panel.add(new FriendsPanel (this.loggedInUser, user, this.FM, "Searched", this.friendsContentPanel.getWidth(), 150));
             }
 
         }
+        this.searchResultsPanel.add(new JScrollPane (panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
         this.searchResultsPanel.revalidate ();
         this.searchResultsPanel.repaint();
     }//GEN-LAST:event_searchUsersButtonMouseClicked
