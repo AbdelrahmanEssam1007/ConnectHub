@@ -682,7 +682,13 @@ public class UserPage extends javax.swing.JFrame {
     
     void setSuggestedGroups () {
         this.groupsPages.removeAllSuggestedGroupsPanel();
-        // TODO : suggestion algortihm
+        for(String friendID : loggedInUser.getProfile().getFriends()) {
+            for (String groupID : UserDB.getInstance().searchUserByUserId(friendID).getGroupIDS()) {
+                if (!loggedInUser.getGroupIDS().contains(groupID)) {
+                    this.groupsPages.addToSuggestedGroupsPanel(new GroupPanel (this.loggedInUser, GroupDB.getInstance().searchGroupByID(groupID)));
+                }
+            }
+        }
         this.groupsPages.setSuggestedGroups();
     }
     
