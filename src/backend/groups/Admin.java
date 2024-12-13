@@ -20,11 +20,7 @@ public class Admin extends GroupMember {
 
   @Override
   public void editPost(String postID, String text, String imagePath){
-    Post post = (Post)groupContentManager.searchContentByID(postID);
-    if(text != null)
-      post.editText(text);
-    if(imagePath != null)
-      post.editImagePath(imagePath);
+    groupContentManager.editContent(postID, text, imagePath);
   }
 
   public void removeMember(GroupMember memberToRemove){

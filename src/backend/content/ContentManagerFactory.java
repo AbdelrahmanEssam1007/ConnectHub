@@ -80,7 +80,23 @@ public abstract class ContentManagerFactory {
         try {
             List<Content> allContent = new ArrayList<>(contentLoader.loadContent());
             boolean changed = allContent.remove(item);
+            System.out.println("ITEM REMOVED: " + changed + " into " + fileName.getFileName() );
             JSONFileWriter.writeJson(fileName.getFileName(), allContent);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void editContent(String contentID, String text, String imagePath){
+        try {
+            this.content = new ArrayList<>(contentLoader.loadContent());
+            Content content = searchContentByID(contentID);
+            if(text != null)
+                content.editText(text);
+            if(imagePath != null)
+                content.editImagePath(imagePath);
+
+            JSONFileWriter.writeJson(fileName.getFileName(), this.content);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }

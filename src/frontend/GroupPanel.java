@@ -178,21 +178,7 @@ public class GroupPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        if (this.role == GroupRole.GUEST) {
-            
-        }
-        else if (this.role == GroupRole.PRIMARY_ADMIN) {
-            
-        }
-        else if (this.role == GroupRole.ADMIN) {
-            
-        }
-        else if (this.role == GroupRole.PENDING_MEMBER) {
-            
-        }
-        else {
-            
-        }
+        new GroupDetails(user, group, role).setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked

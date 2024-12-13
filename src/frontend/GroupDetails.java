@@ -7,6 +7,7 @@ package frontend;
 import backend.User;
 import backend.UserDB;
 import backend.groups.*;
+import frontend.content.PostsPanel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,9 +27,12 @@ public class GroupDetails extends javax.swing.JFrame {
     private User user;
     private Group group;
     private GroupRole role;
-    
+    private GroupContentManager groupContentManager;
+    private PostsPanel postsPanel;
+
     public GroupDetails(User user, Group group, GroupRole role) {
         initComponents();
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         
         this.user = user;
         this.group = group;
@@ -52,7 +56,11 @@ public class GroupDetails extends javax.swing.JFrame {
         this.groupMembersDetailsPanel.revalidate();
         this.groupMembersDetailsPanel.repaint();
         
-        
+        this.groupPostsPanel.setLayout(new BorderLayout());
+        this.groupContentManager = new GroupContentManager(user);
+        this.postsPanel = new PostsPanel(user, groupContentManager, groupPostsPanel.getWidth(), groupPostsPanel.getHeight(), group.getGroupID());
+        this.groupPostsPanel.add(refresh, BorderLayout.PAGE_START);
+        this.groupPostsPanel.add(postsPanel);
     }
 
     private void refreshButtonPressed() {
@@ -63,6 +71,13 @@ public class GroupDetails extends javax.swing.JFrame {
         }
         this.groupMembersDetailsPanel.remove(1);
         this.groupMembersDetailsPanel.add(new JScrollPane (refreshedPanel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER));
+
+        this.postsPanel = new PostsPanel(user, new GroupContentManager(user), groupPostsPanel.getWidth(), groupPostsPanel.getHeight(), group.getGroupID());
+        this.groupMembersDetailsPanel.remove(1);
+        this.groupPostsPanel.add(postsPanel);
+
+        revalidate();
+        repaint();
     }
 
     /**

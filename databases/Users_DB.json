@@ -14,7 +14,7 @@
     "coverPhoto" : null,
     "bio" : "Hello I am Ahmad. Nice to meet you. NOT"
   },
-  "groupIDS" : [ ]
+  "groupIDS" : [ "7265bdfd-4c4c-4f01-889f-5bda3851c32e" ]
 }, {
   "userId" : "cb2b9573-b77b-4897-83f2-99c422c3e9b8",
   "email" : "abdo@gmail.com",
@@ -82,7 +82,7 @@
     "coverPhoto" : null,
     "bio" : "testing this text field"
   },
-  "groupIDS" : [ "7265bdfd-4c4c-4f01-889f-5bda3851c32e" ]
+  "groupIDS" : [ ]
 }, {
   "userId" : "44023cbe-7916-450d-868a-b8b54f8a9330",
   "email" : "zaki@gmail.com",

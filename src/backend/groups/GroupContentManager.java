@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GroupContentManager extends ContentManagerFactory {
     public GroupContentManager(User user){
-        super(FileNames.GROUP_POSTS, new GroupPostLoader(), new PostFactory(), user);
+        super(FileNames.POSTS, new PostLoader(), new PostFactory(), user);
     }
 
     @Override
@@ -26,7 +26,9 @@ public class GroupContentManager extends ContentManagerFactory {
             List<Content> tempContent = new ArrayList<>();
 
             for(Content x : content){
-                if(x.getGroupID().equals(groupID))
+                if(x.getGroupID() == null)
+                    continue;
+                else if(x.getGroupID().equals(groupID))
                     tempContent.add(x);
             }
 
