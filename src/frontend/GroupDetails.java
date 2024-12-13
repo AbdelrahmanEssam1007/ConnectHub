@@ -35,7 +35,7 @@ public class GroupDetails extends javax.swing.JFrame {
     public GroupDetails(User user, Group group, GroupRole role) {
         initComponents();
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
+
         this.mainUserID = user.getUserId();
         this.groupID = group.getGroupID();
         this.role = role;
@@ -72,6 +72,8 @@ public class GroupDetails extends javax.swing.JFrame {
     }
 
     private void refreshButtonPressed() {
+        GroupDB.getInstance().readFromDB();
+        UserDB.getInstance().refreshDB();
         new GroupDetails(UserDB.getInstance().searchUserByUserId(mainUserID), GroupDB.getInstance().searchGroupByID(groupID),
                 GroupDB.getInstance().searchGroupByID(groupID).getUserRole(mainUserID)).setVisible(true);
         this.dispose();
