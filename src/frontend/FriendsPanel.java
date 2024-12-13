@@ -88,6 +88,9 @@ public class FriendsPanel extends javax.swing.JPanel {
         }
         else if (this.type.equals("Searched")) {
             jButton1.setText("Send Friend Request");
+            if (this.loggedinUser.getProfile().getBlocked().contains(this.friendUser.getUserId())) {
+                jButton1.setText("Unblock");
+            }
             jButton1.setBackground(new java.awt.Color(0, 153, 255));
             jButton1.setForeground(new java.awt.Color(255, 255, 255));
             jButton2.setVisible(false);

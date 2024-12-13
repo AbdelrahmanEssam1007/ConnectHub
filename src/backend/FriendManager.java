@@ -37,7 +37,7 @@ public class FriendManager {
     Profile targetProfile = targetUser.getProfile();
 
     if (userProfile.getBlocked().contains(targetUser.getUserId())) {
-        int response = JOptionPane.showConfirmDialog(null, "You have blocked this user. Do you want to unblock them?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to unblock them?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             this.unblockUser(targetUser);
         } else {
@@ -119,7 +119,6 @@ public class FriendManager {
   }
 
   // Unblock a user
-  // TODO: Use this function
   public void unblockUser(User targetUser) {
     String targetId = targetUser.getUserId();
     if (!userProfile.getBlocked().contains(targetId)) {
