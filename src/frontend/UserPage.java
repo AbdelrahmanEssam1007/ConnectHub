@@ -509,7 +509,7 @@ public class UserPage extends javax.swing.JFrame {
         panel.setSize(this.searchResultsPanel.getWidth(), this.searchResultsPanel.getHeight());
         panel.setLayout(new BoxLayout (panel, BoxLayout.Y_AXIS));
         for (Group group : GroupDB.getInstance().getGroups()) {
-            {
+            if(group.getGroupName().contains(this.searchCriteriaField.getText())) {
                 panel.add(new GroupPanel (this.loggedInUser, group));
                 System.out.println(group.getGroupID()); //* group id is displayed, group exists
             }
@@ -682,7 +682,13 @@ public class UserPage extends javax.swing.JFrame {
     
     void setSuggestedGroups () {
         this.groupsPages.removeAllSuggestedGroupsPanel();
-        // TODO : suggestion algortihm
+        for(String friendID : loggedInUser.getProfile().getFriends()) {
+            for (String groupID : UserDB.getInstance().searchUserByUserId(friendID).getGroupIDS()) {
+                if (!loggedInUser.getGroupIDS().contains(groupID)) {
+                    this.groupsPages.addToSuggestedGroupsPanel(new GroupPanel (this.loggedInUser, GroupDB.getInstance().searchGroupByID(groupID)));
+                }
+            }
+        }
         this.groupsPages.setSuggestedGroups();
     }
     
