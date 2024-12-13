@@ -54,6 +54,7 @@ public class UserPage extends javax.swing.JFrame {
     private String typeFeed = "Post";
     private UserDB userDB = UserDB.getInstance();
     private FriendsPages friendsPages;
+    private GroupsPages groupsPages;
 
     private Notifications notifications;
     private List<Group> userGroups;
@@ -103,6 +104,7 @@ public class UserPage extends javax.swing.JFrame {
         this.profilePanel = new ProfilePanel(this.loggedInUser, this.loggedInUser, this.profileContentPanel.getWidth(), 200);
         this.refreshManager = new RefreshManager(List.of(postsPanel, storiesPanel));
         this.friendsPages = new FriendsPages(this.friendsContentPanel.getWidth(), this.friendsContentPanel.getHeight());
+        this.groupsPages = new GroupsPages(this.groupsPanel.getWidth(), this.groupsPanel.getHeight());
 
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -467,6 +469,7 @@ public class UserPage extends javax.swing.JFrame {
         this.loggedInUser = UserDB.getInstance().searchUserByUserId(this.loggedInUser.getUserId());
         this.loggedInUser = FM.refresh();
         this.refreshManager.refreshAll();
+        this.searchResultsPanel.removeAll();
         this.friendsContentPanel.removeAll();
         this.setProfileContentPanel();
         this.setPostsContentPanel();
@@ -477,7 +480,12 @@ public class UserPage extends javax.swing.JFrame {
         this.friendsContentPanel.add(this.friendsPages);
         this.friendsContentPanel.revalidate();
         this.friendsContentPanel.repaint();
-        this.searchResultsPanel.removeAll();
+        this.groupsPanel.removeAll();
+        this.setCurrentGroupsPanel();
+        this.setSuggestedGroups();
+        this.groupsPanel.add (this.groupsPages);
+        this.groupsPanel.revalidate();
+        this.groupsPanel.repaint();
     }//GEN-LAST:event_refreshButtonMouseClicked
 
     private void logoutButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutButtonMouseClicked
@@ -640,6 +648,20 @@ public class UserPage extends javax.swing.JFrame {
             }
         }
         this.friendsPages.setSuggestedFriends();
+    }
+    
+    void setCurrentGroupsPanel () {
+        this.groupsPages.removeAllCurrentGroupsPanel();
+        for (String groupID : this.loggedInUser.getGroupIDS()) {
+            this.groupsPages.addToCurrentGroupsPanel(new GroupPanel (this.loggedInUser, GroupDB.getInstance().searchGroupByID(groupID)));
+        }
+        this.groupsPages.setCurrentGroups();
+    }
+    
+    void setSuggestedGroups () {
+        this.groupsPages.removeAllSuggestedGroupsPanel();
+        // TODO : suggestion algortihm
+        this.groupsPages.setSuggestedGroups();
     }
     
     public void pressRefreshButton () {
