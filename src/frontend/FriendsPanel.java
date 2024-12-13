@@ -8,6 +8,9 @@ import backend.FriendManager;
 import backend.User;
 import backend.content.PostManager;
 import backend.content.StoryManager;
+import backend.groups.Group;
+import backend.groups.GroupManager;
+import backend.groups.GroupRole;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
 
@@ -29,10 +32,14 @@ public class FriendsPanel extends javax.swing.JPanel {
      * Creates new form FriendsPanel
      */
     
-    User friendUser;
-    User loggedinUser;
-    FriendManager FM;
-    String type;
+    private User friendUser;
+    private User loggedinUser;
+    private FriendManager FM;
+    private String type;
+    private Group group = null;
+    private GroupRole role;
+    private GroupRole friendRole;
+    
 
     private String pfpImagePath;
     private ImageIcon pfpImage;
@@ -46,6 +53,8 @@ public class FriendsPanel extends javax.swing.JPanel {
         this();
         setSize(width,height);
         setVisible(true);
+        
+        this.jButton3.setVisible(false);
 
         this.loggedinUser = loggedinUser;
         this.friendUser = friendUser;
@@ -97,6 +106,67 @@ public class FriendsPanel extends javax.swing.JPanel {
         }
     }
     
+    public FriendsPanel (User loggedinUser, User friendUser, FriendManager FM, String type, int width, int height, Group group) {
+        this(loggedinUser, friendUser, FM, type, width, height);
+        
+        this.group = group;
+        
+        this.role = GroupManager.getInstance().getGroupRole(group.getGroupID(), loggedinUser.getUserId());
+        this.friendRole = GroupManager.getInstance().getGroupRole(group.getGroupID(), friendUser.getUserId());
+        
+        if (this.friendRole == GroupRole.PRIMARY_ADMIN) {
+            this.statusLabel.setText("Primary Admin");
+        }
+        else if (this.friendRole == GroupRole.ADMIN) {
+            this.statusLabel.setText("Admin");
+        }
+        else if (this.friendRole == GroupRole.GROUP_MEMBER) {
+            this.statusLabel.setText("Member");
+        }
+        else if (this.friendRole == GroupRole.PENDING_MEMBER) {
+            this.statusLabel.setText("Pending");
+        }
+        
+        if (this.role == GroupRole.PRIMARY_ADMIN) {
+            if (this.friendRole == GroupRole.PRIMARY_ADMIN) {
+                this.jButton1.setVisible(false);
+                this.jButton2.setVisible(false);
+            }
+            else {
+                this.jButton1.setText("Kick");
+                if (this.friendRole == GroupRole.ADMIN) {
+                    this.jButton2.setText("Demote");
+                }
+                else if (this.friendRole == GroupRole.GROUP_MEMBER) {
+                    this.jButton2.setText("Promote");
+                }
+                else if (this.friendRole == GroupRole.PENDING_MEMBER) {
+                    this.jButton2.setText("Accept");
+                    this.jButton3.setVisible(true);
+                    this.jButton3.setText("Reject");
+                }
+            }
+        }
+        else if (this.role == GroupRole.ADMIN) {
+            this.jButton2.setVisible(false);
+            if (this.friendRole == GroupRole.PRIMARY_ADMIN || this.friendRole == GroupRole.ADMIN) {
+                this.jButton1.setVisible(false);
+            }
+            else if (this.friendRole == GroupRole.GROUP_MEMBER) {
+                this.jButton1.setText("Kick");
+            }
+            else if (this.friendRole == GroupRole.PENDING_MEMBER) {
+                this.jButton1.setText("Accept");
+                this.jButton3.setVisible(true);
+                this.jButton3.setText("Reject");
+            }
+        }
+        else {
+            this.jButton1.setVisible(false);
+            this.jButton2.setVisible(false);
+        }
+    }
+    
     
 
     /**
@@ -114,6 +184,8 @@ public class FriendsPanel extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         userStatusPanel = new javax.swing.JPanel();
         viewProfileButton = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        statusLabel = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -170,6 +242,13 @@ public class FriendsPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setText("jButton3");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -185,11 +264,16 @@ public class FriendsPanel extends javax.swing.JPanel {
                         .addComponent(userStatusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton2)
                         .addGap(18, 18, 18)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(viewProfileButton)))
+                        .addComponent(viewProfileButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -202,11 +286,14 @@ public class FriendsPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(userStatusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jButton1)
-                                .addComponent(jButton2))
+                                .addComponent(jButton2)
+                                .addComponent(jButton3))
                             .addComponent(viewProfileButton))))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
@@ -259,11 +346,17 @@ public class FriendsPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2MouseClicked
 
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JPanel pfpPanel;
+    private javax.swing.JTextField statusLabel;
     private javax.swing.JPanel userStatusPanel;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JButton viewProfileButton;

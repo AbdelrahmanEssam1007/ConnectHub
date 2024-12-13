@@ -111,6 +111,15 @@ public class Group {
     groupAdminsIDs.remove(userID);
     pendingMembersIDs.remove(userID);
   }
+  
+  public List <String> getAllMembers () {
+      List <String> allMembers = new ArrayList<>();
+      allMembers.add(this.groupPrimaryAdminID);
+      allMembers.addAll(this.groupAdminsIDs);
+      allMembers.addAll(this.groupMembersIDs);
+      allMembers.addAll(this.pendingMembersIDs);
+      return allMembers;
+  }
 
   @Override
   public String toString() {
