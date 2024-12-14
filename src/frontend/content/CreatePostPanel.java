@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import utils.NotificationType;
+
 public class CreatePostPanel extends JDialog{
     private JPanel panel1;
     private JTextArea contentTextInput;
@@ -113,16 +115,13 @@ public class CreatePostPanel extends JDialog{
                             String postID = postManager.createTextImageContent(text, imageFile, selectedGroup);
                             if(selectedGroup == null){
                                 for (String friendId : userFriendsIDs) {
-                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.POST.getType(), postID));
                                 }
                             }
                             else{
                                 for (String memberID : selectedGroup.getAllMembers()) {
-                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new post in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new post in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.POST.getType(), postID));
                                 }
-                            }
-                            for (String friendId : userFriendsIDs) {
-                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
                             }
                             JOptionPane.showMessageDialog(null, "Successfully made post!",
                                 "Post Creation", JOptionPane.INFORMATION_MESSAGE);
@@ -131,12 +130,12 @@ public class CreatePostPanel extends JDialog{
                             String postID = storyManager.createTextImageContent(text, imageFile, selectedGroup);
                             if(selectedGroup == null){
                                 for (String friendId : userFriendsIDs) {
-                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.STORY.getType(), postID));
                                 }
                             }
                             else{
                                 for (String memberID : selectedGroup.getAllMembers()) {
-                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new story in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new story in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.STORY.getType(), postID));
                                 }
                             }
                             JOptionPane.showMessageDialog(null, "Successfully made story!",
@@ -160,12 +159,12 @@ public class CreatePostPanel extends JDialog{
                             String postID = postManager.createImageOnlyContent(imageFile, selectedGroup);
                             if(selectedGroup == null){
                                 for (String friendId : userFriendsIDs) {
-                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.POST.getType(), postID));
                                 }
                             }
                             else{
                                 for (String memberID : selectedGroup.getAllMembers()) {
-                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new post in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new post in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.POST.getType(), postID));
                                 }
                             }
                             JOptionPane.showMessageDialog(null, "Successfully made post!",
@@ -174,12 +173,12 @@ public class CreatePostPanel extends JDialog{
                             String postID = storyManager.createImageOnlyContent(imageFile, selectedGroup);
                             if(selectedGroup == null){
                                 for (String friendId : userFriendsIDs) {
-                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                    NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.STORY.getType(), postID));
                                 }
                             }
                             else{
                                 for (String memberID : selectedGroup.getAllMembers()) {
-                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new story in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                    NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new story in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.STORY.getType(), postID));
                                 }
                             }
                             JOptionPane.showMessageDialog(null, "Successfully made story!",
@@ -203,12 +202,12 @@ public class CreatePostPanel extends JDialog{
                         String postID = postManager.createTextOnlyContent(text, selectedGroup);
                         if(selectedGroup == null){
                             for (String friendId : userFriendsIDs) {
-                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new post", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.POST.getType(), postID));
                             }
                         }
                         else{
                             for (String memberID : selectedGroup.getAllMembers()) {
-                                NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new post in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "POST", postID));
+                                NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new post in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.POST.getType(), postID));
                             }
                         }
                         JOptionPane.showMessageDialog(null, "Successfully made post!",
@@ -217,12 +216,12 @@ public class CreatePostPanel extends JDialog{
                         String postID = storyManager.createTextOnlyContent(text, selectedGroup);
                         if(selectedGroup == null){
                             for (String friendId : userFriendsIDs) {
-                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                NotificationsDB.getInstance(friendId).addNotification(new Notification("created a new story", friendId, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.STORY.getType(), postID));
                             }
                         }
                         else{
                             for (String memberID : selectedGroup.getAllMembers()) {
-                                NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new story in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), "STORY", postID));
+                                NotificationsDB.getInstance(memberID).addNotification(new Notification("created a new story in " + selectedGroup.getGroupName(), memberID, loggedInUser.getUserId(), "new", LocalDateTime.now(), NotificationType.STORY.getType(), postID));
                             }
                         }
                         JOptionPane.showMessageDialog(null, "Successfully made story!",

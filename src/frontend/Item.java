@@ -1,24 +1,24 @@
 package frontend;
 
-import javax.swing.*;
-
 import backend.FriendManager;
 import backend.Notifications.Notification;
 import backend.Notifications.NotificationsDB;
 import backend.User;
 import backend.UserDB;
-import backend.content.*;
+import backend.content.Post;
+import backend.content.PostManager;
+import backend.content.Story;
+import backend.content.StoryManager;
 import backend.groups.Group;
 import backend.groups.GroupDB;
 import backend.groups.GroupRole;
-import frontend.content.ContentPanel;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
 import utils.Constants;
 import utils.ImageAvatar;
+import utils.NotificationType;
 
-import java.awt.*;
-import java.lang.constant.Constable;
+import javax.swing.*;
 
 /**
  *
@@ -43,31 +43,31 @@ public class Item extends javax.swing.JPanel implements Constants {
         this.loggedInUserName = loggedInUserName;
         this.notificationID = notificationID;
         this.postID = postID;
-        if(type.equals("GROUP_ACTIVITY")) {
+        if(type.equals(NotificationType.GROUP_ACTIVITY.getType())) {
             jButton1.setText("");
             jButton1.setVisible(false);
             jButton2.setBackground(new java.awt.Color(0, 153, 255));
             jButton2.setText("Open Group");
         }
-        else if(type.equals("POST")) {
+        else if(type.equals(NotificationType.POST.getType())) {
             jButton1.setText("");
             jButton1.setVisible(false);
             jButton2.setBackground(new java.awt.Color(0, 153, 255));
             jButton2.setText("Open Post");
         }
-        else if(type.equals("STORY")) {
+        else if(type.equals(NotificationType.STORY.getType())) {
             jButton1.setText("");
             jButton1.setVisible(false);
             jButton2.setBackground(new java.awt.Color(0, 153, 255));
             jButton2.setText("Open Story");
         }
-        else if(type.equals("FRIEND_REQUEST")) {
+        else if(type.equals(NotificationType.FRIEND_REQUEST.getType())) {
             jButton1.setVisible(true);
             jButton1.setBackground(new java.awt.Color(0, 153, 255));
             jButton2.setBackground(new java.awt.Color(102, 102, 102));
             jButton1.setText("Accept");
             jButton2.setText("Decline");
-        } else if (type.equals("BLANK")) {
+        } else if (type.equals(NotificationType.BLANK.getType())) {
             jButton1.setVisible(false);
             jButton2.setVisible(false);
         }
@@ -111,6 +111,7 @@ public class Item extends javax.swing.JPanel implements Constants {
         setMinimumSize(new java.awt.Dimension(334, 66));
         setMaximumSize(new java.awt.Dimension(334, 66));
         setSize(new java.awt.Dimension(334, 66));
+        setPreferredSize(new java.awt.Dimension(334, 66));
 
         setOpaque(false);
 
@@ -195,7 +196,7 @@ public class Item extends javax.swing.JPanel implements Constants {
 
     private void jButton1ButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-        if(this.type.equals("FRIEND_REQUEST")) {
+        if(this.type.equals(NotificationType.FRIEND_REQUEST.getType())) {
             FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
             Notification tempNoti = NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).searchNotificationByNotificationID(notificationID);
             tempNoti.setStatus("responded");
@@ -205,19 +206,19 @@ public class Item extends javax.swing.JPanel implements Constants {
 
     private void jButton2ButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
-        if(this.type.equals("FRIEND_REQUEST")) {
+        if(this.type.equals(NotificationType.FRIEND_REQUEST.getType())) {
             FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
             Notification tempNoti = NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).searchNotificationByNotificationID(notificationID);
             tempNoti.setStatus("responded");
             NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(tempNoti);
             //NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserName()).saveDB();
-        } else if (this.type.equals("GROUP_ACTIVITY")) {
+        } else if (this.type.equals(NotificationType.GROUP_ACTIVITY.getType())) {
             // Open group
             User user = UserDB.getInstance().searchUserByUserName(loggedInUserName);
             Group group = GroupDB.getInstance().searchGroupByID(postID);
             GroupRole role = group.getUserRole(user.getUserId());
             new GroupDetails(user, group, role).setVisible(true);
-        } else if (this.type.equals("POST")) {
+        } else if (this.type.equals(NotificationType.POST.getType())) {
             // Open post
             JFrame frame = new JFrame();
             frame.setSize(600,300);
@@ -228,7 +229,7 @@ public class Item extends javax.swing.JPanel implements Constants {
             Post postNotify = (Post)postManager.searchContentByID(postID);
             frame.add(postPanel.createContentPanel(postNotify));
             frame.setVisible(true);
-        } else if (this.type.equals("STORY")) {
+        } else if (this.type.equals(NotificationType.STORY.getType())) {
             // Open story
             JFrame frame = new JFrame();
             frame.setSize(600,300);

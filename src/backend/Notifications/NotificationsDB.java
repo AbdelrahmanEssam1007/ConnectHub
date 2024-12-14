@@ -1,13 +1,15 @@
 package backend.Notifications;
 
+import utils.Constants;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationsDB {
+public class NotificationsDB implements Constants {
     private List<Notification> notifications;
     private String userID;
     private static ArrayList<NotificationsDB> instances;
@@ -21,6 +23,12 @@ public class NotificationsDB {
                 return instance;
             }
         }
+        // Handle if NOTIFICATIONS_DIRECTORY does not exist
+        File destinationDir = new File(NOTIFICATIONS_DIRECTORY);
+        if(!destinationDir.exists()){
+            destinationDir.mkdir();
+        }
+
         NotificationsDB instance = new NotificationsDB(userID);
         instances.add(instance);
         return instance;
@@ -29,7 +37,7 @@ public class NotificationsDB {
     private NotificationsDB(String userID) {
         this.userID = userID;
         try {
-            this.setNotifications(JSONFileReader.readJson("databases/notifications/" + "noti_" + userID + ".json", Notification.class));
+            this.setNotifications(JSONFileReader.readJson(NOTIFICATIONS_DIRECTORY + "noti_" + userID + ".json", Notification.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,12 +59,12 @@ public class NotificationsDB {
 
     public synchronized void removeNotification(Notification notification) throws IOException {
         notifications.remove(notification);
-        JSONFileWriter.writeJson("databases/notifications/" + "noti_" + notification.getUserID() + ".json", notifications);
+        JSONFileWriter.writeJson(NOTIFICATIONS_DIRECTORY + "noti_" + notification.getUserID() + ".json", notifications);
     }
 
     public void refreshNotifications() {
         try {
-            this.setNotifications(JSONFileReader.readJson("databases/notifications/" + "noti_" + userID + ".json", Notification.class));
+            this.setNotifications(JSONFileReader.readJson(NOTIFICATIONS_DIRECTORY + "noti_" + userID + ".json", Notification.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,7 +92,7 @@ public class NotificationsDB {
 
     public synchronized void saveDB() {
         try {
-            JSONFileWriter.writeJson("databases/notifications/" + "noti_" + userID + ".json", notifications);
+            JSONFileWriter.writeJson(NOTIFICATIONS_DIRECTORY + "noti_" + userID + ".json", notifications);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
