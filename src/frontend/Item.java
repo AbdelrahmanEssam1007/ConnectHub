@@ -27,22 +27,39 @@ import javax.swing.*;
 public class Item extends javax.swing.JPanel implements Constants {
 
     private String type;
+    private String senderUserID;
     private String senderUserName;
+    private String loggedInUserID;
     private String loggedInUserName;
     private String notificationID;
     private String postID;
+    private UserDB userDB;
+    private Notification notification;
 
-    public Item(String notificationID, Icon icon, String senderUserName, String loggedInUserName, String des, String time, String type, String postID) {
+    public Item(Notification notification, String time){
         initComponents();
-        pic.setIcon(icon);
+        //pic.setIcon(icon);
+        this.notification = notification;
+
+        userDB = UserDB.getInstance();
+        this.senderUserID = notification.getSenderUserID();
+        this.loggedInUserID = notification.getUserID();
+        this.type = notification.getType();
+        this.senderUserName = userDB.searchUserByUserId(senderUserID).getUserName();
+        this.loggedInUserName = userDB.searchUserByUserId(loggedInUserID).getUserName();
+        this.notificationID = notification.getNotificationID();
+        this.postID = notification.getPostID();
+
         lbName.setText(senderUserName);
-        lbDes.setText(des);
+        lbDes.setText(notification.getMessage());
         lbTime.setText(time);
-        this.type = type;
-        this.senderUserName = senderUserName;
-        this.loggedInUserName = loggedInUserName;
-        this.notificationID = notificationID;
-        this.postID = postID;
+
+        if(userDB.searchUserByUserId(senderUserID).getProfile().getProfilePhoto() == null)
+            pic.setIcon(new ImageIcon(Constants.DEFAULT_PFP));
+        else
+            pic.setIcon(new ImageIcon(userDB.searchUserByUserId(senderUserID).getProfile().getProfilePhoto()));
+
+        // Set button text and color based on notification type
         if(type.equals(NotificationType.GROUP_ACTIVITY.getType())) {
             jButton1.setText("");
             jButton1.setVisible(false);
@@ -71,6 +88,7 @@ public class Item extends javax.swing.JPanel implements Constants {
             jButton1.setVisible(false);
             jButton2.setVisible(false);
         }
+
     }
 
     public Item(Icon icon, String name, String des, String time) {
@@ -195,23 +213,20 @@ public class Item extends javax.swing.JPanel implements Constants {
 
 
     private void jButton1ButtonMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
+        // Accept friend request
         if(this.type.equals(NotificationType.FRIEND_REQUEST.getType())) {
             FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
-            Notification tempNoti = NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).searchNotificationByNotificationID(notificationID);
-            tempNoti.setStatus("responded");
-            NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(tempNoti);
+            notification.setStatus("responded");
+            NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(notification);
         }
     }
 
     private void jButton2ButtonMouseClicked(java.awt.event.MouseEvent evt) {
-        // TODO add your handling code here:
         if(this.type.equals(NotificationType.FRIEND_REQUEST.getType())) {
+            // Decline friend request
             FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
-            Notification tempNoti = NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).searchNotificationByNotificationID(notificationID);
-            tempNoti.setStatus("responded");
-            NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(tempNoti);
-            //NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserName()).saveDB();
+            notification.setStatus("responded");
+            NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(notification);
         } else if (this.type.equals(NotificationType.GROUP_ACTIVITY.getType())) {
             // Open group
             User user = UserDB.getInstance().searchUserByUserName(loggedInUserName);

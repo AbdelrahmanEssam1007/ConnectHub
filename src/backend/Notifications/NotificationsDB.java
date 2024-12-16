@@ -44,7 +44,7 @@ public class NotificationsDB implements Constants {
     }
 
     public ArrayList<Notification> getNotifications() {
-        this.refreshNotifications();
+        refreshNotifications();
         return new ArrayList<>(notifications);
     }
 
@@ -55,6 +55,7 @@ public class NotificationsDB implements Constants {
     public synchronized void addNotification(Notification notification) {
         notifications.add(notification);
         saveDB();
+        refreshNotifications();
     }
 
     public synchronized void removeNotification(Notification notification) throws IOException {
@@ -75,6 +76,7 @@ public class NotificationsDB implements Constants {
             if (noti.getNotificationID().equals(notification.getNotificationID())) {
                 noti.setStatus(notification.getStatus());
                 saveDB();
+                refreshNotifications();
                 return;
             }
         }
