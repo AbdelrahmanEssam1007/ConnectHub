@@ -7,35 +7,39 @@ import utils.JSONFileWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class NotificationsDB implements Constants {
     private List<Notification> notifications;
     private String userID;
-    private static ArrayList<NotificationsDB> instances;
+    private static HashMap<String, NotificationsDB> instances;
 
-    public static NotificationsDB getInstance(String userID) {
+    // Flag to check if notifications are modified
+    private boolean isModified;
+
+    public static synchronized NotificationsDB getInstance(String userID) {
         if (instances == null) {
-            instances = new ArrayList<>();
+            instances = new HashMap<>();
         }
-        for (NotificationsDB instance : instances) {
-            if (instance.userID.equals(userID)) {
-                return instance;
-            }
+        if (instances.containsKey(userID)) {
+            return instances.get(userID);
         }
+
         // Handle if NOTIFICATIONS_DIRECTORY does not exist
         File destinationDir = new File(NOTIFICATIONS_DIRECTORY);
-        if(!destinationDir.exists()){
+        if (!destinationDir.exists()) {
             destinationDir.mkdir();
         }
 
         NotificationsDB instance = new NotificationsDB(userID);
-        instances.add(instance);
+        instances.put(userID, instance);
         return instance;
     }
 
     private NotificationsDB(String userID) {
         this.userID = userID;
+        this.isModified = true;
         try {
             this.setNotifications(JSONFileReader.readJson(NOTIFICATIONS_DIRECTORY + "noti_" + userID + ".json", Notification.class));
         } catch (IOException e) {
@@ -43,28 +47,34 @@ public class NotificationsDB implements Constants {
         }
     }
 
-    public ArrayList<Notification> getNotifications() {
-        refreshNotifications();
+    public synchronized ArrayList<Notification> getNotifications() {
+        if (isModified) {
+            refreshNotifications();
+        }
         return new ArrayList<>(notifications);
     }
 
-    public void setNotifications(List<Notification> notifications) {
+    public synchronized void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
+        this.isModified = true;
     }
 
     public synchronized void addNotification(Notification notification) {
-        notifications.add(notification);
-        saveDB();
         refreshNotifications();
+        notifications.add(notification);
+        isModified = true;
+        saveDB();
     }
 
     public synchronized void removeNotification(Notification notification) throws IOException {
         notifications.remove(notification);
-        JSONFileWriter.writeJson(NOTIFICATIONS_DIRECTORY + "noti_" + notification.getUserID() + ".json", notifications);
+        isModified = true;
+        saveDB();
     }
 
-    public void refreshNotifications() {
+    public synchronized void refreshNotifications() {
         try {
+            notifications.clear();
             this.setNotifications(JSONFileReader.readJson(NOTIFICATIONS_DIRECTORY + "noti_" + userID + ".json", Notification.class));
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,15 +85,17 @@ public class NotificationsDB implements Constants {
         for (Notification noti : notifications) {
             if (noti.getNotificationID().equals(notification.getNotificationID())) {
                 noti.setStatus(notification.getStatus());
-                saveDB();
-                refreshNotifications();
-                return;
+                isModified = true;
+                break;
             }
         }
+        saveDB();
     }
 
     public Notification searchNotificationByNotificationID(String notificationID) {
-        refreshNotifications();
+        if (isModified) {
+            refreshNotifications();
+        }
         for (Notification notification : notifications) {
             if (notification.getNotificationID().equals(notificationID)) {
                 return notification;
@@ -95,6 +107,7 @@ public class NotificationsDB implements Constants {
     public synchronized void saveDB() {
         try {
             JSONFileWriter.writeJson(NOTIFICATIONS_DIRECTORY + "noti_" + userID + ".json", notifications);
+            isModified = false; // Reset flag after saving
         } catch (IOException ex) {
             ex.printStackTrace();
         }

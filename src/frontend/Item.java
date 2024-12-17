@@ -50,7 +50,7 @@ public class Item extends javax.swing.JPanel implements Constants {
         this.notificationID = notification.getNotificationID();
         this.postID = notification.getPostID();
 
-        lbName.setText(senderUserName);
+        lbName.setText(senderUserName.length() > 14 ? senderUserName.substring(0, 11) + "..." : senderUserName);
         lbDes.setText(notification.getMessage());
         lbTime.setText(time);
 
@@ -215,18 +215,19 @@ public class Item extends javax.swing.JPanel implements Constants {
     private void jButton1ButtonMouseClicked(java.awt.event.MouseEvent evt) {
         // Accept friend request
         if(this.type.equals(NotificationType.FRIEND_REQUEST.getType())) {
-            FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).acceptFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
+            FriendManager.getInstance(UserDB.getInstance().searchUserByUserId(this.loggedInUserID)).acceptFriendRequest(UserDB.getInstance().searchUserByUserId(this.senderUserID));
             notification.setStatus("responded");
-            NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(notification);
+            NotificationsDB.getInstance(this.loggedInUserID).updateNotification(notification);
+            //System.out.println("Update notification status: " + notification.getNotificationID() + " new status: " + notification.getStatus());
         }
     }
 
     private void jButton2ButtonMouseClicked(java.awt.event.MouseEvent evt) {
         if(this.type.equals(NotificationType.FRIEND_REQUEST.getType())) {
             // Decline friend request
-            FriendManager.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName)).declineFriendRequest(UserDB.getInstance().searchUserByUserName(this.senderUserName));
+            FriendManager.getInstance(UserDB.getInstance().searchUserByUserId(this.loggedInUserID)).declineFriendRequest(UserDB.getInstance().searchUserByUserId(this.senderUserID));
             notification.setStatus("responded");
-            NotificationsDB.getInstance(UserDB.getInstance().searchUserByUserName(this.loggedInUserName).getUserId()).updateNotification(notification);
+            NotificationsDB.getInstance(this.loggedInUserID).updateNotification(notification);
         } else if (this.type.equals(NotificationType.GROUP_ACTIVITY.getType())) {
             // Open group
             User user = UserDB.getInstance().searchUserByUserName(loggedInUserName);

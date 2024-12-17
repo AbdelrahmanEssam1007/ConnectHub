@@ -35,17 +35,17 @@ public class NotificationsService extends Thread implements Constants {
                 // TODO: Refresh user page
                 Thread.sleep(5000);//10000
                 // Read the file and create a notification
-                if(notificationsDB.getNotifications().isEmpty()) {
-//                    System.out.println("No notifications");
-                }
-                else {
-//                    System.out.println("Notifications found");
-                }
+//                if(notificationsDB.getNotifications().isEmpty()) {
+////                    System.out.println("No notifications");
+//                }
+//                else {
+////                    System.out.println("Notifications found");
+//                }
+                notificationsDB = NotificationsDB.getInstance(userID);
                 notificationsPanel.clearNoti();
                 notificationsDB.refreshNotifications();
                 for (Notification notification : notificationsDB.getNotifications()) {
                     if(notification.getStatus().equals("new")) {
-                        System.out.println("New notification: " + notification.getNotificationID());
                         // Add new notification
                         notification.setStatus("shown");
                         notificationsDB.updateNotification(notification);
@@ -70,7 +70,7 @@ public class NotificationsService extends Thread implements Constants {
                     } else if (notification.getStatus().equals("responded")) {
                         // remove notification
                     } else {
-//                        System.out.println("Notification already read");
+                        //System.out.println("Notification already read");
                     }
                 }
                 notificationsPanel.revalidate();
@@ -78,7 +78,6 @@ public class NotificationsService extends Thread implements Constants {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-//            System.out.println("Checking for notifications...");
         }
     }
 }
