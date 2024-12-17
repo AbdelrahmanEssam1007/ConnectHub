@@ -7,6 +7,7 @@ package backend.content;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Content {
     @JsonProperty
@@ -16,6 +17,7 @@ public class Content {
     private String authorID;
     private String groupID;
     private String username;
+    private List<Comment> comments;
 
     /*TODO: Replace it with json creator constructor if enough time*/
     /*Do not remove empty constructor for now, needed for Jackson*/
@@ -28,6 +30,14 @@ public class Content {
         this.authorID = authorID;
         this.username = username;
         this.groupID = groupID;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public boolean expired(){ return false; }

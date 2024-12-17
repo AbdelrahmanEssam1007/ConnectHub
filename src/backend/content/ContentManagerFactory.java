@@ -3,6 +3,7 @@ package backend.content;
 import backend.User;
 import backend.groups.Group;
 import utils.FileNames;
+import utils.IDGenerator;
 import utils.JSONFileReader;
 import utils.JSONFileWriter;
 
@@ -32,6 +33,19 @@ public abstract class ContentManagerFactory {
                 return x;
         }
         return null;
+    }
+
+    public void addComment(User user, String contentID, String text){
+        Comment newComment = new Comment(text, IDGenerator.generateUserId(), user.getUserId());
+        Content content  = searchContentByID(contentID);
+        content.getComments().add(newComment);
+        saveToDB(this.content);
+    }
+
+    public List<Comment> returnComments(String contentID){
+        readFromDB("All");
+        Content content = searchContentByID(contentID);
+        return content.getComments();
     }
 
     public void readFromDB(String type){

@@ -89,7 +89,7 @@
   "userName" : "ZakiZokZokZakaZiko",
   "password" : "956d1d07354d1de9ad915b09b54bcab8abd29b2e3f83d59c4d82f2157b253b9a",
   "dateOfBirth" : [ 2024, 12, 6 ],
-  "status" : true,
+  "status" : false,
   "profile" : {
     "friends" : [ "e9a28975-62c3-4cba-b586-669918ad4389" ],
     "blocked" : [ ],
