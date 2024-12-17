@@ -1,4 +1,4 @@
-package frontend;
+package frontend.notifications;
 
 import backend.FriendManager;
 import backend.Notifications.Notification;
@@ -12,6 +12,7 @@ import backend.content.StoryManager;
 import backend.groups.Group;
 import backend.groups.GroupDB;
 import backend.groups.GroupRole;
+import frontend.GroupDetails;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
 import utils.Constants;

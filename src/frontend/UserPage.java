@@ -5,38 +5,30 @@
 package frontend;
 
 import backend.*;
-import backend.Notifications.Notification;
-import backend.Notifications.NotificationsDB;
 import backend.Notifications.NotificationsService;
 import backend.content.PostManager;
 import backend.content.StoryManager;
 import backend.groups.Group;
-import backend.groups.GroupContentManager;
 import backend.groups.GroupDB;
 import frontend.content.CreatePostPanel;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.*;
 
 import java.awt.Component;
 import java.awt.Point;
+
+import frontend.notifications.Notifications;
 import net.miginfocom.layout.ComponentWrapper;
 import net.miginfocom.layout.LayoutCallback;
-import org.w3c.dom.ls.LSOutput;
 import raven.glasspanepopup.DefaultLayoutCallBack;
 import raven.glasspanepopup.DefaultOption;
 import raven.glasspanepopup.GlassPanePopup;
 import utils.ModernScrollBarUI;
-import utils.ImageUtils;
 
 /**
  *
