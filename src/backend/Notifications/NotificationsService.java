@@ -1,17 +1,12 @@
 package backend.Notifications;
 
 import backend.UserDB;
-import frontend.Item;
-import frontend.Notifications;
+import frontend.notifications.Item;
+import frontend.notifications.Notifications;
 import utils.Constants;
 import utils.TimeUtils;
 
-import javax.swing.*;
 import java.awt.*;
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.Date;
 
 public class NotificationsService extends Thread implements Constants {
 

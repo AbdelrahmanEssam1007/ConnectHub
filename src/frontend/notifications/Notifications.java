@@ -1,4 +1,4 @@
-package frontend;
+package frontend.notifications;
 
 import java.awt.Color;
 import java.awt.Dimension;
