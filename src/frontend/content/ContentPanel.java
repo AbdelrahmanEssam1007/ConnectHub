@@ -102,11 +102,11 @@ public class ContentPanel extends JPanel{
         headerPanel.setBackground(Color.WHITE);
         headerPanel.add(header);
         GroupRole role = GroupManager.getInstance().getGroupRole(type, user.getUserId());
+
         if(user.getUserId().equals(content.getAuthorID()) ||
         role == GroupRole.ADMIN || role == GroupRole.PRIMARY_ADMIN){
             removeContentButton = new JButton("Remove");
             removeContentButton.addActionListener(e -> {
-                System.out.println("IM INSIDE REMOVE");
                 contentManagerFactory.removeContent(content);
                 loadContent(type);
             });
@@ -151,6 +151,14 @@ public class ContentPanel extends JPanel{
             imageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             contentPanel.add(imageLabel);
         }
+
+        /*Adding comment button*/
+        JButton commentButton = new JButton("Comment");
+        headerPanel.add(commentButton);
+        commentButton.addActionListener(e -> {
+            String commentText = JOptionPane.showInputDialog("Your Comment: ");
+            contentManagerFactory.addComment(user.getUserId(), content.getPostID(), commentText);
+        });
 
         return contentPanel;
     }

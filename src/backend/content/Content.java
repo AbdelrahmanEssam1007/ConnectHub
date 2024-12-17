@@ -7,6 +7,7 @@ package backend.content;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Content {
@@ -30,6 +31,7 @@ public class Content {
         this.authorID = authorID;
         this.username = username;
         this.groupID = groupID;
+        this.comments = new ArrayList<>();
     }
 
     public List<Comment> getComments() {

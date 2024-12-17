@@ -1,6 +1,7 @@
 package backend.content;
 
 import backend.User;
+import backend.UserDB;
 import backend.groups.Group;
 import utils.FileNames;
 import utils.IDGenerator;
@@ -35,11 +36,17 @@ public abstract class ContentManagerFactory {
         return null;
     }
 
-    public void addComment(User user, String contentID, String text){
-        Comment newComment = new Comment(text, IDGenerator.generateUserId(), user.getUserId());
+    public void addComment(String userID, String contentID, String text){
+        readFromDB("All");
+        User user = UserDB.getInstance().searchUserByUserId(userID);
         Content content  = searchContentByID(contentID);
+        Comment newComment = new Comment(text, IDGenerator.generateUserId(), user.getUserId());
         content.getComments().add(newComment);
-        saveToDB(this.content);
+        try {
+            JSONFileWriter.writeJson(fileName.getFileName(), this.content);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Comment> returnComments(String contentID){

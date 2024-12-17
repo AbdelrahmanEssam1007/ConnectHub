@@ -1,1 +1,16 @@
-[]
+[ {
+  "contentData" : {
+    "imagePath" : null,
+    "text" : "test post"
+  },
+  "postDate" : [ 2024, 12, 18, 1, 25, 34, 543865700 ],
+  "postID" : "2702035f-7e0d-407b-936e-22474948c4b5",
+  "authorID" : "44023cbe-7916-450d-868a-b8b54f8a9330",
+  "groupID" : null,
+  "username" : "ZakiZokZokZakaZiko",
+  "comments" : [ {
+    "text" : "test zaki",
+    "commentId" : "718119f7-0909-4156-a64d-d393da58759c",
+    "authorId" : "44023cbe-7916-450d-868a-b8b54f8a9330"
+  } ]
+} ]
