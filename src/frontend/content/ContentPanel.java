@@ -1,6 +1,7 @@
 package frontend.content;
 
 import backend.User;
+import backend.content.Comment;
 import backend.content.Content;
 import backend.content.ContentManagerFactory;
 import backend.groups.Group;
@@ -158,6 +159,15 @@ public class ContentPanel extends JPanel{
         commentButton.addActionListener(e -> {
             String commentText = JOptionPane.showInputDialog("Your Comment: ");
             contentManagerFactory.addComment(user.getUserId(), content.getPostID(), commentText);
+        });
+
+        /*Add show comments button*/
+        JButton showCommentsButton = new JButton("Show Comments");
+        headerPanel.add(showCommentsButton);
+        showCommentsButton.addActionListener(e -> {
+            List<Comment> commentsList = contentManagerFactory.returnComments(content.getPostID());
+            System.out.println("Comments Size: " + commentsList.size());
+            CommentsPanel commentsPanel = new CommentsPanel(commentsList, 0);
         });
 
         return contentPanel;
