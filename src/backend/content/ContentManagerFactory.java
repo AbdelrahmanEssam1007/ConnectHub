@@ -1,16 +1,16 @@
 package backend.content;
 
+import backend.Notifications.Notification;
+import backend.Notifications.NotificationsDB;
 import backend.User;
 import backend.UserDB;
 import backend.groups.Group;
-import utils.FileNames;
-import utils.IDGenerator;
-import utils.JSONFileReader;
-import utils.JSONFileWriter;
+import utils.*;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +42,7 @@ public abstract class ContentManagerFactory {
         Content content  = searchContentByID(contentID);
         Comment newComment = new Comment(text, IDGenerator.generateUserId(), user.getUserId());
         content.getComments().add(newComment);
+        NotificationsDB.getInstance(content.getAuthorID()).addNotification(new Notification("added a comment to your post", content.getAuthorID(), userID, "new", LocalDateTime.now(), NotificationType.COMMENT.getType(), contentID));
         try {
             JSONFileWriter.writeJson(fileName.getFileName(), this.content);
         } catch (IOException e) {

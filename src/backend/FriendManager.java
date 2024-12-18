@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+import utils.NotificationType;
+
 public class FriendManager {
   
   private static FriendManager FRIEND_MANAGER = null;
@@ -65,7 +67,7 @@ public class FriendManager {
 
     targetProfile.getPending().add(user.getUserId());
     System.out.println("Friend request sent successfully.");
-    NotificationsDB.getInstance(targetUser.getUserId()).addNotification(new Notification("sent you a friend request", targetUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), "FRIEND_REQUEST", ""));
+    NotificationsDB.getInstance(targetUser.getUserId()).addNotification(new Notification("sent you a friend request", targetUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), NotificationType.FRIEND_REQUEST.getType(), ""));
     userDB.SaveDB();
   }
 
@@ -83,7 +85,7 @@ public class FriendManager {
     senderProfile.getPending().remove(user.getUserId()); // check to remove potential bug
     senderProfile.getFriends().add(user.getUserId());
     userDB.SaveDB();
-    NotificationsDB.getInstance(senderUser.getUserId()).addNotification(new Notification("accepted your friend request", senderUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), "BLANK", ""));
+    NotificationsDB.getInstance(senderUser.getUserId()).addNotification(new Notification("accepted your friend request", senderUser.getUserId(), user.getUserId(), "new", LocalDateTime.now(), NotificationType.BLANK.getType(), ""));
   }
 
   // Decline a friend request

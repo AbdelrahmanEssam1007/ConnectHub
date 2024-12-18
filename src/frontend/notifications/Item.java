@@ -67,7 +67,7 @@ public class Item extends javax.swing.JPanel implements Constants {
             jButton2.setBackground(new java.awt.Color(0, 153, 255));
             jButton2.setText("Open Group");
         }
-        else if(type.equals(NotificationType.POST.getType())) {
+        else if(type.equals(NotificationType.POST.getType()) || type.equals(NotificationType.COMMENT.getType())) {
             jButton1.setText("");
             jButton1.setVisible(false);
             jButton2.setBackground(new java.awt.Color(0, 153, 255));
@@ -235,7 +235,7 @@ public class Item extends javax.swing.JPanel implements Constants {
             Group group = GroupDB.getInstance().searchGroupByID(postID);
             GroupRole role = group.getUserRole(user.getUserId());
             new GroupDetails(user, group, role).setVisible(true);
-        } else if (this.type.equals(NotificationType.POST.getType())) {
+        } else if (this.type.equals(NotificationType.POST.getType()) || this.type.equals(NotificationType.COMMENT.getType())) {
             // Open post
             JFrame frame = new JFrame();
             frame.setSize(600,300);

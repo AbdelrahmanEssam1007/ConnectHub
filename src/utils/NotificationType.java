@@ -5,7 +5,8 @@ public enum NotificationType {
     GROUP_ACTIVITY("GROUP_ACTIVITY"),
     POST("POST"),
     STORY("STORY"),
-    FRIEND_REQUEST("FRIEND_REQUEST");
+    FRIEND_REQUEST("FRIEND_REQUEST"),
+    COMMENT("COMMENT");
 
     private final String type;
 
