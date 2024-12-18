@@ -156,7 +156,7 @@ public class ContentPanel extends JPanel{
         headerPanel.add(commentButton);
         commentButton.addActionListener(e -> {
             String commentText = JOptionPane.showInputDialog("Your Comment: ");
-            if(!commentText.isEmpty())
+            if(commentText != null&& !commentText.isEmpty())
                 contentFacade.addComment(user.getUserId(), content.getPostID(), commentText);
         });
 

@@ -14,7 +14,7 @@
     "coverPhoto" : null,
     "bio" : "Hello I am Ahmad. Nice to meet you."
   },
-  "groupIDS" : [ ]
+  "groupIDS" : [ "1b47a941-5cd1-4686-8a39-baf1e9f9f0ad" ]
 }, {
   "userId" : "cb2b9573-b77b-4897-83f2-99c422c3e9b8",
   "email" : "abdo@gmail.com",
@@ -99,5 +99,5 @@
     "coverPhoto" : null,
     "bio" : null
   },
-  "groupIDS" : [ ]
+  "groupIDS" : [ "1b47a941-5cd1-4686-8a39-baf1e9f9f0ad" ]
 } ]
