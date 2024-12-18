@@ -6,10 +6,9 @@ package backend.content;
 
 import backend.User;
 import utils.FileNames;
-import utils.JSONFileWriter;
 
-public class StoryManager extends ContentManagerFactory{
-    public StoryManager(User user){
+public class StoryFacade extends ContentFacade {
+    public StoryFacade(User user){
         super(FileNames.STORIES, new StoryLoader(), new StoryFactory(), user);
     }
 

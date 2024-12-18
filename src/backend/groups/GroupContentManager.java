@@ -2,7 +2,7 @@ package backend.groups;
 
 import backend.User;
 import backend.content.Content;
-import backend.content.ContentManagerFactory;
+import backend.content.ContentFacade;
 import backend.content.PostFactory;
 import backend.content.PostLoader;
 import utils.FileNames;
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupContentManager extends ContentManagerFactory {
+public class GroupContentManager extends ContentFacade {
     public GroupContentManager(User user){
         super(FileNames.POSTS, new PostLoader(), new PostFactory(), user);
     }

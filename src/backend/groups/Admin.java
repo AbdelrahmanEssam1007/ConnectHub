@@ -1,10 +1,7 @@
 package backend.groups;
 
 import backend.User;
-import backend.content.ContentManagerFactory;
 import backend.content.Post;
-
-import java.io.File;
 
 public class Admin extends GroupMember {
   private GroupContentManager groupContentManager;

@@ -7,11 +7,21 @@ public class Comment {
 
     public Comment(){};
 
-    public Comment(String text, String commentId, String authorId) {
+    public Comment buildText(String text){
         this.text = text;
-        this.commentId = commentId;
-        this.authorId = authorId;
+        return this;
     }
+
+    public Comment buildCommentId(String commentId){
+        this.commentId = commentId;
+        return this;
+    }
+
+    public Comment buildAuthorID(String authorID){
+        this.authorId = authorID;
+        return this;
+    }
+
 
     public String getAuthorId() {
         return authorId;

@@ -6,9 +6,9 @@ import backend.Notifications.NotificationsDB;
 import backend.User;
 import backend.UserDB;
 import backend.content.Post;
-import backend.content.PostManager;
+import backend.content.PostFacade;
 import backend.content.Story;
-import backend.content.StoryManager;
+import backend.content.StoryFacade;
 import backend.groups.Group;
 import backend.groups.GroupDB;
 import backend.groups.GroupRole;
@@ -241,9 +241,9 @@ public class Item extends javax.swing.JPanel implements Constants {
             frame.setSize(600,300);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             User user = UserDB.getInstance().searchUserByUserName(loggedInUserName);
-            PostManager postManager = new PostManager(user);
-            PostsPanel postPanel = new PostsPanel(user, postManager, frame.getHeight(), frame.getWidth(), "All");
-            Post postNotify = (Post)postManager.searchContentByID(postID);
+            PostFacade postFacade = new PostFacade(user);
+            PostsPanel postPanel = new PostsPanel(user, postFacade, frame.getHeight(), frame.getWidth(), "All");
+            Post postNotify = (Post) postFacade.searchContentByID(postID);
             frame.add(postPanel.createContentPanel(postNotify));
             frame.setVisible(true);
         } else if (this.type.equals(NotificationType.STORY.getType())) {
@@ -252,9 +252,9 @@ public class Item extends javax.swing.JPanel implements Constants {
             frame.setSize(600,300);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             User user = UserDB.getInstance().searchUserByUserName(loggedInUserName);
-            StoryManager storyManager = new StoryManager(user);
-            StoriesPanel storiesPanel = new StoriesPanel(user, storyManager, frame.getHeight(), frame.getWidth(), "All");
-            Story storyNotify = (Story)storyManager.searchContentByID(postID);
+            StoryFacade storyFacade = new StoryFacade(user);
+            StoriesPanel storiesPanel = new StoriesPanel(user, storyFacade, frame.getHeight(), frame.getWidth(), "All");
+            Story storyNotify = (Story) storyFacade.searchContentByID(postID);
             frame.add(storiesPanel.createContentPanel(storyNotify));
             frame.setVisible(true);
         }

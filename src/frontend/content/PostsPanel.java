@@ -13,7 +13,7 @@ import backend.User;
  * @author Amr
  */
 public class PostsPanel extends ContentPanel implements Refreshable {
-    public PostsPanel(User user, ContentManagerFactory contentManager, int width, int height, String type){
+    public PostsPanel(User user, ContentFacade contentManager, int width, int height, String type){
         super(user, contentManager, width, height, type);
     }
 

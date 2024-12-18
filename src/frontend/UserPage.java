@@ -6,8 +6,8 @@ package frontend;
 
 import backend.*;
 import backend.Notifications.NotificationsService;
-import backend.content.PostManager;
-import backend.content.StoryManager;
+import backend.content.PostFacade;
+import backend.content.StoryFacade;
 import backend.groups.Group;
 import backend.groups.GroupDB;
 import frontend.content.CreatePostPanel;
@@ -38,8 +38,8 @@ public class UserPage extends javax.swing.JFrame {
 
     private User loggedInUser;
     private FriendManager FM;
-    private PostManager postManager;
-    private StoryManager storyManager;
+    private PostFacade postFacade;
+    private StoryFacade storyFacade;
     private RefreshManager refreshManager;
     private PostsPanel postsPanel;
     private StoriesPanel storiesPanel;
@@ -88,13 +88,13 @@ public class UserPage extends javax.swing.JFrame {
         this.setTitle("ConnectHub" + " - " + this.loggedInUser.getUserName());
 
         this.FM = FriendManager.getInstance(user);
-        this.postManager = new PostManager(this.loggedInUser);
-        this.storyManager = new StoryManager(this.loggedInUser);
+        this.postFacade = new PostFacade(this.loggedInUser);
+        this.storyFacade = new StoryFacade(this.loggedInUser);
         this.type = "Friends";
         this.typeFeed = "Post";
-        this.postsPanel = new PostsPanel(this.loggedInUser, postManager,this.postsContentPanel.getWidth(), this.postsContentPanel.getHeight(), type);
+        this.postsPanel = new PostsPanel(this.loggedInUser, postFacade,this.postsContentPanel.getWidth(), this.postsContentPanel.getHeight(), type);
         this.typeFeed = "Stories";
-        this.storiesPanel = new StoriesPanel(this.loggedInUser, storyManager, this.storiesContentPanel.getWidth(), this.storiesContentPanel.getHeight(), type);
+        this.storiesPanel = new StoriesPanel(this.loggedInUser, storyFacade, this.storiesContentPanel.getWidth(), this.storiesContentPanel.getHeight(), type);
         this.profilePanel = new ProfilePanel(this.loggedInUser, this.loggedInUser, this.profileContentPanel.getWidth(), 200);
         this.refreshManager = new RefreshManager(List.of(postsPanel, storiesPanel));
         this.friendsPages = new FriendsPages(this.friendsContentPanel.getWidth(), this.friendsContentPanel.getHeight());
@@ -554,7 +554,7 @@ public class UserPage extends javax.swing.JFrame {
         GroupDB.getInstance().readFromDB();
         String userID = loggedInUser.getUserId();
         userGroups = UserDB.getInstance().searchUserByUserId(userID).returnGroups();
-        new CreatePostPanel(postManager, storyManager, refreshManager, userGroups).setVisible(true);
+        new CreatePostPanel(postFacade, storyFacade, refreshManager, userGroups).setVisible(true);
         this.refreshButtonMouseClicked(evt);
     }//GEN-LAST:event_createNewContentButtonMouseClicked
 
@@ -603,8 +603,8 @@ public class UserPage extends javax.swing.JFrame {
         this.profileContentPanel.removeAll();
         this.profileContentPanel.setLayout(new BoxLayout(this.profileContentPanel, BoxLayout.Y_AXIS));
         this.type = "Profile";
-        this.postsPanel = new PostsPanel(this.loggedInUser, new PostManager(loggedInUser),this.profileContentPanel.getWidth(), this.profileContentPanel.getHeight()/3, type);
-        this.storiesPanel = new StoriesPanel(this.loggedInUser, new StoryManager(loggedInUser), this.profileContentPanel.getWidth(), this.profileContentPanel.getHeight()/3, type);
+        this.postsPanel = new PostsPanel(this.loggedInUser, new PostFacade(loggedInUser),this.profileContentPanel.getWidth(), this.profileContentPanel.getHeight()/3, type);
+        this.storiesPanel = new StoriesPanel(this.loggedInUser, new StoryFacade(loggedInUser), this.profileContentPanel.getWidth(), this.profileContentPanel.getHeight()/3, type);
         this.profileContentPanel.add(this.profilePanel);
         this.profileContentPanel.add(this.postsPanel);
         this.profileContentPanel.add(this.storiesPanel);
@@ -617,7 +617,7 @@ public class UserPage extends javax.swing.JFrame {
         this.postsContentPanel.removeAll();
         this.type = "Friends";
         this.typeFeed = "Post";
-        this.postsPanel = new PostsPanel(this.loggedInUser, new PostManager(this.loggedInUser),this.postsContentPanel.getWidth(), this.postsContentPanel.getHeight(), type);
+        this.postsPanel = new PostsPanel(this.loggedInUser, new PostFacade(this.loggedInUser),this.postsContentPanel.getWidth(), this.postsContentPanel.getHeight(), type);
         this.postsContentPanel.add(this.postsPanel);
         this.postsContentPanel.revalidate();
         this.postsContentPanel.repaint();
@@ -627,7 +627,7 @@ public class UserPage extends javax.swing.JFrame {
         this.storiesContentPanel.removeAll();
         this.type = "Friends";
         this.typeFeed = "Stories";
-        this.storiesPanel = new StoriesPanel(this.loggedInUser, new StoryManager(this.loggedInUser),this.storiesContentPanel.getWidth(), this.storiesContentPanel.getHeight(), type);
+        this.storiesPanel = new StoriesPanel(this.loggedInUser, new StoryFacade(this.loggedInUser),this.storiesContentPanel.getWidth(), this.storiesContentPanel.getHeight(), type);
         this.storiesContentPanel.add(this.storiesPanel);
         this.storiesContentPanel.revalidate();
         this.storiesContentPanel.repaint();

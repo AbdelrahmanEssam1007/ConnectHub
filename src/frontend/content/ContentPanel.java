@@ -3,9 +3,7 @@ package frontend.content;
 import backend.User;
 import backend.content.Comment;
 import backend.content.Content;
-import backend.content.ContentManagerFactory;
-import backend.groups.Group;
-import backend.groups.GroupDB;
+import backend.content.ContentFacade;
 import backend.groups.GroupManager;
 import backend.groups.GroupRole;
 import utils.ModernScrollBarUI;
@@ -19,15 +17,15 @@ import static utils.ImageUtils.scaleImageIcon;
 
 public class ContentPanel extends JPanel{
     protected final User user;
-    protected final ContentManagerFactory contentManagerFactory;
+    protected final ContentFacade contentFacade;
     protected final JPanel contentContainer;
     protected final String type;
     protected final JPanel scrollContentPanel;
 
-    public ContentPanel(User user, ContentManagerFactory contentManagerFactory, int width, int height, String type) {
+    public ContentPanel(User user, ContentFacade contentFacade, int width, int height, String type) {
         /*Initializing class variables*/
         this.user = user;
-        this.contentManagerFactory = contentManagerFactory;
+        this.contentFacade = contentFacade;
         this.type = type;
 
         /*Configuring main content panel*/
@@ -58,8 +56,8 @@ public class ContentPanel extends JPanel{
 
     /*Loading method*/
     public void loadContent(String type){
-        contentManagerFactory.readFromDB(type);
-        List<Content> content = contentManagerFactory.getContent();
+        contentFacade.readFromDB(type);
+        List<Content> content = contentFacade.getContent();
         contentContainer.removeAll();
 
         if (content.isEmpty()) {
@@ -108,7 +106,7 @@ public class ContentPanel extends JPanel{
         role == GroupRole.ADMIN || role == GroupRole.PRIMARY_ADMIN){
             removeContentButton = new JButton("Remove");
             removeContentButton.addActionListener(e -> {
-                contentManagerFactory.removeContent(content);
+                contentFacade.removeContent(content);
                 loadContent(type);
             });
             headerPanel.add(removeContentButton);
@@ -117,7 +115,7 @@ public class ContentPanel extends JPanel{
                 String newText = JOptionPane.showInputDialog("Please input new text.");
                 if(newText != null){
                     /*TODO: add editing image*/
-                    contentManagerFactory.editContent(content.getPostID(), newText, null);
+                    contentFacade.editContent(content.getPostID(), newText, null);
                     loadContent(type);
                 }
             });
@@ -159,14 +157,14 @@ public class ContentPanel extends JPanel{
         commentButton.addActionListener(e -> {
             String commentText = JOptionPane.showInputDialog("Your Comment: ");
             if(!commentText.isEmpty())
-                contentManagerFactory.addComment(user.getUserId(), content.getPostID(), commentText);
+                contentFacade.addComment(user.getUserId(), content.getPostID(), commentText);
         });
 
         /*Add show comments button*/
         JButton showCommentsButton = new JButton("Show Comments");
         headerPanel.add(showCommentsButton);
         showCommentsButton.addActionListener(e -> {
-            List<Comment> commentsList = contentManagerFactory.returnComments(content.getPostID());
+            List<Comment> commentsList = contentFacade.returnComments(content.getPostID());
             System.out.println("Comments Size: " + commentsList.size());
             CommentsPanel commentsPanel = new CommentsPanel(commentsList, 0);
         });
@@ -178,7 +176,7 @@ public class ContentPanel extends JPanel{
 
         /*Add like button*/
         JButton likeButton = new JButton();
-        if(contentManagerFactory.searchLikesByAuthorID(user.getUserId(), content.getPostID()) == null){
+        if(contentFacade.searchLikesByAuthorID(user.getUserId(), content.getPostID()) == null){
             likeButton.setText("Like");
             likeButton.setBackground(new java.awt.Color(102, 102, 102));
         }else{
@@ -187,18 +185,18 @@ public class ContentPanel extends JPanel{
         }
         headerPanel.add(likeButton);
         likeButton.addActionListener(e -> {
-            if(contentManagerFactory.searchLikesByAuthorID(user.getUserId(), content.getPostID()) != null){
+            if(contentFacade.searchLikesByAuthorID(user.getUserId(), content.getPostID()) != null){
                 likeButton.setBackground(new java.awt.Color(102, 102, 102));
                 likeButton.setText("Like");
-                contentManagerFactory.removeLike(user.getUserId(), content.getPostID());
-                Content newContent = contentManagerFactory.searchContentByID(content.getPostID());
+                contentFacade.removeLike(user.getUserId(), content.getPostID());
+                Content newContent = contentFacade.searchContentByID(content.getPostID());
                 likeCounter.setText("Likes: " + newContent.getLikes().size());
             }
             else{
                 likeButton.setBackground(new java.awt.Color(0, 153, 255));
                 likeButton.setText("Liked");
-                contentManagerFactory.addLike(user.getUserId(), content.getPostID());
-                Content newContent = contentManagerFactory.searchContentByID(content.getPostID());
+                contentFacade.addLike(user.getUserId(), content.getPostID());
+                Content newContent = contentFacade.searchContentByID(content.getPostID());
                 likeCounter.setText("Likes: " + newContent.getLikes().size());
             }
             revalidate();

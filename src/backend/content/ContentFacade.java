@@ -3,7 +3,6 @@ package backend.content;
 import backend.Notifications.Notification;
 import backend.Notifications.NotificationsDB;
 import backend.User;
-import backend.UserDB;
 import backend.groups.Group;
 import utils.*;
 
@@ -14,14 +13,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ContentManagerFactory {
+public abstract class ContentFacade {
     protected final FileNames fileName;
     protected final ContentLoader contentLoader;
     protected final ContentFactory contentFactory;
     protected final User user;
     protected List<Content> content = new ArrayList<>();
 
-    public ContentManagerFactory(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory, User user) {
+    public ContentFacade(FileNames fileName, ContentLoader contentLoader, ContentFactory contentFactory, User user) {
         this.fileName = fileName;
         this.contentLoader = contentLoader;
         this.contentFactory = contentFactory;
@@ -39,7 +38,10 @@ public abstract class ContentManagerFactory {
     public void addComment(String userID, String contentID, String text){
         readFromDB("All");
         Content content  = searchContentByID(contentID);
-        Comment newComment = new Comment(text, IDGenerator.generateUserId(), userID);
+        Comment newComment = new Comment();
+        newComment.buildText(text)
+                .buildCommentId(IDGenerator.generateUserId())
+                .buildAuthorID(userID);
         content.getComments().add(newComment);
         NotificationsDB.getInstance(content.getAuthorID()).addNotification(new Notification("added a comment to your post", content.getAuthorID(), userID, "new", LocalDateTime.now(), NotificationType.COMMENT.getType(), contentID));
         try {

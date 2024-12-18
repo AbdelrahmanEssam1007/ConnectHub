@@ -6,8 +6,8 @@ package frontend;
 
 import backend.FriendManager;
 import backend.User;
-import backend.content.PostManager;
-import backend.content.StoryManager;
+import backend.content.PostFacade;
+import backend.content.StoryFacade;
 import backend.groups.*;
 import frontend.content.PostsPanel;
 import frontend.content.StoriesPanel;
@@ -315,8 +315,8 @@ public class FriendsPanel extends javax.swing.JPanel {
         profilePage.setSize(600, 630);
         profilePage.setLayout(new BoxLayout(profilePage.getContentPane(), BoxLayout.Y_AXIS));
         profilePage.add(new ProfilePanel(this.friendUser, this.loggedinUser, profilePage.getWidth(), 200));
-        profilePage.add(new PostsPanel(this.loggedinUser, new PostManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
-        profilePage.add(new StoriesPanel(this.loggedinUser, new StoryManager(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
+        profilePage.add(new PostsPanel(this.loggedinUser, new PostFacade(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
+        profilePage.add(new StoriesPanel(this.loggedinUser, new StoryFacade(this.friendUser),profilePage.getWidth(), profilePage.getHeight()/3, "Profile"));
         profilePage.setVisible(true);
         profilePage.revalidate();
         profilePage.repaint();
