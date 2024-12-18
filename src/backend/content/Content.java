@@ -19,6 +19,7 @@ public class Content {
     private String groupID;
     private String username;
     private List<Comment> comments;
+    private List<Like> likes;
 
     /*TODO: Replace it with json creator constructor if enough time*/
     /*Do not remove empty constructor for now, needed for Jackson*/
@@ -32,6 +33,15 @@ public class Content {
         this.username = username;
         this.groupID = groupID;
         this.comments = new ArrayList<>();
+        this.likes = new ArrayList<>();
+    }
+
+    public List<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
     }
 
     public List<Comment> getComments() {

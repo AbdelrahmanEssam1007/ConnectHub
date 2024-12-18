@@ -158,7 +158,8 @@ public class ContentPanel extends JPanel{
         headerPanel.add(commentButton);
         commentButton.addActionListener(e -> {
             String commentText = JOptionPane.showInputDialog("Your Comment: ");
-            contentManagerFactory.addComment(user.getUserId(), content.getPostID(), commentText);
+            if(!commentText.isEmpty())
+                contentManagerFactory.addComment(user.getUserId(), content.getPostID(), commentText);
         });
 
         /*Add show comments button*/
@@ -170,6 +171,41 @@ public class ContentPanel extends JPanel{
             CommentsPanel commentsPanel = new CommentsPanel(commentsList, 0);
         });
 
+        /*Add like counter*/
+        JLabel likeCounter = new JLabel();
+        headerPanel.add(likeCounter);
+        likeCounter.setText("Likes: " + content.getLikes().size());
+
+        /*Add like button*/
+        JButton likeButton = new JButton();
+        if(contentManagerFactory.searchLikesByAuthorID(user.getUserId(), content.getPostID()) == null){
+            likeButton.setText("Like");
+            likeButton.setBackground(new java.awt.Color(102, 102, 102));
+        }else{
+            likeButton.setText("Liked");
+            likeButton.setBackground(new java.awt.Color(0, 153, 255));
+        }
+        headerPanel.add(likeButton);
+        likeButton.addActionListener(e -> {
+            if(contentManagerFactory.searchLikesByAuthorID(user.getUserId(), content.getPostID()) != null){
+                likeButton.setBackground(new java.awt.Color(102, 102, 102));
+                likeButton.setText("Like");
+                contentManagerFactory.removeLike(user.getUserId(), content.getPostID());
+                Content newContent = contentManagerFactory.searchContentByID(content.getPostID());
+                likeCounter.setText("Likes: " + newContent.getLikes().size());
+            }
+            else{
+                likeButton.setBackground(new java.awt.Color(0, 153, 255));
+                likeButton.setText("Liked");
+                contentManagerFactory.addLike(user.getUserId(), content.getPostID());
+                Content newContent = contentManagerFactory.searchContentByID(content.getPostID());
+                likeCounter.setText("Likes: " + newContent.getLikes().size());
+            }
+            revalidate();
+            repaint();
+        });
+        revalidate();
+        repaint();
         return contentPanel;
     }
 }

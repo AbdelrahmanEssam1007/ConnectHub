@@ -38,9 +38,8 @@ public abstract class ContentManagerFactory {
 
     public void addComment(String userID, String contentID, String text){
         readFromDB("All");
-        User user = UserDB.getInstance().searchUserByUserId(userID);
         Content content  = searchContentByID(contentID);
-        Comment newComment = new Comment(text, IDGenerator.generateUserId(), user.getUserId());
+        Comment newComment = new Comment(text, IDGenerator.generateUserId(), userID);
         content.getComments().add(newComment);
         NotificationsDB.getInstance(content.getAuthorID()).addNotification(new Notification("added a comment to your post", content.getAuthorID(), userID, "new", LocalDateTime.now(), NotificationType.COMMENT.getType(), contentID));
         try {
@@ -48,6 +47,45 @@ public abstract class ContentManagerFactory {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void addLike(String userID, String contentID){
+        readFromDB("All");
+        Content content = searchContentByID(contentID);
+        Like newLike = new Like(userID);
+        content.getLikes().add(newLike);
+        NotificationsDB.getInstance(content.getAuthorID()).addNotification(new Notification("liked your post", content.getAuthorID(), userID, "new", LocalDateTime.now(), NotificationType.COMMENT.getType(), contentID));
+        try {
+            JSONFileWriter.writeJson(fileName.getFileName(), this.content);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void removeLike(String userID, String contentID){
+        readFromDB("All");
+        Content content = searchContentByID(contentID);
+        List<Like> likes = content.getLikes();
+        Like likeToRemove = searchLikesByAuthorID(userID, contentID);
+
+        if(likeToRemove == null)
+            throw new RuntimeException("Like does not exist, cannot remove");
+
+        content.getLikes().remove(likeToRemove);
+        try {
+            JSONFileWriter.writeJson(fileName.getFileName(), this.content);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Like searchLikesByAuthorID(String authorID, String contentID){
+        Content content = searchContentByID(contentID);
+        for(Like x : content.getLikes()){
+            if(x.getAuthorID().equals(authorID))
+                return x;
+        }
+        return null;
     }
 
     public List<Comment> returnComments(String contentID){
