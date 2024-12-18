@@ -6,7 +6,8 @@ public enum NotificationType {
     POST("POST"),
     STORY("STORY"),
     FRIEND_REQUEST("FRIEND_REQUEST"),
-    COMMENT("COMMENT");
+    COMMENT("COMMENT"),
+    LIKE("LIKE");
 
     private final String type;
 

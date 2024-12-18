@@ -54,7 +54,7 @@ public abstract class ContentManagerFactory {
         Content content = searchContentByID(contentID);
         Like newLike = new Like(userID);
         content.getLikes().add(newLike);
-        NotificationsDB.getInstance(content.getAuthorID()).addNotification(new Notification("liked your post", content.getAuthorID(), userID, "new", LocalDateTime.now(), NotificationType.COMMENT.getType(), contentID));
+        NotificationsDB.getInstance(content.getAuthorID()).addNotification(new Notification("liked your post", content.getAuthorID(), userID, "new", LocalDateTime.now(), NotificationType.LIKE.getType(), contentID));
         try {
             JSONFileWriter.writeJson(fileName.getFileName(), this.content);
         } catch (IOException e) {
